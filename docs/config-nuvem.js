@@ -14,6 +14,6 @@
    SQL. NUNCA coloque aqui a chave secreta / service_role.
    ========================================================= */
 window.ATELIE_NUVEM = {
-  url: '',    // ex.: 'https://abcdefghijklmno.supabase.co'
-  chave: ''   // ex.: 'sb_publishable_...' ou 'eyJhbGciOi...'
+  url: 'https://vgrsfeqbgroplxnumhvg.supabase.co',
+  chave: 'sb_publishable_tDs_tEee6ENOT17HMP3FLQ_-vyjn4Dq'
 };
