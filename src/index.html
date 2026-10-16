@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="Ateliê do Pensamento — um percurso pessoal de filosofia, autoconhecimento, literatura e compreensão do mundo.">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#f6f1e7" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#1b1a18" media="(prefers-color-scheme: dark)">
+  <meta name="referrer" content="no-referrer">
+  <title>Ateliê do Pensamento</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect x='1.5' y='1.5' width='37' height='37' rx='9' fill='%232f5d57'/%3E%3Cpath d='M11 29c2.5-9 6-15 9-15s4.5 6 9 15' fill='none' stroke='%23f6f1e7' stroke-width='2.2' stroke-linecap='round'/%3E%3Cpath d='M14.5 23.5h11' stroke='%23f6f1e7' stroke-width='2.2' stroke-linecap='round'/%3E%3Ccircle cx='20' cy='9.5' r='2.3' fill='%23d79b78'/%3E%3C/svg%3E">
+  <!-- Aplica tema e tamanho de fonte antes de desenhar a página (evita piscar) -->
+  <script>
+    (function () {
+      try {
+        var d = JSON.parse(localStorage.getItem('atelie-do-pensamento:v1') || '{}');
+        var p = d.preferencias || {};
+        if (p.tema === 'claro') document.documentElement.dataset.theme = 'light';
+        if (p.tema === 'escuro') document.documentElement.dataset.theme = 'dark';
+        if (p.fonte) document.documentElement.dataset.fonte = p.fonte;
+      } catch (e) {}
+    })();
+  </script>
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+  <div id="app">
+    <noscript><p style="padding:2rem;font-family:Georgia,serif">O Ateliê do Pensamento precisa de JavaScript ativado para funcionar. Nenhum dado é enviado para fora do seu navegador.</p></noscript>
+  </div>
+
+  <!-- Conteúdo educacional (separado da lógica da interface) -->
+  <script src="js/conteudo/00-base.js"></script>
+  <script src="js/conteudo/10-etapa1-obvio.js"></script>
+  <script src="js/conteudo/11-etapa1-ferramentas.js"></script>
+  <script src="js/conteudo/15-unidades-confronto.js"></script>
+  <script src="js/conteudo/20-etapa2.js"></script>
+  <script src="js/conteudo/30-etapa3.js"></script>
+  <script src="js/conteudo/40-etapas4a6.js"></script>
+  <script src="js/conteudo/45-contrapontos.js"></script>
+  <script src="js/conteudo/50-perguntas.js"></script>
+  <script src="js/conteudo/51-perguntas-extra.js"></script>
+  <script src="js/conteudo/55-debates.js"></script>
+  <script src="js/conteudo/60-biblioteca.js"></script>
+  <script src="js/conteudo/61-biblioteca-literatura.js"></script>
+  <script src="js/conteudo/62-biblioteca-ensaios.js"></script>
+  <script src="js/conteudo/63-biblioteca-ajustes.js"></script>
+  <script src="js/conteudo/70-pensadores.js"></script>
+  <script src="js/conteudo/75-pensadores-ampliados.js"></script>
+  <script src="js/conteudo/80-oficina.js"></script>
+  <script src="js/conteudo/90-laboratorio-mapa.js"></script>
+  <script src="js/conteudo/95-exame-conviccoes.js"></script>
+
+  <!-- Configuração opcional da sincronização (fica fora do arquivo único para ser editada à parte) -->
+  <script src="config-nuvem.js"></script>
+
+  <!-- Interface -->
+  <script src="js/app/01-nucleo.js"></script>
+  <script src="js/app/02-percurso.js"></script>
+  <script src="js/app/03-explorar.js"></script>
+  <script src="js/app/04-ferramentas.js"></script>
+  <script src="js/app/05-caderno-dados.js"></script>
+  <script src="js/app/06-confronto.js"></script>
+  <script src="js/app/08-nuvem.js"></script>
+  <script src="js/app/07-iniciar.js"></script>
+</body>
+</html>
