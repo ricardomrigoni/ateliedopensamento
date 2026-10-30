@@ -22,6 +22,14 @@
       } catch (e) {}
     })();
   </script>
+  <!-- PWA (instalação como aplicativo): usado na versão publicada em docs/ -->
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Ateliê">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <!-- /PWA -->
   <style>
 /* =========================================================
    Ateliê do Pensamento — estilos
@@ -12106,5 +12114,11 @@ html { background-color: var(--papel); }
 })();
 
 </script>
+  <!-- PWA: registra o service worker quando servido por http(s) -->
+  <script>
+    if ('serviceWorker' in navigator && /^https?:$/.test(location.protocol)) {
+      window.addEventListener('load', function () { navigator.serviceWorker.register('sw.js').catch(function () {}); });
+    }
+  </script>
 </body>
 </html>
