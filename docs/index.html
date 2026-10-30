@@ -743,6 +743,44 @@ details.mais-obras .grade-livros { padding-bottom: 1rem; }
 .tabela-conceitos th, .tabela-conceitos td { text-align: left; padding: .5rem .65rem; border-bottom: 1px solid var(--linha); vertical-align: top; }
 .tabela-conceitos th { font-family: var(--f-ui); font-size: .8rem; text-transform: uppercase; letter-spacing: .04em; color: var(--tinta-2); }
 
+/* ---------- v1.4: teste da inversão ---------- */
+.b-inversao { border-radius: var(--raio); padding: 1.2rem 1.25rem; background: var(--superficie); border: 1px solid var(--linha); border-top: 3px solid var(--acento); }
+.b-inversao > .rotulo { color: var(--acento-forte); display: flex; align-items: center; gap: .35rem; }
+.inv-caso { margin: 1rem 0 .6rem; padding: .9rem 1rem; border-radius: var(--raio-p); }
+.inv-caso > .rotulo { margin-top: 0; }
+.inv-caso p:last-child { margin-bottom: 0; }
+.inv-a { background: var(--acento-tinta); }
+.inv-a > .rotulo { color: var(--acento-forte); }
+.inv-b { background: var(--terracota-tinta); }
+.inv-b > .rotulo { color: var(--terracota); }
+.inv-corpo { margin-top: 1rem; }
+.inv-resultado { font-family: var(--f-ui); font-size: .92rem; color: var(--acento-forte); min-height: 1em; padding: .1rem 0; }
+
+/* ---------- v1.4: barras de rolagem integradas à identidade visual ---------- */
+:root { --rolagem-trilho: transparent; --rolagem-polegar: color-mix(in srgb, var(--linha-forte) 85%, var(--tinta-3)); --rolagem-polegar-ativo: var(--acento); }
+html, .nav-lateral, textarea, .tabela-conceitos, .passos-caso, .tabela-afin, .dlg-corpo, dialog {
+  scrollbar-width: thin;
+  scrollbar-color: var(--rolagem-polegar) var(--rolagem-trilho);
+}
+.nav-lateral { scrollbar-gutter: stable; }
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: var(--rolagem-trilho); }
+::-webkit-scrollbar-thumb {
+  background-color: var(--rolagem-polegar);
+  border-radius: 999px;
+  border: 3px solid transparent;
+  background-clip: padding-box;
+  min-height: 40px;
+}
+::-webkit-scrollbar-thumb:hover, ::-webkit-scrollbar-thumb:active { background-color: var(--rolagem-polegar-ativo); }
+::-webkit-scrollbar-corner { background: transparent; }
+::-webkit-scrollbar-button { display: none; height: 0; width: 0; }
+.nav-lateral::-webkit-scrollbar { width: 8px; }
+.nav-lateral::-webkit-scrollbar-thumb { border-width: 2px; }
+html { background-color: var(--papel); }
+:root[data-theme="light"] { color-scheme: light; }
+:root[data-theme="dark"] { color-scheme: dark; }
+
 </style>
 </head>
 <body>
@@ -2408,7 +2446,7 @@ details.mais-obras .grade-livros { padding-bottom: 1rem; }
         ] },
 
       { t: 'texto', titulo: 'Para continuar', html: `
-        <p>Leve essa convicção para o <a href="#/conviccoes">Exame de convicções</a>, que inclui o teste do duplo padrão e o da coerência entre o que se pensa e como se vive. A próxima unidade trata do mesmo fenômeno pelo lado da linguagem: o que acontece quando as palavras mudam de sentido conforme quem as usa.</p>` },
+        <p>Leve essa convicção para o <a href="#/conviccoes">Exame de convicções</a>, que inclui o teste do duplo padrão e o da coerência entre o que se pensa e como se vive. As próximas unidades levam o fenômeno ao terreno da política (“Nós e eles”) e ao da linguagem: o que acontece quando as palavras mudam de sentido conforme quem as usa.</p>` },
 
       { t: 'comparar', ref: 'impressao', id: 'comparacao',
         prompt: 'Releia o que você escreveu sobre sua reação a uma notícia incômoda. Que mecanismo desta unidade aparece ali? Você reagiria igual hoje?' },
@@ -2416,7 +2454,8 @@ details.mais-obras .grade-livros { padding-bottom: 1rem; }
       { t: 'conexoes', itens: [
         { ref: 'u:u-visoes', txt: 'Por que concordo com o que concordo: intuições morais e visões de mundo.' },
         { ref: 'u:u-discordar', txt: 'As fontes razoáveis de discordância — nem toda divergência é viés.' },
-        { ref: 'u:u-duplipensar', txt: 'A próxima unidade: duplipensar e a disputa pelo sentido das palavras.' },
+        { ref: 'u:u-nos-eles', txt: 'A próxima unidade: polarização e dois pesos.' },
+        { ref: 'u:u-duplipensar', txt: 'Duplipensar e a disputa pelo sentido das palavras.' },
         { ref: 'ferramenta:conviccoes', txt: 'O Exame de convicções.' },
         { ref: 'p:festinger', txt: 'Ficha do pensador: Leon Festinger.' },
         { ref: 'p:kahneman', txt: 'Ficha do pensador: Daniel Kahneman.' }
@@ -2430,7 +2469,7 @@ details.mais-obras .grade-livros { padding-bottom: 1rem; }
       situacao: 'Um colega que você admira é acusado de assediar uma funcionária. Seu primeiro pensamento é “ele nunca faria isso”.',
       prompt: 'Que mecanismos podem estar em ação nessa reação? O que seria uma reação justa — nem condenação automática, nem defesa automática?'
     },
-    proximos: ['u:u-duplipensar', 'ferramenta:conviccoes', 'q:q-mesmo-criterio']
+    proximos: ['u:u-nos-eles', 'ferramenta:conviccoes', 'q:q-mesmo-criterio']
   };
 
   /* ---------------------------------------------------------
@@ -2547,8 +2586,10 @@ details.mais-obras .grade-livros { padding-bottom: 1rem; }
 
       { t: 'conexoes', itens: [
         { ref: 'u:u-palavra', txt: 'A unidade sobre palavra, conceito e coisa.' },
-        { ref: 'u:u-dissonancia', txt: 'A unidade anterior: quando os fatos ameaçam o que pensamos.' },
-        { ref: 'u:u-investigador', txt: 'A próxima: advogado ou investigador das próprias convicções.' },
+        { ref: 'u:u-dissonancia', txt: 'Quando os fatos ameaçam o que pensamos.' },
+        { ref: 'u:u-nos-eles', txt: 'Nós e eles: polarização e dois pesos.' },
+        { ref: 'u:u-desinformacao', txt: 'O próximo módulo começa pela anatomia da desinformação.' },
+        { ref: 'u:u-investigador', txt: 'Advogado ou investigador das próprias convicções.' },
         { ref: 'b:b-1984', txt: 'O romance 1984, de George Orwell.' },
         { ref: 'p:orwell', txt: 'Ficha do pensador: George Orwell.' },
         { ref: 'p:popper', txt: 'Ficha do pensador: Karl Popper.' },
@@ -2563,7 +2604,7 @@ details.mais-obras .grade-livros { padding-bottom: 1rem; }
       situacao: 'Num grupo de mensagens, alguém escreve: “Isso não é censura, é responsabilidade.” Uma semana depois, sobre medida parecida do outro lado: “Isso é censura pura.”',
       prompt: 'Que critérios distinguiriam honestamente “responsabilidade” de “censura”? Eles sustentam as duas frases?'
     },
-    proximos: ['u:u-investigador', 'q:q-palavras', 'b:b-1984']
+    proximos: ['u:u-desinformacao', 'q:q-palavras', 'b:b-1984']
   };
 
   /* ---------------------------------------------------------
@@ -2643,6 +2684,7 @@ details.mais-obras .grade-livros { padding-bottom: 1rem; }
       { t: 'conexoes', itens: [
         { ref: 'u:u-dissonancia', txt: 'Os mecanismos que protegem as convicções.' },
         { ref: 'u:u-duplipensar', txt: 'A disputa pelo sentido das palavras.' },
+        { ref: 'u:u-nao-sei', txt: 'A próxima unidade: não sei o suficiente.' },
         { ref: 'u:u-visao', txt: 'Na Etapa 6: uma visão de mundo revisável.' },
         { ref: 'd:d-duvida', txt: 'Debate: desconfiar ou confiar nas próprias convicções?' },
         { ref: 'ferramenta:conviccoes', txt: 'O Exame de convicções.' },
@@ -2658,7 +2700,608 @@ details.mais-obras .grade-livros { padding-bottom: 1rem; }
       situacao: 'Uma pesquisa divulgada hoje contraria algo que você vem defendendo há anos.',
       prompt: 'Antes de ler os detalhes: o que, na pesquisa, faria você ajustar sua posição — e o que faria você desconfiar dela com razão?'
     },
-    proximos: ['ferramenta:conviccoes', 'd:d-duvida', 'q:q-contradicao']
+    proximos: ['u:u-nao-sei', 'ferramenta:conviccoes', 'd:d-duvida']
+  };
+})();
+
+</script>
+  <script>/* js/conteudo/17-unidades-pensamento-critico.js */
+/* =========================================================
+   Unidades acrescentadas na versão 1.4 — pensamento crítico
+   ---------------------------------------------------------
+   Completam a trilha “Convicção, contradição e autoengano”
+   (Etapa 2) e formam o módulo “Avaliar, verificar e revisar”.
+   u-absorver · u-atalhos · u-nos-eles ·
+   u-desinformacao · u-falacias · u-nao-sei
+   Bloco novo: “inversao” — o mesmo caso julgado duas vezes,
+   com o agente do seu lado e do lado adversário.
+   ========================================================= */
+(function () {
+  const U = window.ATELIE.unidades;
+  const ROT_INV = ['Inaceitável', 'Grave', 'Depende', 'Aceitável', 'Correto'];
+
+  /* ---------------------------------------------------------
+     1. Como uma opinião entra em mim
+     --------------------------------------------------------- */
+  U['u-absorver'] = {
+    id: 'u-absorver',
+    titulo: 'Como uma opinião entra em mim sem pedir licença',
+    pergunta: 'Quantas das minhas opiniões eu de fato examinei — e quantas apenas ouvi tantas vezes que passaram a parecer verdadeiras?',
+    duracao: '30–35 min',
+    eixos: ['A', 'C', 'E'],
+    resumo: 'O efeito de verdade ilusória, a mera exposição, o esquecimento da fonte, a influência persistente de informações já corrigidas e a exposição seletiva: como opiniões se instalam por repetição e familiaridade — e como interromper esse automatismo.',
+    blocos: [
+      { t: 'importa', html: `
+        <p>Imagine alguém que assiste com frequência a vídeos e comentários sobre um assunto. Não pesquisa, não verifica, não decide conscientemente confiar em ninguém. Apenas encontra a mesma interpretação muitas vezes. Com o tempo, ela passa a parecer plausível; depois, óbvia; por fim, é repetida como opinião própria.</p>
+        <p>Nada disso exige má-fé, nem de quem fala nem de quem ouve. É o modo normal de funcionamento da mente — e é por isso que vale a pena conhecê-lo. Esta unidade começa a trilha porque trata do momento anterior a todos os outros: o da <em>entrada</em> das crenças.</p>` },
+
+      { t: 'impressao', id: 'impressao',
+        prompt: 'Escolha uma opinião sua sobre um assunto que você nunca estudou a fundo — economia, saúde, segurança, história, um político. <strong>Onde e quando você a ouviu pela primeira vez?</strong> Consegue dizer por que acredita nela?',
+        dica: 'Se você não lembrar de onde veio, isso já é parte da resposta.' },
+
+      { t: 'conceito', titulo: 'O efeito de verdade ilusória', html: `
+        <p>Em 1977, Lynn Hasher e colegas pediram a estudantes que avaliassem se frases sobre fatos pouco conhecidos eram verdadeiras. Algumas frases se repetiam em sessões diferentes. As repetidas passaram a ser julgadas mais verdadeiras — fossem verdadeiras ou não. O fenômeno, chamado <strong>efeito de verdade ilusória</strong>, é um dos mais replicados da psicologia.</p>
+        <p>Dois resultados posteriores tornam o efeito mais inquietante:</p>
+        <ul>
+          <li><strong>Saber não protege totalmente.</strong> Lisa Fazio e colegas (2015) mostraram que a repetição aumenta a crença até em afirmações falsas sobre coisas que os participantes sabiam responder corretamente quando perguntados diretamente.</li>
+          <li><strong>Uma exposição basta.</strong> Gordon Pennycook e colegas (2018) observaram que ver uma única vez uma manchete falsa, mesmo acompanhada de aviso de checagem, aumentava a sensação de que ela era verdadeira — e o efeito ainda aparecia uma semana depois.</li>
+        </ul>
+        <p>A explicação mais aceita é que a mente usa a <strong>fluência</strong> — a facilidade de processar uma informação — como pista de verdade. Na maior parte do tempo, a pista funciona: coisas verdadeiras costumam ser repetidas mais vezes. O problema é quando a repetição é fabricada, ou apenas reflete o que circula no nosso meio.</p>` },
+
+      { t: 'revelar', rotulo: 'Familiaridade, fonte esquecida e correções que não apagam', html: `
+        <p><strong>Mera exposição.</strong> O psicólogo Robert Zajonc mostrou em 1968 que a simples exposição repetida a algo — palavras, rostos, símbolos — tende a aumentar a simpatia por ele. Gostamos do que é familiar, e o familiar parece seguro.</p>
+        <p><strong>O esquecimento da fonte.</strong> Guardamos o conteúdo de uma informação muito melhor do que sua origem. Semanas depois, lembramos “li em algum lugar que…”, mas já não sabemos se foi num jornal sério, num meme ou numa conversa de bar. Pesquisas sobre o chamado “efeito adormecido” sugerem que, em certas condições, uma mensagem vinda de fonte pouco confiável ganha força com o tempo justamente porque a fonte é esquecida.</p>
+        <p><strong>A influência persistente.</strong> Estudos de Hollyn Johnson e Colleen Seifert (1994) e de Stephan Lewandowsky e colegas mostraram que uma informação falsa continua influenciando o raciocínio mesmo depois de corrigida — sobretudo quando a correção apenas diz “isso é falso” sem oferecer uma explicação alternativa para preencher o espaço.</p>` },
+
+      { t: 'conceito', titulo: 'A dieta de informações', html: `
+        <p>A <strong>exposição seletiva</strong> é a tendência de procurar fontes que confirmam o que já pensamos e evitar as que nos contrariam. É o viés de confirmação aplicado à escolha do que ler, ver e seguir. Algoritmos de recomendação podem reforçá-la, mas boa parte dela é escolha nossa: quem nos segue, a quem seguimos, de quem nos afastamos.</p>
+        <p>Uma nuance: pesquisas com dados reais de navegação, como as de Andrew Guess (2021), sugerem que as “bolhas” são menos fechadas do que se imaginava para a maioria das pessoas — muita gente consome pouca política e de fontes variadas. O efeito é mais forte numa minoria muito engajada, que, por isso mesmo, tem enorme influência no debate público.</p>
+        <p>Junte as peças: <em>exposição seletiva</em> decide o que chega; a <em>repetição</em> torna familiar; a <em>familiaridade</em> parece verdade; a <em>fonte</em> é esquecida; e a opinião resultante parece ter sido formada por nós.</p>` },
+
+      { t: 'classificar', id: 'entrada',
+        prompt: 'Que mecanismo de entrada aparece principalmente em cada caso?',
+        categorias: ['Verdade ilusória', 'Mera exposição', 'Fonte esquecida', 'Influência persistente', 'Exposição seletiva'],
+        itens: [
+          { txt: 'Depois de ouvir em vários vídeos que “90% dos políticos são corruptos”, Lúcio passa a repetir o número sem nunca ter visto de onde ele vem.', cat: ['Verdade ilusória', 'Fonte esquecida'], exp: 'O número ficou; a origem (se havia alguma) sumiu, e a repetição lhe deu cara de dado.' },
+          { txt: 'Uma notícia falsa sobre um remédio é desmentida. Meses depois, Sônia ainda sente que “alguma coisa ali tinha”.', cat: ['Influência persistente'], exp: 'A correção não apagou a impressão — especialmente se não ofereceu outra explicação.' },
+          { txt: 'Carla só segue perfis que pensam como ela e sai de grupos quando aparecem opiniões contrárias.', cat: ['Exposição seletiva'], exp: 'A escolha da dieta de informações, feita aos poucos e sem decisão consciente.' },
+          { txt: 'Um candidato desconhecido aparece tanto em outdoors que, na véspera da eleição, parece “alguém em quem dá para confiar”.', cat: ['Mera exposição'], exp: 'Familiaridade sentida como confiança — por isso campanhas investem em repetição.' },
+          { txt: '“Li em algum lugar que o cérebro só usa 10% da capacidade.”', cat: ['Fonte esquecida', 'Verdade ilusória'], exp: 'Um mito muito repetido, sem fonte lembrada. Os neurocientistas o rejeitam: praticamente todo o cérebro é usado.' }
+        ] },
+
+      { t: 'passos', id: 'origem', titulo: 'Como esta opinião foi formada?',
+        prompt: 'Volte à opinião que você escreveu na primeira impressão e responda com honestidade.',
+        campos: [
+          { id: 'pesquisei', rotulo: 'Eu pesquisei o assunto? Li fontes diferentes, inclusive contrárias?', dica: '' },
+          { id: 'repeticao', rotulo: 'Ouvi essa afirmação muitas vezes? Onde?', dica: 'Vídeos, grupos, conversas, uma pessoa específica?' },
+          { id: 'confianca', rotulo: 'Confio em quem a apresentou? Essa pessoa entende do assunto?', dica: 'Confiar em alguém é razoável — se ele for competente nesse tema.' },
+          { id: 'contrarios', rotulo: 'Conheço os melhores argumentos contrários?', dica: 'Se não consegue formular nenhum, você conhece só metade da questão.' },
+          { id: 'explicar', rotulo: 'Sei explicar por que acredito nisso — com razões, não só com a conclusão?', dica: '' },
+          { id: 'familiaridade', rotulo: 'Estou confundindo familiaridade com credibilidade?', dica: 'A pergunta central desta unidade.' }
+        ] },
+
+      { t: 'conceito', titulo: 'Como interromper o automatismo', html: `
+        <ol>
+          <li><strong>Pausar antes de aceitar ou compartilhar.</strong> Pennycook e David Rand mostraram que um simples lembrete para pensar na exatidão de uma notícia reduz o compartilhamento de manchetes falsas. Muitas vezes o problema não é viés, mas pressa.</li>
+          <li><strong>Perguntar “onde ouvi isso?”</strong> sempre que perceber uma convicção sobre algo que nunca estudou.</li>
+          <li><strong>Separar familiaridade de evidência:</strong> “já ouvi isso muitas vezes” não é uma razão; “vi os dados, de tal fonte” é.</li>
+          <li><strong>Variar a dieta</strong> de propósito: seguir algumas fontes sérias do outro lado, não para concordar, mas para saber o que estão dizendo na melhor versão — e não na versão que o seu lado repete sobre eles.</li>
+          <li><strong>Aceitar não ter opinião</strong> sobre o que não conhece. É a forma mais simples de não absorver opiniões alheias como próprias.</li>
+        </ol>` },
+
+      { t: 'escolha', id: 'repetido',
+        prompt: 'Você percebe que acredita firmemente em algo que ouviu muitas vezes, mas nunca verificou. O que é mais sensato?',
+        opcoes: [
+          { txt: 'Abandonar a crença: se não foi verificada, é falsa.', ok: false, fb: 'Não verificado não é o mesmo que falso. Coisas repetidas muitas vezes muitas vezes são verdadeiras. O ajuste correto é na confiança, não na conclusão.' },
+          { txt: 'Baixar a confiança até verificar, e procurar a fonte original.', ok: true, fb: 'Isso. A crença pode estar certa, mas hoje ela se apoia em familiaridade. Tratá-la como provisória e checar a origem é o que transforma uma opinião absorvida numa opinião própria.' },
+          { txt: 'Mantê-la: se tanta gente diz, deve ser verdade.', ok: false, fb: 'É exatamente o atalho que o efeito de verdade ilusória explora. O número de vezes que você ouviu algo pode refletir apenas o que circula no seu meio.' }
+        ] },
+
+      { t: 'comparar', ref: 'impressao', id: 'comparacao',
+        prompt: 'Releia o que escreveu sobre a origem da sua opinião. Qual a sua confiança nela agora, de 0 a 100? Por quê?' },
+
+      { t: 'conexoes', itens: [
+        { ref: 'u:u-atalhos', txt: 'A próxima unidade: os atalhos mentais que distorcem julgamentos.' },
+        { ref: 'u:u-dissonancia', txt: 'Depois que uma crença entra, como ela se protege.' },
+        { ref: 'u:u-desinformacao', txt: 'A desinformação explora exatamente esses mecanismos.' },
+        { ref: 'u:u-fato', txt: 'Fato, interpretação e valor (Etapa 1).' },
+        { ref: 'ferramenta:conviccoes', txt: 'O Exame de convicções — inclui a pergunta sobre a origem de cada crença.' }
+      ] },
+      { t: 'leituras', ids: ['b-arte-pensar', 'b-kahneman', 'b-filtro-invisivel', 'b-educacao-midiatica', 'b-rinoceronte'] },
+      { t: 'sintese' }
+    ],
+    revisao: {
+      conceito: 'Verdade ilusória, mera exposição, esquecimento da fonte, influência persistente, exposição seletiva.',
+      situacao: 'Num almoço de família, todos repetem com convicção a mesma frase sobre um tema político. Você percebe que também concorda — mas não sabe dizer por quê.',
+      prompt: 'Como essa opinião pode ter chegado a você? O que faria para saber se ela tem fundamento?'
+    },
+    proximos: ['u:u-atalhos', 'u:u-dissonancia', 'q:q-nao-sei']
+  };
+
+  /* ---------------------------------------------------------
+     2. Atalhos que enganam
+     --------------------------------------------------------- */
+  U['u-atalhos'] = {
+    id: 'u-atalhos',
+    titulo: 'Atalhos que enganam',
+    pergunta: 'Se nossa mente usa atalhos para decidir rápido, quando eles nos servem — e quando nos levam a erros previsíveis?',
+    duracao: '35 min',
+    eixos: ['A', 'C', 'E'],
+    resumo: 'Disponibilidade, ancoragem, enquadramento, retrospectiva, excesso de confiança e negatividade: as heurísticas e vieses estudados por Kahneman, Tversky e outros — com o que se sabe de sólido, o que foi questionado e como usar isso em decisões reais.',
+    blocos: [
+      { t: 'importa', html: `
+        <p>Uma <strong>heurística</strong> é um atalho mental: uma regra rápida que dispensa cálculo. Sem elas, não sairíamos do lugar. Mas, como mostraram os psicólogos Daniel Kahneman e Amos Tversky a partir dos anos 1970, esses atalhos produzem erros <em>sistemáticos</em> — não aleatórios, mas previsíveis, e por isso possíveis de corrigir.</p>
+        <p>Uma ressalva antes de começar: outros pesquisadores, como Gerd Gigerenzer, lembram que muitas heurísticas funcionam muito bem nos ambientes para os quais evoluíram. O objetivo não é desconfiar de toda intuição, mas saber em que situações ela costuma falhar.</p>` },
+
+      { t: 'impressao', id: 'impressao',
+        prompt: 'Sem pesquisar: o que mata mais pessoas no Brasil por ano — <strong>acidentes de avião, tubarões ou quedas dentro de casa?</strong> E o que você teme mais? Escreva também por que acha isso.' },
+
+      { t: 'conceito', titulo: 'Seis atalhos e seus erros', html: `
+        <dl class="camadas">
+          <dt>Disponibilidade</dt><dd>Julgamos a frequência de algo pela facilidade com que exemplos vêm à mente (Tversky e Kahneman, 1973). Mortes dramáticas e noticiadas — acidentes aéreos, ataques de tubarão, crimes espetaculares — parecem mais comuns do que são; causas silenciosas, como quedas domésticas ou doenças crônicas, parecem mais raras.</dd>
+          <dt>Ancoragem</dt><dd>Um número inicial, mesmo irrelevante, puxa as estimativas seguintes. Num experimento clássico (1974), uma roleta manipulada para parar em 10 ou 65 influenciou estimativas sobre a porcentagem de países africanos na ONU. Estudos com juízes alemães (Englich, Mussweiler e Strack, 2006) encontraram efeitos de ancoragem até em sentenças, depois que um número foi sugerido por um dado lançado.</dd>
+          <dt>Enquadramento</dt><dd>A mesma informação, apresentada de formas diferentes, leva a escolhas diferentes. Uma cirurgia com “90% de sobrevivência” parece melhor que uma com “10% de mortalidade” — e médicos também reagem assim. Em política, “corte de gastos” e “ajuste fiscal”, “invasão” e “ocupação” enquadram o mesmo fato.</dd>
+          <dt>Retrospectiva</dt><dd>Depois de saber o resultado, achamos que ele era previsível — “eu sabia”. Baruch Fischhoff mostrou nos anos 1970 que as pessoas lembram ter atribuído mais probabilidade a acontecimentos que de fato ocorreram do que realmente atribuíram. O viés nos faz julgar com dureza decisões alheias que, na hora, eram razoáveis.</dd>
+          <dt>Excesso de confiança</dt><dd>Superestimamos a exatidão do que sabemos. Num estudo famoso (Svenson, 1981), a grande maioria dos motoristas americanos se considerou acima da média. Em testes de calibração, quando as pessoas dizem ter 90% de certeza, acertam bem menos que isso.</dd>
+          <dt>Negatividade</dt><dd>Informações ruins pesam mais que as boas (Baumeister e colegas, 2001: “o mau é mais forte que o bom”). Um estudo em 17 países (Soroka e colegas, 2019) encontrou reações fisiológicas mais intensas a notícias negativas. Por isso o noticiário — e as redes — tendem ao negativo, e nossa percepção do mundo costuma ser mais sombria que os dados (ver Rosling).</dd>
+        </dl>` },
+
+      { t: 'aprofundar', titulo: 'O que resistiu ao tempo', html: `
+        <p>A psicologia passou, desde 2011, por uma “crise de replicação”: muitos estudos famosos não se repetiram quando refeitos com amostras maiores. As heurísticas desta unidade, em geral, saíram-se bem — ancoragem, enquadramento, disponibilidade e retrospectiva foram reproduzidas muitas vezes, embora o tamanho dos efeitos varie. Já alguns estudos citados em livros de divulgação, sobretudo sobre <em>priming</em> (pequenos estímulos que mudariam o comportamento sem que percebêssemos), não resistiram — e o próprio Kahneman reconheceu ter confiado demais neles.</p>
+        <p>Lição de método: um conceito pode ser sólido e um estudo que o ilustra, frágil — e vice-versa.</p>` },
+
+      { t: 'pensador', id: 'kahneman' },
+
+      { t: 'classificar', id: 'atalhos',
+        prompt: 'Que atalho explica melhor cada situação?',
+        categorias: ['Disponibilidade', 'Ancoragem', 'Enquadramento', 'Retrospectiva', 'Excesso de confiança', 'Negatividade'],
+        itens: [
+          { txt: 'Depois de uma semana de notícias sobre um sequestro, Paulo deixa de deixar os filhos irem à escola sozinhos, embora a cidade nunca tenha sido tão segura.', cat: ['Disponibilidade', 'Negatividade'], exp: 'Um caso vívido e muito noticiado vira medida de risco.' },
+          { txt: 'O vendedor começa pedindo R$ 5.000; o cliente “consegue” fechar por R$ 3.800 e sai satisfeito, embora o carro valha R$ 3.000.', cat: ['Ancoragem'], exp: 'O primeiro número define o que parece um bom negócio.' },
+          { txt: '“Era óbvio que essa empresa ia quebrar” — dito por quem, um ano antes, havia investido nela.', cat: ['Retrospectiva'], exp: 'O resultado reescreve a lembrança do que se sabia.' },
+          { txt: 'A mesma reforma é chamada de “modernização” por uns e de “retirada de direitos” por outros, e cada grupo reage à palavra antes de ler o texto.', cat: ['Enquadramento'], exp: 'A moldura chega antes do conteúdo — em qualquer direção.' },
+          { txt: 'Antes de um debate, Rita tem certeza de que conhece bem o tema; ao tentar explicar os detalhes, percebe que não conseguiria.', cat: ['Excesso de confiança'], exp: 'Também chamada de ilusão de profundidade explicativa — tema da unidade “Não sei o suficiente”.' },
+          { txt: 'Um erro do governo que você apoia rende dez minutos de conversa; dez acertos, nenhum comentário. (Vale para o governo que você rejeita também.)', cat: ['Negatividade'], exp: 'O negativo atrai atenção — o que distorce o retrato de qualquer governo, de qualquer lado.' }
+        ] },
+
+      { t: 'revelar', rotulo: 'Resposta da primeira impressão', html: `
+        <p>No Brasil, quedas são uma das principais causas de morte por acidente, sobretudo entre idosos, com milhares de óbitos por ano. Mortes em acidentes de avião comercial são raras — em vários anos, poucas ou nenhuma — e ataques fatais de tubarão, pouquíssimos, concentrados sobretudo na região do Recife. Se você temia mais o tubarão ou o avião, é a heurística da disponibilidade em ação: o que é dramático e noticiado parece mais provável.</p>` },
+
+      { t: 'passos', id: 'decisao', titulo: 'Uma decisão sua, revista',
+        prompt: 'Pense numa decisão importante que você precisa tomar (ou tomou recentemente).',
+        campos: [
+          { id: 'decisao', rotulo: 'A decisão', dica: '' },
+          { id: 'ancora', rotulo: 'Que número, primeira opinião ou primeira oferta pode estar ancorando você?', dica: '' },
+          { id: 'moldura', rotulo: 'Como ela muda se você a descrever em termos opostos (ganho/perda, risco/chance)?', dica: '' },
+          { id: 'base', rotulo: 'Qual a taxa de base? Com que frequência decisões como essa dão certo para pessoas em situação parecida?', dica: 'Kahneman chamava isso de “visão de fora”.' },
+          { id: 'confianca', rotulo: 'Sua confiança de 0 a 100 — e o que a baixaria', dica: '' }
+        ] },
+
+      { t: 'comparar', ref: 'impressao', id: 'comparacao',
+        prompt: 'Releia sua resposta sobre aviões, tubarões e quedas. Que outros medos ou certezas seus podem estar sendo moldados pela disponibilidade?' },
+
+      { t: 'conexoes', itens: [
+        { ref: 'u:u-absorver', txt: 'Como opiniões entram por repetição.' },
+        { ref: 'u:u-causa', txt: 'Correlação e causa (Etapa 1).' },
+        { ref: 'u:u-dissonancia', txt: 'A próxima unidade: como protegemos crenças.' },
+        { ref: 'u:u-nao-sei', txt: 'Excesso de confiança e os limites do conhecimento.' },
+        { ref: 'p:kahneman', txt: 'Ficha do pensador: Daniel Kahneman.' }
+      ] },
+      { t: 'leituras', ids: ['b-kahneman', 'b-arte-pensar', 'b-rosling', 'b-cisne-negro', 'b-ruido', 'b-mlodinow'] },
+      { t: 'sintese' }
+    ],
+    revisao: {
+      conceito: 'Disponibilidade, ancoragem, enquadramento, retrospectiva, excesso de confiança, negatividade.',
+      situacao: 'Depois de uma tragédia muito noticiada, propõe-se uma lei de emergência para evitar que algo parecido se repita.',
+      prompt: 'Que atalhos podem estar influenciando a avaliação do risco e da solução? Que dados você pediria antes de opinar?'
+    },
+    proximos: ['u:u-dissonancia', 'u:u-nao-sei', 'b:b-kahneman']
+  };
+
+  /* ---------------------------------------------------------
+     3. Nós e eles: polarização e dois pesos
+     --------------------------------------------------------- */
+  U['u-nos-eles'] = {
+    id: 'u-nos-eles',
+    titulo: 'Nós e eles: polarização e dois pesos',
+    pergunta: 'Por que julgo com rigor o que prejudica meu grupo e com indulgência o que o favorece — e por que discordar parece, às vezes, um ataque a quem eu sou?',
+    duracao: '40 min',
+    eixos: ['H', 'G', 'E', 'A'],
+    resumo: 'Polarização afetiva, cognição de proteção da identidade, a distorção de como imaginamos o outro lado, desengajamento moral, hipocrisia moral e whataboutism — com dois testes de inversão para você aplicar a si mesmo.',
+    blocos: [
+      { t: 'importa', html: `
+        <p>A unidade sobre dissonância mostrou como a identidade de grupo pode decidir antes dos fatos. Esta aprofunda o tema no terreno onde ele é mais forte: a política. E começa por um exercício, antes de qualquer teoria — porque o objetivo não é entender os outros, mas observar a si mesmo.</p>
+        <p><strong>Uma regra para esta unidade:</strong> não procure aqui provas de que um campo político é mais hipócrita que o outro. Aplique os mesmos critérios a todos — sem presumir que todos erram na mesma medida, nem que todas as acusações têm o mesmo fundamento.</p>` },
+
+      { t: 'inversao', id: 'ministro', titulo: 'Teste da inversão 1 — o ministro e o jornalista',
+        caso: '<p>Um ministro do governo, ligado ao <strong>{lado}</strong>, determina que órgãos públicos deixem de dar entrevistas a um jornal que publicou uma série de reportagens críticas, algumas com erros já reconhecidos pelo próprio jornal. O ministro diz que “não vai alimentar quem espalha mentiras”.</p>',
+        rotulos: ROT_INV },
+
+      { t: 'conceito', titulo: 'Polarização afetiva', html: `
+        <p>Os cientistas políticos distinguem dois tipos de polarização. A <strong>ideológica</strong> é a distância entre as opiniões. A <strong>afetiva</strong> é a antipatia entre os grupos: desconfiança, desprezo, recusa de conviver. Shanto Iyengar e colegas mostraram (2012, 2019) que, nos Estados Unidos, a polarização afetiva cresceu muito mais que a ideológica: as pessoas não discordam tanto mais do que antes, mas detestam muito mais quem discorda.</p>
+        <p>No Brasil, Felipe Nunes e Thomas Traumann, em <em>Biografia do abismo</em> (2023), usaram pesquisas de opinião para descrever um fenômeno parecido: a identidade política passou a influenciar amizades, casamentos, escolhas de consumo e a forma de interpretar quase qualquer notícia.</p>
+        <p>Quando o pertencimento ao grupo se torna parte da identidade pessoal, entra em ação o que o professor de Direito Dan Kahan chamou de <strong>cognição de proteção da identidade</strong>: avaliamos informações de modo a preservar nossa posição no grupo. Do ponto de vista do indivíduo, isso pode até ser “racional” — errar sobre um fato custa pouco; ser visto como traidor pelo próprio grupo custa caro.</p>` },
+
+      { t: 'revelar', rotulo: 'Como imaginamos o outro lado — e como ele é', html: `
+        <p>Vários estudos mostram que exageramos o quanto o outro lado é extremo e o quanto ele nos odeia. A pesquisa <em>The Perception Gap</em> (More in Common, 2019) encontrou que democratas e republicanos americanos imaginavam que os adversários tinham posições muito mais radicais do que de fato tinham — e que quem mais consumia notícias tinha a imagem mais distorcida.</p>
+        <p>Samantha Moore-Berg, Emile Bruneau e colegas (2020) mostraram que cada lado superestimava muito o quanto o outro o desumanizava e desprezava; e que corrigir essa percepção reduzia a hostilidade. A distorção alimenta a si mesma: se acho que eles me odeiam, fica mais fácil odiá-los.</p>
+        <p><strong>O que isso não diz:</strong> não diz que os dois lados têm sempre razão pela metade, nem que não há extremistas. Diz que a imagem que temos “deles” costuma ser feita a partir dos seus representantes mais barulhentos — os que mais aparecem justamente por serem extremos.</p>` },
+
+      { t: 'conceito', titulo: 'Como pessoas boas justificam dois pesos', html: `
+        <p>O psicólogo Albert Bandura descreveu o <strong>desengajamento moral</strong>: mecanismos que permitem a pessoas com valores sinceros aprovar ou praticar o que normalmente condenariam, sem sentir que traíram esses valores. Entre eles:</p>
+        <ul>
+          <li><strong>Justificação moral:</strong> o fim nobre redime o meio (“é para salvar a democracia”, “é para proteger a família”).</li>
+          <li><strong>Rótulos eufemísticos:</strong> “ajuste”, “resposta proporcional”, “efeito colateral”.</li>
+          <li><strong>Comparação vantajosa:</strong> “o que eles fizeram foi muito pior”.</li>
+          <li><strong>Difusão da responsabilidade:</strong> “todo mundo faz”, “eu só compartilhei”.</li>
+          <li><strong>Desumanização e culpabilização da vítima:</strong> “com essa gente não dá para ter escrúpulos”, “eles provocaram”.</li>
+        </ul>
+        <p>O psicólogo Daniel Batson estudou a <strong>hipocrisia moral</strong>: o desejo de <em>parecer</em> justo sem arcar com o custo de <em>ser</em> justo. Em seus experimentos, participantes que podiam tirar cara ou coroa para decidir quem ficaria com uma tarefa agradável muitas vezes jogavam a moeda — e ficavam com a tarefa boa mesmo quando a moeda dizia o contrário.</p>` },
+
+      { t: 'conceito', titulo: '“E o outro lado?”: o whataboutism', html: `
+        <p>O <strong>whataboutism</strong> (“e quanto a…?”) é responder a uma crítica apontando um erro do acusador ou do outro lado, em vez de responder à crítica. A tática ficou associada à propaganda soviética na Guerra Fria, que respondia a denúncias sobre o Gulag lembrando a segregação racial nos Estados Unidos — e é usada hoje por todos os lados.</p>
+        <p>É importante separar duas coisas:</p>
+        <ul>
+          <li><strong>Desvio:</strong> “Vocês falam da corrupção do nosso candidato, mas e a do seu?” — usado para encerrar o assunto. A corrupção de um não absolve a do outro.</li>
+          <li><strong>Teste de coerência legítimo:</strong> “Você condena isso agora; por que não condenou quando o seu lado fez o mesmo?” — usado para verificar se o critério é aplicado igualmente. Isso não refuta a crítica, mas pode mostrar um duplo padrão de quem a faz.</li>
+        </ul>
+        <p>A diferença está no que vem depois: o desvio troca de assunto; o teste de coerência volta ao critério e aceita a conclusão para os dois casos.</p>` },
+
+      { t: 'inversao', id: 'fakenews', titulo: 'Teste da inversão 2 — a notícia falsa útil',
+        caso: '<p>Um vídeo editado, que atribui a um político <strong>adversário do {lado}</strong> uma frase que ele não disse, viraliza. Um deputado do {lado} compartilha o vídeo. Quando se descobre que é falso, ele apaga a postagem sem se retratar e diz: “Mesmo que essa frase não seja dele, é o que ele pensa”.</p>',
+        rotulos: ROT_INV },
+
+      { t: 'classificar', id: 'pesos',
+        prompt: 'Que mecanismo aparece principalmente em cada frase?',
+        categorias: ['Justificação moral', 'Comparação vantajosa', 'Difusão da responsabilidade', 'Desumanização', 'Whataboutism', 'Teste de coerência'],
+        itens: [
+          { txt: '“Sim, a medida foi dura, mas era necessária para salvar o país.”', cat: ['Justificação moral'], exp: 'O fim é usado para dispensar o exame do meio. Às vezes o argumento é bom — por isso exige demonstração, não só afirmação.' },
+          { txt: '“Perto do que o outro governo fez, isso é café pequeno.”', cat: ['Comparação vantajosa'], exp: 'Pode até ser verdade, mas não responde se “isso” é aceitável.' },
+          { txt: '“Eu só repassei o que recebi.”', cat: ['Difusão da responsabilidade'], exp: 'Quem compartilha também responde pelo que compartilha.' },
+          { txt: '“Essa gente não merece ser tratada como cidadão.”', cat: ['Desumanização'], exp: 'O passo mais perigoso: quando o adversário deixa de ser visto como pessoa, quase tudo passa a ser permitido contra ele.' },
+          { txt: '“Vocês reclamam da censura agora? E quando o seu lado mandou derrubar perfis?”', cat: ['Whataboutism', 'Teste de coerência'], exp: 'Depende do que vem depois. Se encerra a conversa, é desvio. Se leva a “então vamos condenar os dois casos”, é teste de coerência.' },
+          { txt: '“Critiquei quando o outro governo fez isso; critico agora, ainda que seja o meu.”', cat: ['Teste de coerência'], exp: 'O critério aplicado aos dois lados — o que a unidade inteira procura cultivar.' }
+        ] },
+
+      { t: 'contraponto', unidade: 'u-nos-eles', id: 'lealdade', titulo: 'Lealdade ao próprio grupo é um defeito?',
+        contexto: 'Depois de estudar o viés de grupo, é tentador concluir que toda lealdade é uma distorção.',
+        afirmacao: 'O ideal é avaliar cada fato sem nenhuma lealdade de grupo.',
+        outro: { nome: 'A defesa da lealdade', html: `
+          <p>Para Jonathan Haidt, a lealdade é um dos fundamentos morais humanos, e não um simples defeito. Pensadores comunitaristas e conservadores, de Burke a Scruton, lembram que pertencemos a famílias, comunidades, nações e tradições, e que essas pertenças nos dão raízes, deveres e identidade. Alguém sem nenhuma lealdade não é um juiz imparcial: é alguém sem laços. E grupos coesos também são capazes de proteger seus membros e corrigir seus líderes.</p>` },
+        replica: '<p>A distinção útil talvez seja entre <em>lealdade às pessoas</em> e <em>lealdade às conclusões</em>. É possível ser leal a um grupo — defendê-lo, cuidar dele, permanecer nele — e ainda assim reconhecer seus erros. Às vezes, é justamente a lealdade que exige isso: quem ama um grupo quer que ele acerte, não apenas que vença.</p>',
+        refs: ['p:haidt', 'p:burke', 'u:u-visoes'] },
+
+      { t: 'passos', id: 'meulado', titulo: 'Os acertos do outro lado',
+        prompt: 'Este exercício costuma ser mais difícil do que parece.',
+        campos: [
+          { id: 'acertos', rotulo: 'Cite duas coisas que o campo político que você rejeita faz bem ou acertou', dica: 'Concretas, não irônicas.' },
+          { id: 'erros', rotulo: 'Cite dois erros reais do campo que você apoia', dica: 'Erros que você reconheceria diante de alguém do outro lado.' },
+          { id: 'imagem', rotulo: 'Como você imagina um eleitor típico do outro lado? De onde vem essa imagem?', dica: 'De pessoas reais que você conhece ou de quem aparece mais nas redes?' },
+          { id: 'conversa', rotulo: 'Quando foi sua última conversa respeitosa com alguém do outro lado? O que aprendeu?', dica: '' }
+        ] },
+
+      { t: 'comparar', ref: 'inv_ministro_a_porque', id: 'comparacao',
+        prompt: 'Releia o que você escreveu no primeiro teste de inversão. Com o que estudou nesta unidade, que critério você usaria para julgar os dois casos?' },
+
+      { t: 'conexoes', itens: [
+        { ref: 'u:u-dissonancia', txt: 'Identidade de grupo e cegueira moral seletiva.' },
+        { ref: 'u:u-duplipensar', txt: 'A próxima unidade: a disputa pelas palavras.' },
+        { ref: 'u:u-visoes', txt: 'Fundamentos morais: por que cada lado valoriza coisas diferentes.' },
+        { ref: 'd:d-expressao', txt: 'Debate: os limites da liberdade de expressão.' },
+        { ref: 'q:q-mesmo-criterio', txt: 'Pergunta: aplico ao meu lado os critérios que aplico ao outro?' },
+        { ref: 'p:haidt', txt: 'Ficha do pensador: Jonathan Haidt.' }
+      ] },
+      { t: 'leituras', ids: ['b-biografia-abismo', 'b-haidt', 'b-maquina-caos', 'b-hoffer', 'b-honra-katharina', 'b-bruxas-salem'] },
+      { t: 'sintese' }
+    ],
+    revisao: {
+      conceito: 'Polarização afetiva, cognição de proteção da identidade, percepções distorcidas do outro lado, desengajamento moral, whataboutism.',
+      situacao: 'Um político do campo que você apoia é condenado por um tribunal. Seus amigos dizem que é perseguição; os do outro lado, que é justiça.',
+      prompt: 'Que critérios você usaria para avaliar a condenação — os mesmos que usaria se fosse alguém do outro lado? Que informações faltam?'
+    },
+    proximos: ['u:u-duplipensar', 'q:q-mesmo-criterio', 'ferramenta:debates']
+  };
+
+  /* ---------------------------------------------------------
+     4. Anatomia da desinformação
+     --------------------------------------------------------- */
+  U['u-desinformacao'] = {
+    id: 'u-desinformacao',
+    titulo: 'Anatomia da desinformação',
+    pergunta: 'Como informações falsas, distorcidas ou fora de contexto se formam e se espalham — e que critérios posso usar para avaliá-las, venham de onde vierem?',
+    duracao: '40 min',
+    eixos: ['C', 'H', 'F'],
+    resumo: 'Os tipos de desordem informacional, os truques com números e imagens, a leitura lateral dos checadores profissionais, o método SIFT, e como distinguir fato, inferência e opinião numa notícia — sempre com os mesmos critérios para qualquer lado.',
+    blocos: [
+      { t: 'importa', html: `
+        <p>“Fake news” virou uma acusação que cada lado faz ao outro, e por isso a expressão perdeu precisão. Esta unidade a substitui por distinções mais úteis e por um conjunto de critérios que funcionam independentemente de quem divulga a informação.</p>
+        <p>Desinformação não é exclusividade de nenhum campo ideológico. Isso não significa que todos a produzam na mesma quantidade em todo momento — essa é uma questão empírica, a ser examinada caso a caso —, mas significa que os critérios para detectá-la devem ser os mesmos para todos.</p>` },
+
+      { t: 'impressao', id: 'impressao',
+        prompt: 'Qual foi a última informação que você compartilhou ou repetiu sem verificar? Como você decidiu que era confiável?' },
+
+      { t: 'conceito', titulo: 'Desinformação não é tudo igual', html: `
+        <p>Num relatório de 2017 para o Conselho da Europa, Claire Wardle e Hossein Derakhshan propuseram três categorias:</p>
+        <ul>
+          <li><strong>Informação incorreta</strong> (<em>misinformation</em>): falsa, mas compartilhada por engano, sem intenção de enganar.</li>
+          <li><strong>Desinformação</strong> (<em>disinformation</em>): falsa e criada ou divulgada deliberadamente para enganar.</li>
+          <li><strong>Má informação</strong> (<em>malinformation</em>): verdadeira, mas usada para causar dano — como vazar dados privados.</li>
+        </ul>
+        <p>E Wardle descreveu formas comuns, da menos à mais grave:</p>
+        <table class="tabela-conceitos">
+          <thead><tr><th>Forma</th><th>O que é</th></tr></thead>
+          <tbody>
+            <tr><td>Sátira ou paródia</td><td>Sem intenção de enganar, mas pode ser tomada como verdadeira fora do contexto.</td></tr>
+            <tr><td>Conexão falsa</td><td>Manchete, imagem ou legenda que não corresponde ao conteúdo.</td></tr>
+            <tr><td>Conteúdo enganoso</td><td>Informação real usada para sugerir algo que ela não mostra.</td></tr>
+            <tr><td>Contexto falso</td><td>Conteúdo verdadeiro com data, lugar ou circunstância errados — a foto de outro país, o vídeo de anos atrás.</td></tr>
+            <tr><td>Conteúdo impostor</td><td>Imitação de fontes conhecidas (logos, nomes de jornais, perfis falsos).</td></tr>
+            <tr><td>Conteúdo manipulado</td><td>Imagem, áudio ou vídeo verdadeiros, editados para enganar — inclusive por inteligência artificial.</td></tr>
+            <tr><td>Conteúdo fabricado</td><td>Inteiramente falso.</td></tr>
+          </tbody>
+        </table>
+        <p>Repare que a maior parte da desinformação não é invenção pura: é recorte, contexto trocado e meia-verdade. Por isso é tão eficaz.</p>` },
+
+      { t: 'revelar', rotulo: 'Por que o falso corre mais rápido', html: `
+        <p>Um estudo de Soroush Vosoughi, Deb Roy e Sinan Aral, publicado na <em>Science</em> em 2018, analisou cerca de 126 mil histórias que circularam no Twitter entre 2006 e 2017. As falsas se espalharam mais longe, mais rápido e para mais pessoas que as verdadeiras — e isso se devia a pessoas, não a robôs. Uma explicação provável é a <strong>novidade</strong>: o falso costuma ser mais surpreendente, e despertar mais emoção (indignação, medo, nojo).</p>
+        <p>E uma nuance importante: Pennycook e Rand mostraram que muita gente compartilha notícias falsas mais por <strong>falta de atenção</strong> do que por raciocínio motivado. Quando convidadas a pensar se uma manchete é exata, as pessoas distinguem razoavelmente bem verdadeiro de falso — inclusive quando a manchete favorece o próprio lado. Parar para pensar já ajuda.</p>` },
+
+      { t: 'conceito', titulo: 'Truques com números e imagens', html: `
+        <ul>
+          <li><strong>Percentual sem base:</strong> “os crimes aumentaram 300%” pode significar de 3 para 12 casos.</li>
+          <li><strong>Risco relativo sem risco absoluto:</strong> “dobra o risco” pode ser de 1 em 100 mil para 2 em 100 mil.</li>
+          <li><strong>Período escolhido a dedo:</strong> começar a série no ano mais baixo ou mais alto para fabricar uma tendência.</li>
+          <li><strong>Eixo cortado:</strong> um gráfico que começa em 95 faz uma diferença de 2% parecer enorme.</li>
+          <li><strong>Média que esconde:</strong> a renda média pode subir enquanto a da maioria cai.</li>
+          <li><strong>Amostra imprópria:</strong> enquete de rede social apresentada como pesquisa.</li>
+          <li><strong>Correlação vendida como causa:</strong> ver a unidade da Etapa 1.</li>
+          <li><strong>Imagem fora de contexto:</strong> a foto real de outro lugar, outra época, outra situação.</li>
+          <li><strong>Recorte de fala:</strong> a frase verdadeira, sem a frase seguinte que mudava seu sentido.</li>
+        </ul>
+        <p>O livro clássico sobre o tema é <em>Como mentir com estatística</em>, de Darrell Huff (1954). Thomas Sowell, em <em>Fatos e falácias da economia</em>, mostra muitos desses truques em debates econômicos — especialmente o uso de médias e categorias estatísticas que mudam de composição ao longo do tempo.</p>` },
+
+      { t: 'conceito', titulo: 'Como os checadores profissionais leem', html: `
+        <p>Sam Wineburg e Sarah McGrew, da Universidade Stanford, compararam como historiadores, estudantes universitários e checadores profissionais avaliavam sites desconhecidos. Os historiadores e estudantes liam o site com atenção, de cima a baixo — e muitas vezes eram enganados por aparência profissional. Os checadores faziam outra coisa: saíam do site quase imediatamente e abriam outras abas para descobrir <em>quem</em> estava por trás dele. É a <strong>leitura lateral</strong>.</p>
+        <p>Mike Caulfield resumiu o método em quatro passos, conhecidos pela sigla inglesa <strong>SIFT</strong>:</p>
+        <ol>
+          <li><strong>Pare.</strong> Antes de reagir ou compartilhar, note a emoção que a informação provocou. Indignação imediata é sinal de cuidado.</li>
+          <li><strong>Investigue a fonte.</strong> Quem publicou? Que interesse tem? É especialista no assunto?</li>
+          <li><strong>Encontre uma cobertura melhor.</strong> Outras fontes confiáveis — de linhas editoriais diferentes — dizem o mesmo?</li>
+          <li><strong>Rastreie até a origem.</strong> Qual o estudo, a declaração completa, a foto original, a data?</li>
+        </ol>` },
+
+      { t: 'classificar', id: 'noticia',
+        prompt: 'Num texto jornalístico, separe: o que é fato verificável, o que é inferência e o que é opinião.',
+        categorias: ['Fato verificável', 'Inferência', 'Opinião'],
+        itens: [
+          { txt: '“O índice de desemprego caiu de 9,1% para 8,4% no trimestre, segundo o IBGE.”', cat: ['Fato verificável'], exp: 'Pode ser conferido na fonte citada. (Ainda vale ver a série maior e o método.)' },
+          { txt: '“A queda mostra que a nova política econômica está funcionando.”', cat: ['Inferência'], exp: 'Pode ser verdade, mas exige mostrar que a política causou a queda — e não a sazonalidade, o cenário externo ou outra coisa.' },
+          { txt: '“É uma vergonha que ainda haja quem critique o governo.”', cat: ['Opinião'], exp: 'Um juízo de valor — legítimo como opinião, mas não é informação.' },
+          { txt: '“Especialistas alertam que o país corre o risco de uma crise.”', cat: ['Inferência'], exp: 'Quais especialistas? Quantos? Com que argumento? Formulações vagas assim podem esconder uma opinião isolada.' },
+          { txt: '“O ministro afirmou, em entrevista na terça, que não aumentará impostos.”', cat: ['Fato verificável'], exp: 'Que ele disse é verificável. Que vai cumprir é outra questão.' },
+          { txt: '“Como sempre, a imprensa esconde os números que não interessam.”', cat: ['Opinião', 'Inferência'], exp: 'Uma generalização que pode conter algo verificável (que números?), mas apresentada sem evidência.' }
+        ] },
+
+      { t: 'passos', id: 'anatomia', titulo: 'Anatomia de uma notícia',
+        prompt: 'Escolha uma notícia ou postagem que circulou nos últimos dias — de preferência uma que <strong>favoreça</strong> a sua posição.',
+        campos: [
+          { id: 'texto', rotulo: 'A afirmação principal, em uma frase', dica: '' },
+          { id: 'fonte', rotulo: 'Fonte original: quem disse, onde, quando?', dica: 'Chegou a ela, ou parou num print?' },
+          { id: 'fatos', rotulo: 'O que nela é fato comprovado?', dica: '' },
+          { id: 'inferencias', rotulo: 'O que é inferência ou interpretação?', dica: '' },
+          { id: 'omissoes', rotulo: 'O que está faltando? Que contexto mudaria a leitura?', dica: 'Base dos números, período, fala completa, outros casos.' },
+          { id: 'interesses', rotulo: 'Quem ganha com a circulação dessa notícia?', dica: 'Conflito de interesse não prova falsidade, mas pede cuidado.' },
+          { id: 'verificar', rotulo: 'O que ainda precisaria ser verificado — e onde?', dica: '' }
+        ] },
+
+      { t: 'escolha', id: 'checagem',
+        prompt: 'Uma agência de checagem classifica como “enganosa” uma notícia que favorece o seu lado. O que fazer?',
+        opcoes: [
+          { txt: 'Desconsiderar: as agências de checagem são parciais.', ok: false, fb: 'Agências podem errar ou ter vieses, e essa crítica é feita por diferentes campos. Mas, se a desconfiança só aparece quando a checagem contraria seu lado, é raciocínio motivado. A resposta é examinar o argumento da checagem, não descartá-la pela origem.' },
+          { txt: 'Ler os argumentos e as fontes da checagem e conferir se eles se sustentam.', ok: true, fb: 'Isso. Uma checagem séria mostra suas fontes. Se elas se sustentam, ajuste sua crença; se não se sustentam, você terá uma razão concreta para discordar — e não apenas uma suspeita.' },
+          { txt: 'Aceitar automaticamente: se a agência disse, está decidido.', ok: false, fb: 'Checagem também é argumento, e argumentos se examinam. Confiar em fontes competentes é razoável; dispensar o próprio exame, não.' }
+        ] },
+
+      { t: 'comparar', ref: 'impressao', id: 'comparacao',
+        prompt: 'Releia o que escreveu sobre a última informação que compartilhou. Ela passaria pelos quatro passos do SIFT?' },
+
+      { t: 'conexoes', itens: [
+        { ref: 'u:u-absorver', txt: 'Repetição e familiaridade: por que a desinformação funciona.' },
+        { ref: 'u:u-fato', txt: 'Fato, interpretação e valor (Etapa 1).' },
+        { ref: 'u:u-causa', txt: 'Correlação e causa (Etapa 1).' },
+        { ref: 'c:c-viral', txt: 'Oficina: o caso da notícia que viralizou.' },
+        { ref: 'u:u-falacias', txt: 'A próxima unidade: argumentos que parecem bons.' }
+      ] },
+      { t: 'leituras', ids: ['b-educacao-midiatica', 'b-mentir-estatistica', 'b-sowell-falacias', 'b-sagan-mundo', 'b-maquina-caos', 'b-honra-katharina', 'b-ilusoes-perdidas'] },
+      { t: 'sintese' }
+    ],
+    revisao: {
+      conceito: 'Informação incorreta, desinformação e má informação; contexto falso; truques estatísticos; leitura lateral; SIFT.',
+      situacao: 'Chega a você uma foto de uma enchente com a legenda “o governo abandonou essa cidade”.',
+      prompt: 'Quais seriam os seus quatro passos antes de acreditar ou compartilhar?'
+    },
+    proximos: ['u:u-falacias', 'c:c-viral', 'q:q-noticia']
+  };
+
+  /* ---------------------------------------------------------
+     5. Argumentos que parecem bons
+     --------------------------------------------------------- */
+  U['u-falacias'] = {
+    id: 'u-falacias',
+    titulo: 'Argumentos que parecem bons',
+    pergunta: 'Como reconhecer, em situações reais, argumentos que convencem sem provar — inclusive quando eles defendem algo em que acredito?',
+    duracao: '35–40 min',
+    eixos: ['A', 'F'],
+    resumo: 'Espantalho, falso dilema, generalização apressada, apelo à autoridade, apelo à emoção, ad hominem, falsa equivalência, petição de princípio, post hoc, seleção conveniente de evidências e desvio de assunto — com casos realistas e um aviso contra a “falácia da falácia”.',
+    blocos: [
+      { t: 'importa', html: `
+        <p>A unidade sobre argumentos da Etapa 1 apresentou a ideia de falácia e um alerta: gritar “falácia!” pode virar um modo de não pensar. Esta unidade aprofunda o tema com uma regra: <strong>para cada falácia, pergunte em que casos o mesmo tipo de argumento seria legítimo</strong>. Quase todas têm uma versão boa — e saber distinguir as duas é o que importa.</p>` },
+
+      { t: 'impressao', id: 'impressao',
+        prompt: 'Lembre-se de um argumento político ou moral que convenceu você recentemente. Escreva-o em forma de premissas e conclusão.' },
+
+      { t: 'conceito', titulo: 'Um catálogo com a versão boa e a ruim', html: `
+        <table class="tabela-conceitos">
+          <thead><tr><th>Falácia</th><th>Versão falaciosa</th><th>Quando é legítimo</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Espantalho</strong></td><td>Deformar a posição do outro para refutá-la mais facilmente.</td><td>Nunca — mas resumir é inevitável: o teste é se o outro reconheceria o resumo.</td></tr>
+            <tr><td><strong>Falso dilema</strong></td><td>Apresentar duas opções quando há outras.</td><td>Quando de fato só há duas (votar sim ou não num plebiscito).</td></tr>
+            <tr><td><strong>Generalização apressada</strong></td><td>Concluir sobre um grupo a partir de poucos casos.</td><td>Quando a amostra é grande e representativa.</td></tr>
+            <tr><td><strong>Apelo à autoridade</strong></td><td>Invocar alguém fora da sua competência, ou um especialista isolado contra o consenso.</td><td>Quando se cita o consenso de especialistas no próprio campo — é assim que todos confiamos em médicos e engenheiros.</td></tr>
+            <tr><td><strong>Apelo à emoção</strong></td><td>Substituir a razão pela emoção (“pense nas crianças!”).</td><td>Quando a emoção é adequada ao que está em jogo e as razões também estão lá.</td></tr>
+            <tr><td><strong>Ad hominem</strong></td><td>Atacar a pessoa em vez do argumento.</td><td>Quando a questão é justamente a credibilidade de um testemunho (um conflito de interesses relevante).</td></tr>
+            <tr><td><strong>Falsa equivalência</strong></td><td>Tratar como iguais coisas de gravidade ou evidência muito diferentes.</td><td>Comparar é legítimo quando os casos são de fato semelhantes no que importa.</td></tr>
+            <tr><td><strong>Petição de princípio</strong></td><td>Pressupor na premissa o que se quer provar.</td><td>—</td></tr>
+            <tr><td><strong>Post hoc</strong></td><td>“Aconteceu depois, logo foi causado por isso.”</td><td>A sequência temporal é uma pista de causa, não uma prova.</td></tr>
+            <tr><td><strong>Seleção conveniente</strong> (<em>cherry picking</em>)</td><td>Mostrar só os dados que favorecem a conclusão.</td><td>Escolher exemplos é normal; o problema é esconder os que contrariam.</td></tr>
+            <tr><td><strong>Desvio de assunto</strong></td><td>Mudar de tema quando o argumento aperta (inclui o whataboutism).</td><td>Quando o novo tema é de fato relevante para o primeiro.</td></tr>
+            <tr><td><strong>Ladeira escorregadia</strong></td><td>“Se aceitarmos A, inevitavelmente chegaremos a Z”, sem mostrar os passos.</td><td>Quando há evidência de que os passos costumam se seguir.</td></tr>
+          </tbody>
+        </table>` },
+
+      { t: 'aprofundar', titulo: 'A falácia da falácia', html: `
+        <p>Um argumento mal construído pode ter uma conclusão verdadeira. Mostrar que alguém usou uma falácia não prova que ele está errado — só que aquele argumento não sustenta a conclusão. Concluir o contrário é às vezes chamado de “falácia da falácia”.</p>
+        <p>Outro cuidado: as falácias são mais fáceis de ver nos argumentos de que discordamos. Um bom exercício é procurar falácias primeiro nos argumentos do próprio lado — onde elas passam despercebidas porque concordamos com a conclusão.</p>` },
+
+      { t: 'classificar', id: 'falacias',
+        prompt: 'Identifique a falácia principal em cada argumento. Vários deles são de campos políticos diferentes; tente avaliá-los com o mesmo rigor.',
+        categorias: ['Espantalho', 'Falso dilema', 'Generalização apressada', 'Apelo à autoridade', 'Ad hominem', 'Post hoc', 'Seleção conveniente', 'Petição de princípio'],
+        itens: [
+          { txt: '“Eles querem o fim da propriedade privada.” (Sobre quem defende aumentar o imposto sobre heranças.)', cat: ['Espantalho'], exp: 'Transforma uma proposta específica numa posição extrema fácil de rejeitar.' },
+          { txt: '“Eles querem que as pessoas morram de fome.” (Sobre quem defende reduzir um programa social.)', cat: ['Espantalho'], exp: 'Mesmo mecanismo, outro lado. Uma proposta de corte pode ser ruim — mas não equivale a desejar a fome.' },
+          { txt: '“Ou você apoia esta lei de segurança, ou está do lado dos bandidos.”', cat: ['Falso dilema'], exp: 'É possível querer segurança e achar esta lei ruim.' },
+          { txt: '“Conheço três funcionários públicos que não trabalham. O serviço público é um cabide de empregos.”', cat: ['Generalização apressada'], exp: 'Três casos não descrevem milhões de servidores — embora possam apontar um problema a investigar.' },
+          { txt: '“Um famoso ator disse que esta vacina é perigosa.”', cat: ['Apelo à autoridade'], exp: 'Fama não é competência médica. (Vale também para atores que fazem campanha a favor de qualquer coisa fora de sua área.)' },
+          { txt: '“Não dá para levar a sério a crítica desse economista: ele já foi filiado a partido.”', cat: ['Ad hominem'], exp: 'A filiação pode sugerir cautela, mas o argumento deve ser avaliado pelo que diz.' },
+          { txt: '“Depois que o novo prefeito assumiu, o desemprego da cidade caiu. Ele é um ótimo gestor.”', cat: ['Post hoc'], exp: 'O desemprego pode ter caído no país inteiro. Comparar com cidades parecidas ajudaria.' },
+          { txt: '“Veja estes cinco países onde a política X fracassou.” (Sem mencionar os dez onde funcionou.)', cat: ['Seleção conveniente'], exp: 'Os exemplos são reais; o problema é o que foi deixado de fora.' },
+          { txt: '“Essa notícia é falsa porque vem da imprensa que mente.” — “Como você sabe que ela mente?” — “Porque publica notícias falsas como essa.”', cat: ['Petição de princípio'], exp: 'O argumento gira em círculo: a conclusão é usada para provar a premissa.' }
+        ] },
+
+      { t: 'escolha', id: 'consenso',
+        prompt: 'Alguém diz: “Você está apelando à autoridade!” porque você citou a conclusão de uma revisão de dezenas de estudos médicos. A crítica procede?',
+        opcoes: [
+          { txt: 'Sim: qualquer citação de especialista é falácia.', ok: false, fb: 'Se fosse assim, ninguém poderia confiar em nenhum conhecimento que não verificou pessoalmente. Recorrer ao consenso dos especialistas no próprio campo é razoável.' },
+          { txt: 'Não, em princípio: citar o consenso de especialistas no tema é legítimo, embora ele possa ser questionado com evidências.', ok: true, fb: 'Isso. A falácia está em usar autoridade fora de sua área, um especialista isolado contra o consenso, ou a autoridade como encerramento da discussão. Consensos podem mudar — mas mudam por evidências, não por suspeita genérica.' },
+          { txt: 'Depende de o especialista concordar com você.', ok: false, fb: 'Essa é exatamente a assimetria do raciocínio motivado: aceitar autoridades que confirmam e rejeitar as que contrariam.' }
+        ] },
+
+      { t: 'passos', id: 'reconstruir', titulo: 'Reconstrua e avalie um argumento do seu lado',
+        prompt: 'Escolha um argumento muito usado pelo seu campo político ou religioso.',
+        campos: [
+          { id: 'argumento', rotulo: 'O argumento em premissas e conclusão', dica: 'Premissa 1… Premissa 2… Logo…' },
+          { id: 'premissas', rotulo: 'As premissas são verdadeiras? Como você sabe?', dica: '' },
+          { id: 'ligacao', rotulo: 'A conclusão decorre delas? Há alguma falácia escondida?', dica: '' },
+          { id: 'melhor', rotulo: 'Reescreva o argumento na sua versão mais forte e honesta', dica: 'Às vezes isso exige afirmar menos.' }
+        ] },
+
+      { t: 'comparar', ref: 'impressao', id: 'comparacao',
+        prompt: 'Releia o argumento que convenceu você. Ele resiste ao catálogo desta unidade? Se tem uma falácia, a conclusão ainda poderia ser defendida de outro modo?' },
+
+      { t: 'conexoes', itens: [
+        { ref: 'u:u-argumento', txt: 'A unidade sobre argumentos (Etapa 1).' },
+        { ref: 'u:u-duplipensar', txt: 'Rótulos como arma e falso dilema.' },
+        { ref: 'u:u-desinformacao', txt: 'Anatomia da desinformação.' },
+        { ref: 'x:x-i', txt: 'Laboratório: defenda o argumento contrário.' }
+      ] },
+      { t: 'leituras', ids: ['b-weston', 'b-carnielli', 'b-schopenhauer-debate', 'b-mentir-estatistica', 'b-doze-homens'] },
+      { t: 'sintese' }
+    ],
+    revisao: {
+      conceito: 'As principais falácias e suas versões legítimas; a falácia da falácia.',
+      situacao: 'Num debate na TV, um candidato responde a uma acusação de corrupção dizendo que o acusador “foi condenado por difamação no passado”.',
+      prompt: 'Que falácia pode estar em jogo? Em que circunstância essa informação seria relevante?'
+    },
+    proximos: ['u:u-investigador', 'x:x-i', 'u:u-nao-sei']
+  };
+
+  /* ---------------------------------------------------------
+     6. Não sei o suficiente
+     --------------------------------------------------------- */
+  U['u-nao-sei'] = {
+    id: 'u-nao-sei',
+    titulo: 'Não sei o suficiente',
+    pergunta: 'Como reconhecer os limites do que sei — e por que conhecer os vieses não me livra deles?',
+    duracao: '30–35 min',
+    eixos: ['A', 'C', 'G'],
+    resumo: 'Humildade intelectual, o ponto cego dos vieses, a ilusão de profundidade explicativa, o efeito Dunning-Kruger e suas críticas, a diferença entre convicção e certeza e entre estar errado e ser desonesto — e a coragem de dizer “não sei”.',
+    blocos: [
+      { t: 'importa', html: `
+        <p>Esta unidade fecha a trilha e funciona como contrapeso a tudo o que veio antes. Estudar vieses tem um efeito colateral conhecido: dá uma sensação de superioridade. Passamos a ver os erros dos outros com nitidez — e continuamos cegos para os nossos, agora com um vocabulário mais sofisticado para descrever os alheios.</p>
+        <p>A habilidade final que a trilha procura não é detectar vieses, mas algo mais simples e mais difícil: conseguir dizer, quando é o caso, <strong>“não sei o suficiente sobre isso para ter uma opinião bem fundamentada”</strong>.</p>` },
+
+      { t: 'impressao', id: 'impressao',
+        prompt: 'Escolha um tema político sobre o qual você tem opinião firme (reforma da previdência, porte de armas, política de drogas, cotas, juros…). <strong>Explique, passo a passo, como a medida que você defende funcionaria na prática</strong> — quem faz o quê, com que efeito, a que custo.' },
+
+      { t: 'conceito', titulo: 'A ilusão de profundidade explicativa', html: `
+        <p>Leonid Rozenblit e Frank Keil (2002) pediram a pessoas que avaliassem o quanto entendiam objetos comuns — um zíper, uma descarga, uma fechadura. Depois pediram que explicassem, passo a passo, como funcionavam. Ao tentar, a maioria percebeu que sabia muito menos do que pensava e baixou a própria avaliação.</p>
+        <p>Philip Fernbach, Steven Sloman e colegas (2013) aplicaram a ideia à política: pediram a pessoas com opiniões firmes sobre medidas públicas que explicassem <em>como</em> elas funcionariam. Depois do exercício, as opiniões ficaram <strong>menos extremas</strong>. Um detalhe importante: pedir às pessoas que dessem as <em>razões</em> de sua posição não teve o mesmo efeito — justificar reforça; explicar o mecanismo expõe as lacunas.</p>
+        <p>Se a sua primeira impressão foi difícil de escrever, você acabou de experimentar o efeito.</p>` },
+
+      { t: 'conceito', titulo: 'O ponto cego dos vieses', html: `
+        <p>Emily Pronin, Daniel Lin e Lee Ross (2002) mostraram que as pessoas reconhecem facilmente vieses nos outros, mas se julgam menos sujeitas a eles — o <strong>ponto cego do viés</strong>. Richard West, Keith Stanovich e colegas (2012) encontraram algo desconcertante: maior capacidade cognitiva não reduzia esse ponto cego; em algumas medidas, estava associada a um ponto cego ligeiramente maior.</p>
+        <p>Isso tem uma consequência prática: conhecer a lista de vieses não protege. O que parece ajudar são <em>procedimentos</em> — o teste da troca, o pré-compromisso, a consulta a quem discorda — que funcionam mesmo quando não percebemos o viés.</p>` },
+
+      { t: 'aprofundar', titulo: 'E o efeito Dunning-Kruger?', html: `
+        <p>Em 1999, David Dunning e Justin Kruger publicaram estudos mostrando que pessoas com pior desempenho em testes de lógica e gramática superestimavam muito sua posição em relação aos outros. A ideia de que “os incompetentes não sabem que são incompetentes” virou meme.</p>
+        <p>Ela precisa de cuidado. Vários pesquisadores mostraram que parte do padrão original pode surgir de artefatos estatísticos — como a regressão à média — e o efeito é bem menor do que a versão popular sugere. O que parece robusto é mais modesto: todos tendemos a avaliar mal nossas habilidades em áreas que não conhecemos, porque a competência necessária para fazer bem é a mesma necessária para perceber que se está fazendo mal. E o meme costuma ser usado justamente para chamar os outros de incompetentes — o ponto cego em ação.</p>` },
+
+      { t: 'conceito', titulo: 'Quatro distinções', html: `
+        <dl class="camadas">
+          <dt>Convicção e certeza</dt><dd>Posso estar profundamente convicto de algo — a ponto de organizar minha vida em torno disso — e ainda reconhecer que não tenho certeza absoluta. A convicção diz respeito ao compromisso; a certeza, ao grau de prova.</dd>
+          <dt>Estar errado e ser desonesto</dt><dd>Errar é a condição normal de quem pensa. Desonestidade intelectual é outra coisa: mudar os critérios conforme a conveniência, esconder evidências, não admitir o erro quando ele fica claro. Acusar de desonesto quem apenas erra envenena o debate; tolerar a desonestidade como se fosse erro, também.</dd>
+          <dt>Humildade e indecisão</dt><dd>Humildade intelectual não é não ter opinião. Mark Leary e colegas a definem como reconhecer que as próprias crenças podem estar erradas. Pesquisas associam esse traço a maior atenção à qualidade das evidências e a menos hostilidade a quem pensa diferente — sem que a pessoa deixe de ter posições.</dd>
+          <dt>Pensar em probabilidades</dt><dd>“Acho provável, com uns 70% de confiança” permite revisar aos poucos, sem a humilhação de “mudar de lado”. Opiniões provisórias não são opiniões fracas; são opiniões honestas sobre o que se sabe.</dd>
+        </dl>
+        <p>Sócrates é lembrado por ter dito que só sabia que nada sabia. No relato de Platão, a formulação é mais sóbria: ele se considerava mais sábio que os outros apenas porque <em>não pensava saber</em> o que não sabia.</p>` },
+
+      { t: 'contraponto', unidade: 'u-nao-sei', id: 'humildade', titulo: 'Humildade demais também é um erro?',
+        contexto: 'Depois de tanta ênfase em limites, é possível concluir que nenhuma opinião merece ser sustentada com firmeza.',
+        afirmacao: 'Como posso estar errado sobre quase tudo, o mais honesto é não tomar posição em temas controversos.',
+        outro: { nome: 'A objeção da coragem moral', html: `
+          <p>Há situações em que a neutralidade é uma escolha — e às vezes uma escolha covarde. Soljenítsin, Orwell e muitos outros pagaram caro por afirmar com firmeza o que viam, quando “não tomar posição” era o mais seguro. A humildade intelectual não pode virar desculpa para nunca se comprometer, nem para tratar todas as posições como igualmente fundamentadas quando não são.</p>` },
+        replica: '<p>Humildade intelectual não é equidistância. Ela pede que a firmeza seja proporcional às razões: firme onde as evidências e os argumentos são fortes, provisória onde são fracos, e aberta à correção em ambos os casos. Dizer “não sei” sobre o que não se sabe é o que dá credibilidade para dizer “sei” quando se sabe.</p>',
+        refs: ['p:solzhenitsyn', 'p:orwell', 'u:u-investigador'] },
+
+      { t: 'passos', id: 'erro', titulo: 'O advogado do próprio erro',
+        prompt: 'Escolha uma opinião sua bastante consolidada. O objetivo não é produzir dúvidas artificiais, mas testar se ela resiste.',
+        campos: [
+          { id: 'opiniao', rotulo: 'A opinião', dica: '' },
+          { id: 'evidencias', rotulo: 'As melhores evidências a favor', dica: '' },
+          { id: 'contra', rotulo: 'As melhores evidências e argumentos que poderiam mostrar que você está errado', dica: 'Como os defenderia alguém inteligente do outro lado?' },
+          { id: 'mudar', rotulo: 'Que informação faria você mudar de ideia?', dica: 'Concreta. Escrita antes de procurar.' },
+          { id: 'criterio', rotulo: 'Esses critérios são objetivos ou foram feitos para que a conclusão sobreviva?', dica: '' },
+          { id: 'saber', rotulo: 'Em uma frase: o quanto você sabe sobre isso? Há algo sobre o qual você deveria dizer “não sei”?', dica: '' }
+        ] },
+
+      { t: 'escolha', id: 'naosei',
+        prompt: 'Num grupo, todos opinam com veemência sobre uma decisão econômica complexa. Você não estudou o assunto. O que é mais honesto?',
+        opcoes: [
+          { txt: 'Escolher o lado que parece mais coerente com seus valores e defendê-lo.', ok: false, fb: 'É o caminho mais comum — e é como opiniões absorvidas viram convicções. Seus valores podem orientar o que você deseja, mas não dizem se a medida funciona.' },
+          { txt: 'Dizer que não sabe o suficiente, perguntar quais são os argumentos e, se o tema importar, estudar.', ok: true, fb: 'Isso exige uma pequena coragem social — e é o que torna suas opiniões, quando você as tiver, mais confiáveis para você mesmo e para os outros.' },
+          { txt: 'Dizer que todas as opiniões são igualmente válidas.', ok: false, fb: 'Não são. Algumas se apoiam em evidências e argumentos melhores. Não saber qual é melhor não significa que nenhuma seja.' }
+        ] },
+
+      { t: 'comparar', ref: 'impressao', id: 'comparacao',
+        prompt: 'Releia sua explicação de como a medida funcionaria. Onde ficaram as lacunas? Sua opinião ficou mais forte, igual ou mais provisória?' },
+
+      { t: 'conexoes', itens: [
+        { ref: 'u:u-investigador', txt: 'Advogado ou investigador: as ferramentas.' },
+        { ref: 'u:u-atalhos', txt: 'Excesso de confiança e outros atalhos.' },
+        { ref: 'u:u-visao', txt: 'Etapa 6: uma visão de mundo revisável.' },
+        { ref: 'q:q-nao-sei', txt: 'Pergunta: quando devo dizer “não sei”?' },
+        { ref: 'x:x-j', txt: 'Laboratório: o advogado do próprio erro, com tentativas ao longo do tempo.' },
+        { ref: 'p:socrates', txt: 'Ficha do pensador: Sócrates.' }
+      ] },
+      { t: 'leituras', ids: ['b-pense-novo', 'b-superprevisoes', 'b-cisne-negro', 'b-apologia', 'b-galef'] },
+      { t: 'sintese' }
+    ],
+    revisao: {
+      conceito: 'Ilusão de profundidade explicativa, ponto cego dos vieses, humildade intelectual, convicção e certeza.',
+      situacao: 'Alguém lhe pergunta, num jantar, sua opinião sobre um tema de que você ouviu falar só pelas redes.',
+      prompt: 'Como você responderia de forma honesta — sem fingir saber e sem fugir da conversa?'
+    },
+    proximos: ['ferramenta:conviccoes', 'x:x-j', 'u:u-visao']
   };
 })();
 
@@ -8065,13 +8708,19 @@ details.mais-obras .grade-livros { padding-bottom: 1rem; }
     const i = etapa.modulos.findIndex((m) => m.id === 'm-linguagem');
     etapa.modulos.splice(i + 1, 0, {
       id: 'm-autoengano', titulo: 'Convicção, contradição e autoengano',
-      descricao: 'O que acontece quando deixamos de usar as convicções para interpretar os fatos e passamos a usar os fatos para proteger as convicções: dissonância, raciocínio motivado, duplipensar, a disputa pelas palavras e as ferramentas de quem quer investigar em vez de apenas defender.',
-      unidades: ['u-dissonancia', 'u-duplipensar', 'u-investigador'],
+      descricao: 'Como formamos e protegemos nossas crenças: opiniões que entram por repetição, atalhos mentais, dissonância e raciocínio motivado, identidade de grupo e dois pesos, duplipensar e a disputa pelas palavras.',
+      unidades: ['u-absorver', 'u-atalhos', 'u-dissonancia', 'u-nos-eles', 'u-duplipensar'],
       vejaTambem: ['ferramenta:conviccoes', 'd:d-duvida'],
       planejadas: [
         { titulo: 'A mentira vital', pergunta: 'Há ilusões que sustentam uma vida? Quem tem o direito de desfazê-las?' },
         { titulo: 'Quando o grupo pensa por mim', pergunta: 'Como saber se uma opinião é minha ou do grupo a que pertenço?' }
       ]
+    }, {
+      id: 'm-avaliar', titulo: 'Avaliar, verificar e revisar',
+      descricao: 'Ferramentas de quem quer investigar em vez de apenas defender: anatomia da desinformação, argumentos que parecem bons, a postura do investigador e a coragem de dizer “não sei”.',
+      unidades: ['u-desinformacao', 'u-falacias', 'u-investigador', 'u-nao-sei'],
+      vejaTambem: ['c:c-viral', 'x:x-i', 'x:x-j'],
+      planejadas: []
     });
   }
 
@@ -8166,6 +8815,304 @@ details.mais-obras .grade-livros { padding-bottom: 1rem; }
     { a: 'falseabilidade', b: 'conhecimento', por: 'Saber o que contaria contra uma crença é parte de sabê-la bem.', limite: 'Convicções sobre valores não se testam como hipóteses empíricas.' },
     { a: 'falseabilidade', b: 'motivado', por: 'Uma crença que reinterpreta toda evidência como confirmação deixou de ser testada.', limite: 'Às vezes a evidência é realmente ambígua.' }
   );
+})();
+
+</script>
+  <script>/* js/conteudo/98-pensamento-critico.js */
+/* =========================================================
+   Versão 1.4 — pensamento crítico, vieses e desinformação
+   Perguntas, exercícios do Laboratório, caso da Oficina,
+   origens no Exame de convicções, mapa e bibliografia.
+   ========================================================= */
+(function () {
+  const A = window.ATELIE;
+  const PROT = 'Obra protegida por direitos autorais; disponível em livrarias e bibliotecas.';
+  const DP = 'O texto original está em domínio público. Traduções recentes podem ter direitos próprios.';
+  const add = (o) => A.livros.push(Object.assign({ alternativa: '', unidades: [] }, o));
+
+  /* ------------------------- perguntas ------------------------- */
+  A.perguntas.push(
+    {
+      id: 'q-nao-sei', tema: 'Pensamento e conhecimento', nivel: 1, eixos: ['A', 'C'],
+      pergunta: 'Quando devo dizer “não sei”?',
+      intro: '<p>Somos pressionados a ter opinião sobre tudo — nas redes, no trabalho, na família. Mas uma opinião sobre o que não estudamos é, quase sempre, uma opinião emprestada. Dizer “não sei o suficiente” pode ser a resposta mais honesta e, às vezes, a mais corajosa.</p>',
+      caminhos: ['Tentar explicar como funciona algo que você defende — e notar onde a explicação falha.', 'Distinguir temas em que você tem razões próprias dos temas em que repete o que ouviu.', 'Perguntar o que se perde e o que se ganha ao suspender o juízo.'],
+      atividade: 'Liste cinco temas sobre os quais você tem opinião. Para cada um, marque: estudei / li um pouco / só ouvi falar. Em quais você deveria baixar o tom?',
+      conexoes: ['u:u-nao-sei', 'u:u-absorver', 'p:socrates'],
+      leituras: ['b-apologia', 'b-pense-novo', 'b-superprevisoes']
+    },
+    {
+      id: 'q-noticia', tema: 'Sociedade e história', nivel: 1, eixos: ['C', 'H'],
+      pergunta: 'Como saber se uma notícia é verdadeira?',
+      intro: '<p>Não temos tempo de checar tudo, e confiar em fontes é inevitável. A questão é em quais confiar, para quê, e como perceber quando a confiança é guiada mais pela conclusão que preferimos do que pela qualidade da fonte.</p>',
+      caminhos: ['Aplicar o método SIFT a uma notícia que favorece o seu lado.', 'Comparar a mesma notícia em veículos de linhas editoriais diferentes.', 'Rastrear um número até a pesquisa original.'],
+      atividade: 'Escolha uma notícia recente que você aceitou sem hesitar. Refaça o caminho até a fonte original. O que mudou?',
+      conexoes: ['u:u-desinformacao', 'c:c-viral', 'u:u-fato'],
+      leituras: ['b-educacao-midiatica', 'b-mentir-estatistica', 'b-sagan-mundo']
+    }
+  );
+
+  /* ------------------------- Laboratório ------------------------- */
+  A.laboratorio.push(
+    {
+      id: 'x-i', letra: 'I', titulo: 'Defenda o argumento contrário',
+      objetivo: 'Construir a melhor versão de uma posição de que você discorda — sem caricatura e sem precisar concordar.',
+      tipo: 'campos',
+      instrucao: 'Escolha uma questão controversa em que você tem posição. Escreva a defesa da posição contrária como se fosse publicada por alguém inteligente e honesto que acredita nela. O teste final: um defensor dessa posição assinaria o seu texto?',
+      campos: [
+        { id: 'questao', rotulo: 'A questão', dica: 'Formule-a como pergunta neutra.' },
+        { id: 'minha', rotulo: 'Minha posição, em uma frase', dica: 'Só para registro; o exercício é o outro lado.' },
+        { id: 'valores', rotulo: 'Que valores e preocupações sustentam o outro lado?', dica: 'Cuidado, justiça, liberdade, lealdade, autoridade, santidade — ou outros.' },
+        { id: 'defesa', rotulo: 'A melhor defesa da posição contrária', dica: 'Use os argumentos mais fortes, não os mais fáceis de refutar.', grande: true, espelho: true },
+        { id: 'teste', rotulo: 'Um defensor dessa posição reconheceria este texto? O que ele corrigiria?', dica: 'O “teste de Turing ideológico”.' },
+        { id: 'aprendi', rotulo: 'O que aprendi — mesmo mantendo minha posição', dica: '' }
+      ],
+      comentario: `
+        <p>Este exercício é difícil porque nossa imagem do outro lado costuma ser feita a partir dos seus representantes mais extremos ou dos resumos que o nosso lado faz deles. Bons sinais de que você conseguiu: o texto não tem ironia; usa argumentos que você reconhece como sérios; nomeia valores reais; e você sentiu algum desconforto ao escrevê-lo.</p>
+        <p>Não é preciso concordar ao final. Mas, se depois do exercício sua posição continuar exatamente igual e você não tiver aprendido nada, vale perguntar se o outro lado foi mesmo apresentado na melhor versão.</p>`,
+      checklist: ['Não usei ironia nem adjetivos depreciativos.', 'Usei pelo menos um argumento que considero forte.', 'Nomeei valores que o outro lado de fato defende.', 'Identifiquei algo que eu não tinha considerado.']
+    },
+    {
+      id: 'x-j', letra: 'J', titulo: 'O advogado do próprio erro',
+      objetivo: 'Testar uma convicção consolidada procurando as melhores razões para acreditar que ela está errada.',
+      tipo: 'campos',
+      instrucao: 'Escolha uma opinião de que você tem bastante certeza. Seu papel agora é o de um advogado contratado para provar que ela está errada. Refaça este exercício de tempos em tempos, com a mesma opinião ou com outras, e compare as tentativas.',
+      campos: [
+        { id: 'opiniao', rotulo: 'A opinião', dica: '' },
+        { id: 'favor', rotulo: 'As melhores evidências a favor', dica: '' },
+        { id: 'contra', rotulo: 'As melhores evidências e argumentos contra', dica: 'Procure fontes sérias do outro lado, não as caricaturas.', grande: true },
+        { id: 'mudaria', rotulo: 'Que informação me faria mudar de ideia?', dica: 'Concreta e escrita antes de procurar.' },
+        { id: 'honestidade', rotulo: 'Meus critérios são objetivos ou feitos para que a conclusão sobreviva?', dica: '' },
+        { id: 'confianca', rotulo: 'Minha confiança agora (0 a 100) e por quê', dica: '' }
+      ],
+      comentario: `
+        <p>O objetivo não é produzir dúvidas artificiais sobre tudo, mas descobrir se a sua convicção resiste ao melhor ataque possível. Se resistir, ela sai mais forte e mais sua. Se não resistir, você ganhou algo mais valioso que uma opinião: uma correção.</p>
+        <p>Atenção a um sinal: se as “melhores evidências contra” que você encontrou são fáceis de refutar, provavelmente você ainda não encontrou as melhores.</p>`,
+      checklist: ['Procurei evidências contrárias fora da minha bolha.', 'Escrevi o que me faria mudar antes de procurar.', 'Registrei minha confiança com um número.', 'Considerei a possibilidade de estar errado sem me sentir ameaçado.']
+    }
+  );
+
+  /* ------------------------- Oficina: a notícia que viralizou ------------------------- */
+  A.casos.push({
+    id: 'c-viral', titulo: 'A notícia que viralizou', escala: 'Mídia e redes', tipo: 'Desinformação e números',
+    eixos: ['C', 'H', 'A'],
+    resumo: 'Um gráfico assustador, um número impressionante e uma conclusão que todos já queriam tirar.',
+    situacao: `
+      <p>Uma cidade média aprovou, em março, uma lei que permite bares e restaurantes funcionarem até as 2h da manhã. Em setembro, viraliza num grupo de mensagens uma imagem com o título: <strong>“Depois da lei dos bares, os assaltos no centro AUMENTARAM 300%!”</strong>. A imagem traz um gráfico com uma barra pequena (“antes”) e uma enorme (“depois”), o logotipo de um portal de notícias local e a frase: “A prefeitura esconde os números”.</p>
+      <p>Metade do grupo compartilha indignada; a outra metade diz que é mentira da oposição. Ninguém abriu link nenhum.</p>
+      <p><em>Antes de continuar: qual foi sua primeira reação? Você era a favor ou contra a lei dos bares?</em></p>`,
+    fatos: {
+      disponiveis: [
+        'A lei foi aprovada em março e permite funcionamento até as 2h.',
+        'Circula uma imagem com o número “300%”, um gráfico e o logotipo de um portal local.',
+        'A imagem afirma que a prefeitura esconde os números.',
+        'O grupo se dividiu sem que ninguém verificasse a fonte.'
+      ],
+      ausentes: [
+        'Qual é a fonte dos dados? Polícia, prefeitura, uma pesquisa?',
+        'Quais são os números absolutos por trás dos 300%?',
+        'Que períodos foram comparados? Meses equivalentes do ano anterior?',
+        'O portal cujo logotipo aparece publicou de fato essa matéria?',
+        'Assaltos aumentaram também em bairros sem bares abertos à noite?',
+        'Houve outras mudanças no período (policiamento, eventos, crise econômica)?'
+      ]
+    },
+    hipoteses: [
+      'A lei de fato aumentou a criminalidade no centro, e a imagem relata isso corretamente.',
+      'O número é verdadeiro, mas parte de uma base muito pequena, e o aumento absoluto é modesto.',
+      'O período foi escolhido para fabricar uma tendência (por exemplo, comparando o mês mais baixo com o mais alto).',
+      'O aumento existe, mas tem outra causa — ou ocorreu na cidade inteira.',
+      'A imagem é falsa ou usa indevidamente o logotipo de um veículo.'
+    ],
+    novaInfoPrompt: 'Volte às suas hipóteses. Qual se sustenta? E o que você ainda não sabe?',
+    novaInfo: `
+      <p>Alguém do grupo decide rastrear a origem e descobre:</p>
+      <ul>
+        <li>O portal local nunca publicou a imagem; o logotipo foi copiado. O portal publicou, sim, uma reportagem sobre segurança no centro, com dados da Secretaria de Segurança.</li>
+        <li>Segundo esses dados, os assaltos <strong>registrados entre 22h e 2h</strong> no centro passaram de 3 em fevereiro para 12 em agosto — daí os 300%. No mesmo período do ano anterior, sem a lei, haviam passado de 5 para 9.</li>
+        <li>Somando todos os horários, os assaltos no centro subiram cerca de 8% de um ano para o outro; na cidade inteira, cerca de 6%.</li>
+        <li>A reportagem também ouviu a polícia: com mais gente na rua à noite, houve mais ocorrências registradas naquele horário, mas também menos assaltos de madrugada em ruas desertas.</li>
+      </ul>`,
+    perspectivas: [
+      { nome: 'Estatística', html: 'Um percentual sobre uma base muito pequena (3 casos) é instável: poucas ocorrências mudam tudo. Comparar fevereiro com agosto ignora a sazonalidade, e o ano anterior já mostrava aumento nesse intervalo. O dado relevante para avaliar a lei é a comparação com o ano anterior e com a cidade toda — e ela mostra um efeito, se houver, muito menor.' },
+      { nome: 'Jornalismo e verificação', html: 'O logotipo copiado é um caso de “conteúdo impostor”; o número verdadeiro usado para sugerir algo que não mostra é “conteúdo enganoso”. A leitura lateral — ir ao portal original — resolveu em minutos o que o grupo discutiu por horas.' },
+      { nome: 'Psicologia', html: 'A imagem provoca indignação e confirma o que metade do grupo já pensava sobre a lei — condições ideais para o compartilhamento sem verificação. A outra metade rejeitou a imagem pelo mesmo motivo, também sem verificar: estava certa sobre o logotipo, mas por sorte, não por método.' },
+      { nome: 'Política pública', html: 'Avaliar a lei exigiria olhar outros efeitos — emprego, arrecadação, movimento no centro, barulho, segurança nas ruas antes desertas — e compará-los com cidades semelhantes. Uma única estatística, verdadeira ou falsa, raramente decide se uma política é boa.' }
+    ],
+    vieses: [
+      { nome: 'Viés de confirmação', html: 'Quem já era contra a lei aceitou o número; quem era a favor o rejeitou. Os dois lados reagiram à conclusão, não à evidência.' },
+      { nome: 'Negatividade e indignação', html: 'Notícias que causam medo e raiva circulam mais rápido e são verificadas menos.' },
+      { nome: 'Autoridade emprestada', html: 'O logotipo de um portal conhecido deu credibilidade à imagem.' },
+      { nome: 'Pressuposto do leitor', html: 'Sua posição prévia sobre a lei influenciou sua primeira reação? Em que direção?' }
+    ],
+    aprofundar: { html: 'Darrell Huff mostrou, em 1954, como escolher a base, o período e a escala de um gráfico muda o que os números parecem dizer. O caso aplica as ferramentas de “Anatomia da desinformação” e de “Correlação não é causa”.', refs: ['u:u-desinformacao', 'u:u-causa', 'b:b-mentir-estatistica'] }
+  });
+
+  /* ------------------------- Exame de convicções: novas origens ------------------------- */
+  if (A.exame && Array.isArray(A.exame.origens)) {
+    A.exame.origens.push(
+      { id: 'repeticao', nome: 'Ouvi muitas vezes (vídeos, redes, conversas)', nota: 'Familiaridade não é evidência: a repetição faz uma afirmação parecer verdadeira mesmo quando não é (efeito de verdade ilusória).' },
+      { id: 'naosei', nome: 'Não sei de onde veio', nota: 'Guardamos conclusões e esquecemos fontes. Vale rastrear a origem antes de confiar.' }
+    );
+  }
+
+  /* ------------------------- mapa de ideias ------------------------- */
+  A.mapa.nos.push(
+    { id: 'confirmacao', nome: 'Viés de confirmação', desc: 'A tendência de procurar, notar e valorizar o que confirma o que já pensamos.', refs: ['u:u-dissonancia', 'u:u-absorver'] },
+    { id: 'repeticao', nome: 'Verdade ilusória', desc: 'A repetição torna uma afirmação familiar — e a familiaridade parece verdade.', refs: ['u:u-absorver'] },
+    { id: 'heuristica', nome: 'Heurísticas', desc: 'Atalhos mentais que permitem decidir rápido e produzem erros previsíveis.', refs: ['u:u-atalhos', 'p:kahneman'] },
+    { id: 'polarizacao', nome: 'Polarização afetiva', desc: 'Não apenas discordar, mas desconfiar e desprezar quem discorda.', refs: ['u:u-nos-eles'] },
+    { id: 'desinformacao', nome: 'Desinformação', desc: 'Informação falsa ou enganosa divulgada para enganar — e seus parentes: o erro sincero e a verdade usada para ferir.', refs: ['u:u-desinformacao', 'c:c-viral'] },
+    { id: 'falacia', nome: 'Falácia', desc: 'Um argumento que parece sustentar a conclusão, mas não sustenta.', refs: ['u:u-falacias', 'u:u-argumento'] },
+    { id: 'humildade', nome: 'Humildade intelectual', desc: 'Reconhecer que as próprias crenças podem estar erradas, sem deixar de tê-las.', refs: ['u:u-nao-sei', 'u:u-investigador'] }
+  );
+  A.mapa.arestas.push(
+    { a: 'confirmacao', b: 'motivado', por: 'O viés de confirmação seleciona o que entra; o raciocínio motivado decide como interpretar.', limite: 'Também procuramos o que confirma por simples economia de esforço, sem desejo envolvido.' },
+    { a: 'confirmacao', b: 'repeticao', por: 'A exposição seletiva faz ouvirmos repetidamente o que já pensamos — e a repetição reforça a crença.', limite: 'Para muita gente, a dieta de informações é mais variada do que se imagina.' },
+    { a: 'confirmacao', b: 'identidade', por: 'Confirmar o que o grupo pensa protege o pertencimento.', limite: 'Identidades também podem valorizar a autocrítica.' },
+    { a: 'confirmacao', b: 'desinformacao', por: 'A desinformação mais eficaz é a que confirma o que o público já queria acreditar.', limite: 'Muitas pessoas compartilham por desatenção, não por viés.' },
+    { a: 'repeticao', b: 'desinformacao', por: 'Campanhas de desinformação apostam na repetição: o falso familiar parece verdadeiro.', limite: 'A repetição também ajuda a fixar informações verdadeiras.' },
+    { a: 'repeticao', b: 'memoria', por: 'Lembramos o conteúdo e esquecemos a fonte.', limite: 'Fontes marcantes podem ser lembradas por muito tempo.' },
+    { a: 'heuristica', b: 'emocao', por: 'O que provoca medo ou emoção vem mais facilmente à mente e parece mais provável.', limite: 'Emoções também nos alertam para riscos reais.' },
+    { a: 'heuristica', b: 'causalidade', por: 'Atalhos levam a ver causas onde há sequência ou coincidência.', limite: 'Às vezes a sequência é mesmo uma boa pista de causa.' },
+    { a: 'polarizacao', b: 'identidade', por: 'Quando a política vira identidade, discordar parece ataque pessoal.', limite: 'Também há polarização por diferenças reais de valores e interesses.' },
+    { a: 'polarizacao', b: 'motivado', por: 'Grupos polarizados avaliam com rigor o que os prejudica e com indulgência o que os favorece.', limite: 'Pessoas polarizadas ainda ajustam crenças diante de correções.' },
+    { a: 'polarizacao', b: 'emocao', por: 'A polarização afetiva é feita de sentimentos: desconfiança, raiva, desprezo.', limite: 'Indignação diante de injustiças reais não é polarização.' },
+    { a: 'polarizacao', b: 'duplipensar', por: 'Rótulos como armas e palavras que mudam de dono alimentam o “nós contra eles”.', limite: 'Nem toda divergência sobre palavras é manipulação.' },
+    { a: 'desinformacao', b: 'verdade', por: 'A maior parte da desinformação usa fatos verdadeiros fora de contexto.', limite: 'Também há conteúdo inteiramente fabricado.' },
+    { a: 'desinformacao', b: 'poder', por: 'Controlar o que circula é uma forma de poder — de governos, partidos, empresas e grupos.', limite: 'Combater a desinformação também pode servir de pretexto para censura.' },
+    { a: 'falacia', b: 'verdade', por: 'Uma falácia é um argumento cuja conclusão não decorre das premissas — não diz se ela é verdadeira.', limite: 'Um argumento falacioso pode ter conclusão verdadeira.' },
+    { a: 'falacia', b: 'linguagem', por: 'Muitas falácias dependem de palavras ambíguas ou carregadas.', limite: 'Linguagem emotiva não é, por si só, falácia.' },
+    { a: 'humildade', b: 'conhecimento', por: 'Saber o que não se sabe é parte do conhecimento.', limite: 'Humildade não é recusar-se a afirmar o que se sabe.' },
+    { a: 'humildade', b: 'falseabilidade', por: 'Quem é intelectualmente humilde consegue dizer o que o faria mudar de ideia.', limite: 'Convicções sobre valores não se testam como hipóteses.' },
+    { a: 'humildade', b: 'dissonancia', por: 'Admitir um erro reduz a dissonância pelo caminho mais honesto.', limite: 'Às vezes o desconforto indica que a crença estava certa e o argumento contrário era fraco.' }
+  );
+
+  /* ------------------------- bibliografia ------------------------- */
+  add({ id: 'b-educacao-midiatica', titulo: 'Educação midiática na prática', autor: 'Januária Cristina Alves', ano: '2026', tipo: 'Introdução', origem: 'Brasil',
+    temas: ['educação', 'sociedade', 'verdade', 'linguagem'], afinidades: ['sociedade', 'conhecimento'],
+    porque: 'Uma jornalista e educadora brasileira discute por que ter mais informação do que nunca não garante entender melhor o mundo, e como formar leitores críticos de notícias, redes e conteúdos digitais.',
+    encontrar: 'Temas como desinformação, censura, leitura e inteligência artificial, com foco na prática.',
+    conexao: 'Complemento brasileiro e atual da unidade “Anatomia da desinformação”.',
+    acesso: 'Fácil; voltado a educadores, pais e público geral.',
+    perguntas: ['Que hábito de leitura de notícias você gostaria de mudar?'],
+    legal: 'Publicado pelas Edições Sesc São Paulo.', unidades: ['u-desinformacao', 'u-absorver'] });
+
+  add({ id: 'b-biografia-abismo', titulo: 'Biografia do abismo', autor: 'Felipe Nunes e Thomas Traumann', ano: '2023', tipo: 'História e sociedade', origem: 'Brasil',
+    temas: ['sociedade', 'poder', 'família', 'identidade'], afinidades: ['sociedade'],
+    porque: 'Um cientista político e um jornalista usam pesquisas de opinião para mostrar como a polarização brasileira passou a dividir famílias, amizades e empresas.',
+    encontrar: 'Dados sobre polarização afetiva no Brasil e a ideia de que ela “calcificou”: as posições se tornaram identidades.',
+    conexao: 'O retrato brasileiro do que a unidade “Nós e eles” descreve. Esteve entre os destaques do Prêmio Jabuti de 2024.',
+    acesso: 'Fácil; muitos gráficos e histórias.',
+    perguntas: ['Você se reconhece em algum dos perfis descritos?', 'Os autores tratam os dois polos com o mesmo rigor? Como você avaliaria isso?'],
+    legal: 'Publicado pela HarperCollins Brasil.', unidades: ['u-nos-eles'] });
+
+  add({ id: 'b-maquina-caos', titulo: 'A máquina do caos', autor: 'Max Fisher', ano: '2022', tipo: 'História e sociedade', origem: 'Estados Unidos',
+    temas: ['sociedade', 'poder', 'emoções'], afinidades: ['critica', 'sociedade'],
+    porque: 'Um jornalista do <em>New York Times</em> investiga como os algoritmos das redes sociais, otimizados para engajamento, favorecem a indignação e a polarização — com casos em vários países, inclusive o Brasil.',
+    encontrar: 'Reportagem e pesquisa, com entrevistas de engenheiros e cientistas.',
+    conexao: 'Ajuda a entender o ambiente em que a exposição seletiva e a negatividade operam hoje.',
+    acesso: 'Fácil a médio.',
+    perguntas: ['Até que ponto o problema está nos algoritmos e até que ponto em nós?'],
+    alternativa: 'Alguns pesquisadores consideram que o livro atribui às plataformas um papel maior do que os dados disponíveis permitem afirmar. Leia junto com estudos que encontram bolhas menos fechadas.',
+    legal: PROT + ' Edição brasileira pela Todavia.', unidades: ['u-nos-eles', 'u-desinformacao'] });
+
+  add({ id: 'b-mentir-estatistica', titulo: 'Como mentir com estatística', autor: 'Darrell Huff', ano: '1954', tipo: 'Divulgação científica', origem: 'Estados Unidos',
+    temas: ['pensamento', 'verdade', 'ciência'], afinidades: ['conhecimento'],
+    porque: 'O clássico sobre como médias, amostras, gráficos e percentuais podem enganar — mesmo sem nenhum número falso.',
+    encontrar: 'Capítulos curtos e ilustrados: a amostra viciada, a média bem escolhida, o gráfico “gee-whiz”, a correlação suspeita.',
+    conexao: 'A caixa de ferramentas para a unidade “Anatomia da desinformação” e o caso da notícia viral.',
+    acesso: 'Muito fácil.',
+    perguntas: ['Que truque do livro você viu nas últimas semanas?'],
+    alternativa: 'Huff, depois, recebeu dinheiro da indústria do tabaco para contestar estudos sobre os danos do cigarro — uma ironia que é, ela mesma, uma lição sobre conflito de interesses.',
+    legal: 'Edição brasileira pela Intrínseca.', unidades: ['u-desinformacao', 'u-falacias'] });
+
+  add({ id: 'b-sowell-falacias', titulo: 'Fatos e falácias da economia', autor: 'Thomas Sowell', ano: '2008', tipo: 'Ensaio', origem: 'Estados Unidos',
+    temas: ['pensamento', 'sociedade', 'trabalho', 'verdade'], afinidades: ['liberdade', 'tradicao'],
+    porque: 'Sowell examina afirmações econômicas populares — sobre renda, gênero, moradia, países pobres — e mostra como dados mal interpretados sustentam conclusões que não resistem a uma análise mais cuidadosa.',
+    encontrar: 'Um dos melhores exemplos de como categorias estatísticas (como “os 20% mais pobres”) mudam de composição ao longo do tempo, e de como isso muda as conclusões.',
+    conexao: 'Um olhar liberal-conservador sobre o uso de números no debate público — útil para aplicar os mesmos critérios a argumentos de todos os lados.',
+    acesso: 'Fácil a médio; sem matemática.',
+    perguntas: ['Algum argumento do livro contraria algo em que você acreditava?', 'Você aplicaria o mesmo rigor de Sowell a um dado que favorece a sua posição?'],
+    legal: 'Edição brasileira pela Record.', unidades: ['u-desinformacao'], contraponto: 'b-piketty' });
+
+  add({ id: 'b-cisne-negro', titulo: 'A lógica do cisne negro', autor: 'Nassim Nicholas Taleb', ano: '2007', tipo: 'Ensaio', origem: 'Estados Unidos (autor nascido no Líbano)',
+    temas: ['pensamento', 'verdade', 'tempo'], afinidades: ['conhecimento', 'tradicao'],
+    porque: 'Acontecimentos raros e imprevisíveis mudam a história — e, depois que acontecem, inventamos explicações que os fazem parecer previsíveis.',
+    encontrar: 'Uma crítica ácida aos especialistas que confundem sorte com competência, ao excesso de confiança e ao viés de retrospectiva.',
+    conexao: 'Aprofunda os atalhos da unidade “Atalhos que enganam” e a humildade de “Não sei o suficiente”. Taleb também valoriza, como Burke e Hayek, o conhecimento acumulado por tradições que sobreviveram ao tempo.',
+    acesso: 'Médio; estilo provocativo e cheio de digressões.',
+    perguntas: ['Que explicação posterior você deu a algo que ninguém previu?'],
+    legal: 'Edição brasileira pela Best Business.', unidades: ['u-atalhos', 'u-nao-sei'] });
+
+  add({ id: 'b-ruido', titulo: 'Ruído', autor: 'Daniel Kahneman, Olivier Sibony e Cass Sunstein', ano: '2021', tipo: 'Divulgação científica', origem: 'Estados Unidos / França',
+    temas: ['pensamento', 'trabalho', 'sociedade'], afinidades: ['psicologia'],
+    porque: 'Além do viés, há o ruído: a variação injustificada entre julgamentos que deveriam ser iguais — dois juízes, dois médicos, o mesmo profissional em dias diferentes.',
+    encontrar: 'Estudos sobre sentenças, seguros, diagnósticos e entrevistas de emprego, e propostas para reduzir a variação.',
+    conexao: 'Mostra que julgamos de modo inconsistente mesmo sem nenhum interesse em jogo — um primo do duplo padrão.',
+    acesso: 'Médio; longo.',
+    perguntas: ['Em que situações você julga coisas parecidas de formas diferentes?'],
+    legal: 'Edição brasileira pela Objetiva.', unidades: ['u-atalhos'] });
+
+  add({ id: 'b-honra-katharina', titulo: 'A honra perdida de Katharina Blum', autor: 'Heinrich Böll', ano: '1974', tipo: 'Novela', origem: 'Alemanha',
+    temas: ['sociedade', 'verdade', 'poder', 'linguagem'],
+    porque: 'Uma jovem passa uma noite com um homem procurado pela polícia. Um jornal sensacionalista distorce declarações, inventa ligações e destrói sua reputação em quatro dias — até que ela reage.',
+    encontrar: 'Uma novela curta, escrita como um relatório seco, que mostra a construção de uma narrativa falsa a partir de fatos isolados e frases recortadas.',
+    conexao: 'O melhor romance sobre como recortes, insinuações e manchetes fabricam uma pessoa que não existe. Böll recebeu o Nobel em 1972.',
+    acesso: 'Fácil; curto.',
+    perguntas: ['Que técnicas o jornal usa? Você as reconhece hoje — em que veículos e de que lados?'],
+    leituras: [
+      { quem: 'Leitura da época', html: 'Böll escreveu sob forte ataque de um grande grupo jornalístico alemão, que o acusava de simpatia pelo terrorismo; o livro foi lido como resposta direta.' },
+      { quem: 'Leitura atual', html: 'Muitos leitores veem nele uma antecipação dos linchamentos nas redes sociais, em que a acusação vale como condenação.' }
+    ],
+    legal: PROT + ' Há edições brasileiras.', unidades: ['u-desinformacao', 'u-nos-eles'] });
+
+  add({ id: 'b-ilusoes-perdidas', titulo: 'Ilusões perdidas', autor: 'Honoré de Balzac', ano: '1837–1843', tipo: 'Romance', origem: 'França',
+    temas: ['sociedade', 'trabalho', 'verdade', 'poder'],
+    porque: 'Lucien, um jovem poeta do interior, chega a Paris querendo ser escritor e descobre o jornalismo: críticas compradas, reputações feitas e desfeitas por interesse, opiniões trocadas conforme quem paga.',
+    encontrar: 'Um panorama cruel da imprensa e da vida literária da Paris do século XIX, que parece escrito hoje.',
+    conexao: 'Mostra a fabricação da opinião pública muito antes das redes sociais: a desinformação como negócio.',
+    acesso: 'Longo e com muitos personagens; a segunda parte, “Um grande homem da província em Paris”, pode ser lida com mais atenção.',
+    perguntas: ['Lucien se corrompe ou apenas aprende as regras do jogo?'],
+    legal: DP, unidades: ['u-desinformacao'] });
+
+  add({ id: 'b-inspetor-geral', titulo: 'O inspetor geral', autor: 'Nikolai Gógol', ano: '1836', tipo: 'Teatro', origem: 'Rússia',
+    temas: ['sociedade', 'poder', 'verdade'],
+    porque: 'Os funcionários corruptos de uma cidadezinha esperam um inspetor do governo e confundem com ele um jovem falido que está de passagem. Cada um vê no rapaz o que teme — e ele aproveita.',
+    encontrar: 'Uma comédia em que o medo e a culpa fazem todos interpretarem cada gesto como confirmação.',
+    conexao: 'Um tratado cômico sobre viés de confirmação coletivo: uma vez formada a hipótese, tudo passa a confirmá-la.',
+    acesso: 'Fácil; peça curta e muito engraçada.',
+    perguntas: ['Por que ninguém duvida do falso inspetor?'],
+    traducao: 'Prefira traduções feitas diretamente do russo.', legal: DP, unidades: ['u-dissonancia', 'u-absorver'] });
+
+  add({ id: 'b-esperando-barbaros', titulo: 'À espera dos bárbaros', autor: 'J. M. Coetzee', ano: '1980', tipo: 'Romance', origem: 'África do Sul',
+    temas: ['poder', 'ética', 'verdade', 'identidade'],
+    porque: 'Um magistrado de uma cidade de fronteira de um império sem nome assiste à chegada de oficiais que vêm combater uma ameaça bárbara de que ninguém tem provas. A ameaça vai sendo construída — e com ela a crueldade.',
+    encontrar: 'Uma alegoria sobre o inimigo fabricado, a tortura em nome da segurança e a cumplicidade de quem só observa.',
+    conexao: 'Mostra como uma narrativa sobre “eles” pode justificar quase tudo — a desumanização da unidade “Nós e eles”.',
+    acesso: 'Médio; curto e perturbador. Contém cenas de tortura.',
+    perguntas: ['Quem são os bárbaros?'],
+    legal: PROT + ' Edição brasileira pela Companhia das Letras.', unidades: ['u-nos-eles'] });
+
+  add({ id: 'b-roupa-imperador', titulo: 'A roupa nova do imperador', autor: 'Hans Christian Andersen', ano: '1837', tipo: 'Conto', origem: 'Dinamarca',
+    temas: ['sociedade', 'verdade', 'poder'],
+    porque: 'Dois trapaceiros convencem um imperador de que tecem um tecido invisível para os tolos. Ninguém ousa dizer que não vê nada — até que uma criança diz.',
+    encontrar: 'Um conto de poucas páginas que todo mundo acha que conhece.',
+    conexao: 'O conformismo e a pressão social sobre o que se diz ver: ninguém quer ser o tolo do grupo.',
+    acesso: 'Muito fácil.',
+    perguntas: ['Que “roupa nova” todos fingem ver no seu meio?', 'Por que é uma criança quem fala?'],
+    legal: DP, unidades: ['u-absorver', 'u-nos-eles'] });
+
+  /* livros já existentes que entram nesta trilha */
+  const ligar = {
+    'b-kahneman': ['u-atalhos', 'u-absorver'], 'b-arte-pensar': ['u-atalhos', 'u-absorver'], 'b-haidt': ['u-nos-eles'],
+    'b-sagan-mundo': ['u-desinformacao', 'u-falacias'], 'b-pense-novo': ['u-nao-sei'], 'b-superprevisoes': ['u-nao-sei'],
+    'b-rosling': ['u-atalhos'], 'b-mlodinow': ['u-atalhos'], 'b-filtro-invisivel': ['u-absorver'], 'b-weston': ['u-falacias'],
+    'b-carnielli': ['u-falacias'], 'b-schopenhauer-debate': ['u-falacias'], 'b-doze-homens': ['u-falacias'], 'b-apologia': ['u-nao-sei'],
+    'b-galef': ['u-nao-sei'], 'b-hoffer': ['u-nos-eles'], 'b-bruxas-salem': ['u-nos-eles'], 'b-rinoceronte': ['u-absorver'],
+    'b-orwell-ensaios': ['u-desinformacao'], 'b-1984': ['u-desinformacao'], 'b-armas-persuasao': ['u-absorver']
+  };
+  A.livros.forEach((b) => { if (ligar[b.id]) b.unidades = [...new Set((b.unidades || []).concat(ligar[b.id]))]; });
 })();
 
 </script>
@@ -9092,6 +10039,27 @@ details.mais-obras .grade-livros { padding-bottom: 1rem; }
             ${AP.botaoExaminar(AP.semHtml(b.afirmacao), 'Contraponto: ' + AP.semHtml(b.titulo))}
           </div></section>`;
       }
+      case 'inversao': {
+        const base = 'inv_' + b.id;
+        const va = AP.ler(cam(u, base + '_a'));
+        const vb = AP.ler(cam(u, base + '_b'));
+        const visto = AP.ler(cam(u, base + '_visto'));
+        const txt = (i) => b.caso.replace(/\{lado\}/g, AP.LADOS_INV[i]);
+        return `<section class="b b-inversao" data-inv="${u.id}|${b.id}"><p class="rotulo">${AP.icone('balanca')} Teste da inversão</p><h2>${b.titulo}</h2>
+          <p class="campo-dica">Julgue a primeira versão com sinceridade antes de ver a segunda. Não há resposta certa: o objetivo é observar os seus critérios.</p>
+          <div class="inv-caso inv-a"><p class="rotulo">Versão 1 · ${AP.LADOS_INV[0]}</p>${txt(0)}</div>
+          <p class="b-prompt">Como você julga essa conduta?</p>${AP.escala(cam(u, base + '_a'), { rotulos: b.rotulos, aria: 'Seu julgamento da versão 1' })}
+          ${AP.campo(cam(u, base + '_a_porque'), { rotulo: 'Por quê?', rows: 2 })}
+          ${visto ? '' : `<button type="button" class="btn btn-secundario" data-acao="inv-revelar" data-u="${u.id}" data-b="${b.id}">Ver a versão 2</button>`}
+          <div class="inv-corpo" ${visto ? '' : 'hidden'}>
+            <div class="inv-caso inv-b"><p class="rotulo">Versão 2 · ${AP.LADOS_INV[1]}</p>${txt(1)}</div>
+            <p class="b-prompt">E agora, como você julga?</p>${AP.escala(cam(u, base + '_b'), { rotulos: b.rotulos, aria: 'Seu julgamento da versão 2' })}
+            ${AP.campo(cam(u, base + '_b_porque'), { rotulo: 'Por quê?', rows: 2 })}
+            <p class="inv-resultado" aria-live="polite">${AP.textoInversao(va, vb, b.rotulos)}</p>
+            ${AP.campo(cam(u, base + '_criterio'), { rotulo: 'Que critério deveria decidir este caso, seja quem for o autor?', rows: 2 })}
+            ${AP.campo(cam(u, base + '_diferenca'), { rotulo: 'Há alguma diferença relevante entre as versões que justifique julgamentos diferentes? Você a teria notado sem saber quem era o autor?', rows: 2 })}
+          </div></section>`;
+      }
       case 'sintese':
         return `<section class="b b-sintese"><h2>Síntese pessoal</h2><p class="campo-dica">Três frases bastam. Esta síntese aparece no seu Caderno.</p>
           ${AP.campo(cam(u, 'sintese_compreendi'), { rotulo: 'O que compreendi', rows: 2 })}
@@ -9108,7 +10076,23 @@ details.mais-obras .grade-livros { padding-bottom: 1rem; }
     if (antes === depois) return `Sua posição se manteve (${n(depois)}). Vale registrar o que a sustentou — manter uma posição depois de examinar o outro lado também é um resultado.`;
     return `Sua posição se moveu de “${n(antes)}” para “${n(depois)}”. Vale registrar o que provocou a mudança.`;
   };
+  AP.LADOS_INV = ['seu campo político', 'campo político que você rejeita'];
+  AP.textoInversao = (a, b, rot) => {
+    if (!a || !b) return '';
+    const n = (v) => (rot[v - 1] || '').toLowerCase();
+    if (a === b) return `Você julgou as duas versões da mesma forma (“${n(a)}”). Os critérios parecem ter se mantido — vale registrar qual foi, para usá-lo de novo.`;
+    const sentido = b < a ? 'com mais severidade' : 'com mais indulgência';
+    return `Você julgou a versão do outro lado ${sentido}: de “${n(a)}” para “${n(b)}”. Isso não prova incoerência — pode haver uma diferença relevante. Mas vale perguntar se ela existe de fato ou se apareceu depois de saber quem era o autor.`;
+  };
   AP.aoEscala = (el, caminho) => {
+    const inv = el.closest('.b-inversao');
+    if (inv) {
+      const [uid, bid] = inv.dataset.inv.split('|');
+      const r = AP.S.respostas[uid] || {};
+      const bl = (A.unidades[uid].blocos || []).find((x) => x.t === 'inversao' && x.id === bid);
+      const m = AP.$('.inv-resultado', inv);
+      if (m && bl) m.textContent = AP.textoInversao(r['inv_' + bid + '_a'], r['inv_' + bid + '_b'], bl.rotulos);
+    }
     const sec = el.closest('.b-contraponto');
     if (sec) {
       const [uid, bid] = sec.dataset.cp.split('|');
@@ -9118,6 +10102,19 @@ details.mais-obras .grade-livros { padding-bottom: 1rem; }
     }
     if (typeof AP.aoEscalaDebate === 'function') AP.aoEscalaDebate(el, caminho);
   };
+  AP.acao('inv-revelar', (el) => {
+    const u = el.dataset.u, b = el.dataset.b;
+    const sec = el.closest('.b-inversao');
+    if (!AP.ler(['respostas', u, 'inv_' + b + '_a']) && el.dataset.avisado !== '1') {
+      el.dataset.avisado = '1';
+      el.insertAdjacentHTML('afterend', '<p class="msg-tentar">Marque seu julgamento da versão 1 antes — é o que torna o teste útil. Ou clique de novo para ver mesmo assim.</p>');
+      return;
+    }
+    AP.gravar(['respostas', u, 'inv_' + b + '_visto'], true);
+    AP.$('.inv-corpo', sec).hidden = false;
+    const msg = AP.$('.msg-tentar', sec); if (msg) msg.remove();
+    el.remove();
+  });
   AP.acao('cp-revelar', (el) => {
     const u = el.dataset.u, b = el.dataset.b;
     const antes = AP.ler(['respostas', u, 'cp_' + b + '_antes']);
@@ -9910,6 +10907,10 @@ details.mais-obras .grade-livros { padding-bottom: 1rem; }
     if (campo.startsWith('cp_')) {
       const cp = u.blocos.find((x) => x.t === 'contraponto' && campo.startsWith('cp_' + x.id + '_'));
       if (cp) { const suf = campo.slice(('cp_' + cp.id + '_').length); const n = { porque: 'o que sustenta minha posição', mudaria: 'o que me faria mudar' }[suf]; return n ? `Contraponto “${AP.semHtml(cp.titulo)}” — ${n}` : null; }
+    }
+    if (campo.startsWith('inv_')) {
+      const iv = u.blocos.find((x) => x.t === 'inversao' && campo.startsWith('inv_' + x.id + '_'));
+      if (iv) { const suf = campo.slice(('inv_' + iv.id + '_').length); const n = { a_porque: 'por que (versão 1, meu campo)', b_porque: 'por que (versão 2, o outro campo)', criterio: 'o critério', diferenca: 'diferenças relevantes' }[suf]; return n ? `${AP.semHtml(iv.titulo)} — ${n}` : null; }
     }
     if (campo === 'sintese_compreendi') return 'Síntese — o que compreendi';
     if (campo === 'sintese_mudou') return 'Síntese — o que mudou';
