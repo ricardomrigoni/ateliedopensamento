@@ -738,6 +738,11 @@ details.mais-obras .grade-livros { padding-bottom: 1rem; }
 .lista-historico-nuvem li { display: flex; flex-wrap: wrap; gap: .5rem; justify-content: space-between; align-items: center; padding: .55rem .75rem; border: 1px solid var(--linha); border-radius: var(--raio-p); background: var(--superficie); font-size: .9rem; }
 .lista-historico-nuvem li > span:last-child { display: flex; gap: .4rem; }
 
+/* ---------- v1.3: tabela de conceitos ---------- */
+.tabela-conceitos { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: .95rem; display: block; overflow-x: auto; }
+.tabela-conceitos th, .tabela-conceitos td { text-align: left; padding: .5rem .65rem; border-bottom: 1px solid var(--linha); vertical-align: top; }
+.tabela-conceitos th { font-family: var(--f-ui); font-size: .8rem; text-transform: uppercase; letter-spacing: .04em; color: var(--tinta-2); }
+
 </style>
 </head>
 <body>
@@ -2255,6 +2260,405 @@ details.mais-obras .grade-livros { padding-bottom: 1rem; }
       prompt: 'Que perguntas o teste da cerca faria antes da decisão? O que um crítico da tradição responderia?'
     },
     proximos: ['u:u-cosmos', 'ferramenta:debates', 'p:chesterton']
+  };
+})();
+
+</script>
+  <script>/* js/conteudo/16-unidades-autoengano.js */
+/* =========================================================
+   Unidades acrescentadas na versão 1.3
+   Módulo “Convicção, contradição e autoengano” (Etapa 2)
+   u-dissonancia · u-duplipensar · u-investigador
+   ---------------------------------------------------------
+   Tema: o que acontece quando deixamos de usar as convicções
+   para interpretar os fatos e passamos a usar os fatos (ou uma
+   seleção deles) para proteger as convicções.
+   ========================================================= */
+(function () {
+  const U = window.ATELIE.unidades;
+
+  /* ---------------------------------------------------------
+     1. Quando os fatos ameaçam o que eu penso
+     --------------------------------------------------------- */
+  U['u-dissonancia'] = {
+    id: 'u-dissonancia',
+    titulo: 'Quando os fatos ameaçam o que eu penso',
+    pergunta: 'O que acontece quando um fato contraria algo em que acredito — ou quando alguém do meu lado faz exatamente o que eu condenaria no outro?',
+    duracao: '35–40 min',
+    eixos: ['A', 'C', 'E', 'H'],
+    resumo: 'Dissonância cognitiva, raciocínio motivado, viés de confirmação e identidade de grupo: quatro mecanismos que ajudam a explicar por que fatos inconvenientes raramente mudam opiniões — e o que as pesquisas mais recentes dizem (e não dizem) sobre eles.',
+    blocos: [
+      { t: 'importa', html: `
+        <p>Há duas maneiras muito diferentes de usar uma convicção. Na primeira, ela serve para <em>interpretar</em> os fatos: é um ponto de partida que pode ser corrigido. Na segunda, os fatos — ou uma seleção deles — passam a servir para <em>proteger</em> a convicção. Quase ninguém escolhe conscientemente a segunda maneira; ela acontece aos poucos, e é muito mais fácil notá-la nos outros do que em si mesmo.</p>
+        <p>Esta unidade apresenta os mecanismos que a psicologia usa para descrever esse deslizamento. O objetivo não é ganhar munição contra quem pensa diferente, mas ganhar instrumentos para examinar as próprias reações — inclusive para descobrir quando elas estão certas.</p>` },
+
+      { t: 'impressao', id: 'impressao',
+        prompt: 'Lembre-se de uma vez em que você recebeu uma notícia que contrariava algo em que acreditava — ou que mostrava alguém que você admira fazendo algo errado. <strong>Qual foi sua primeira reação?</strong> Verificar? Desconfiar da fonte? Procurar contexto? Mudar de ideia? Mudar de assunto?',
+        dica: 'Seja honesto: ninguém vai ler isto além de você.' },
+
+      { t: 'situacao', titulo: 'Duas versões da mesma notícia', html: `
+        <p>Imagine duas manchetes, publicadas em semanas diferentes por um jornal de credibilidade média:</p>
+        <ul>
+          <li><strong>Versão 1:</strong> “Prefeito <em>do partido que você apoia</em> pede à Justiça a remoção de vídeos de moradores que o acusam de irregularidades numa obra. Ele afirma que os vídeos são montagens e espalham desinformação.”</li>
+          <li><strong>Versão 2:</strong> “Prefeito <em>do partido que você rejeita</em> pede à Justiça a remoção de vídeos de moradores que o acusam de irregularidades numa obra. Ele afirma que os vídeos são montagens e espalham desinformação.”</li>
+        </ul>
+        <p>As duas notícias são idênticas, exceto pelo partido.</p>` },
+
+      { t: 'escrita', id: 'duasversoes', titulo: 'Antes da explicação',
+        prompt: 'Qual foi sua reação imediata a cada versão? Em qual delas você pensou primeiro em “censura” e em qual pensou primeiro em “desinformação”? Que informação adicional você procuraria em cada caso?',
+        depois: { rotulo: 'Ver um comentário', html: `
+          <p>Se as reações foram diferentes, isso não prova que você seja incoerente: é possível que você tenha razões para confiar mais em um prefeito do que no outro — seu histórico, por exemplo. Mas repare <strong>em que momento</strong> essas razões apareceram. Se a conclusão veio primeiro e as razões depois, vale desconfiar.</p>
+          <p>O teste honesto é perguntar: <em>que informação decidiria o caso nas duas versões?</em> Os vídeos são montagens ou não? Há perícia? O pedido é para remover conteúdo falso específico ou toda crítica? Se o critério que você usaria é o mesmo nas duas versões, ótimo. Se ele muda conforme o partido, encontramos o fenômeno que esta unidade estuda.</p>` } },
+
+      { t: 'conceito', titulo: 'Dissonância cognitiva', html: `
+        <p>O psicólogo norte-americano <strong>Leon Festinger</strong> propôs em 1957, no livro <em>Uma teoria da dissonância cognitiva</em>, que sentimos desconforto quando percebemos uma incompatibilidade entre coisas que pensamos, valorizamos ou fazemos — e que esse desconforto nos motiva a reduzi-la.</p>
+        <p>O exemplo clássico é o do fumante que sabe que o cigarro faz mal. Ele pode parar de fumar (mudar o comportamento), mas também pode reduzir a dissonância de outros modos: “meu avô fumou a vida toda e viveu até os noventa”, “vou parar no ano que vem”, “de alguma coisa todo mundo morre”.</p>
+        <p>Aplicado às convicções, o mecanismo oferece várias saídas quando um fato as contraria:</p>
+        <ol>
+          <li><strong>Revisar a convicção</strong> — reconhecer que algo nela estava errado.</li>
+          <li><strong>Justificar a exceção conscientemente</strong> — admitir o problema e argumentar que, neste caso, ele se justifica.</li>
+          <li><strong>Redefinir o próprio valor</strong> — passar a dizer que aquilo que se condenava não é bem o que parecia.</li>
+          <li><strong>Desqualificar os fatos</strong> — questionar a fonte, minimizar o ocorrido, mudar de assunto.</li>
+        </ol>
+        <p>Só a primeira exige revisar a crença. As outras preservam a convicção e a imagem que temos de nós mesmos. Mas atenção: a segunda nem sempre é autoengano. Às vezes existe mesmo uma diferença relevante entre dois casos. A pergunta é se essa diferença foi <em>percebida</em> ou <em>inventada depois</em>, para proteger uma posição já assumida.</p>` },
+
+      { t: 'revelar', rotulo: 'A profecia que falhou (1954)', html: `
+        <p>A teoria nasceu de um estudo célebre. Em 1954, uma mulher de Chicago, Dorothy Martin, afirmou receber mensagens de seres de outro planeta anunciando um dilúvio para 21 de dezembro; os fiéis seriam resgatados por um disco voador. Festinger e seus colegas Henry Riecken e Stanley Schachter infiltraram-se no grupo para observar o que aconteceria quando a profecia falhasse. No livro <em>When Prophecy Fails</em> (1956), relataram que, depois do fracasso, parte do grupo não abandonou a crença: reinterpretou o ocorrido (o mundo teria sido poupado graças à fé deles) e passou a buscar novos adeptos.</p>
+        <p><strong>O que a história mais recente acrescenta:</strong> em 2025, o pesquisador Thomas Kelly publicou no <em>Journal of the History of the Behavioral Sciences</em> uma reavaliação baseada em jornais da época e nos papéis de Festinger. Ele argumenta que os pesquisadores infiltrados — que seriam cerca de um terço do grupo — interferiram ativamente nas crenças dos membros, e que o relato do livro tem contradições internas. Outros estudiosos acham que essas falhas não invalidam a ideia de dissonância, mas reconhecem os problemas do estudo.</p>
+        <p>Repare na ironia: uma das histórias mais citadas para ilustrar como pessoas defendem crenças diante de evidências contrárias também precisa ser reexaminada à luz de novas evidências.</p>` },
+
+      { t: 'revelar', rotulo: 'Um dólar ou vinte?', html: `
+        <p>Em 1959, Festinger e James Carlsmith pediram a estudantes que executassem uma tarefa tediosa e depois dissessem ao participante seguinte que ela era interessante. Uns recebiam 1 dólar pela mentira; outros, 20. Depois, os que receberam apenas 1 dólar avaliaram a tarefa como mais agradável. A interpretação: quem recebeu 20 tinha uma justificativa externa para ter mentido; quem recebeu 1 precisou “acreditar um pouco” no que disse para reduzir a dissonância.</p>
+        <p><strong>O que se sabe hoje:</strong> esse tipo de experimento (chamado de “obediência induzida”) foi repetido em grande escala em 2024 por 39 laboratórios de 19 países, com quase 5 mil participantes (Vaidis e colegas, <em>Advances in Methods and Practices in Psychological Science</em>). O efeito central previsto pela teoria <strong>não</strong> apareceu: ter mais ou menos liberdade de escolha ao escrever um texto contrário à própria opinião não mudou as atitudes de forma significativa. Os autores concluem que esse paradigma não oferece evidência robusta de dissonância.</p>
+        <p>Isso não refuta tudo o que se diz sobre dissonância — a experiência de desconforto diante de contradições é comum —, mas mostra que alguns dos experimentos mais famosos são menos sólidos do que os livros didáticos sugeriam.</p>` },
+
+      { t: 'aprofundar', titulo: 'Uma lição de método', html: `
+        <p>Por que contar as fragilidades da teoria numa unidade sobre ela? Porque é exatamente o que a unidade ensina: uma ideia que nos parece iluminadora merece o mesmo exame que uma ideia que nos incomoda. Há também um risco prático: “isso é dissonância cognitiva” virou uma forma de desqualificar o adversário sem examinar o que ele diz. Usar um conceito sobre vieses como arma contra os outros é, ele mesmo, um sinal de viés.</p>` },
+
+      { t: 'pensador', id: 'festinger' },
+
+      { t: 'conceito', titulo: 'Raciocínio motivado: primeiro a conclusão, depois os argumentos', html: `
+        <p>A psicóloga Ziva Kunda, num artigo influente de 1990, descreveu o <strong>raciocínio motivado</strong>: quando queremos chegar a uma conclusão, processamos as informações de um modo que favorece essa conclusão — sem perceber e mantendo a sensação de que estamos sendo objetivos. Não acreditamos no que quisermos; mas procuramos, aceitamos e interpretamos as evidências de modo a poder justificar o que queremos.</p>
+        <p>O psicólogo Thomas Gilovich resumiu a assimetria com duas perguntas. Diante de algo que nos agrada, perguntamos: <strong>“Posso acreditar nisso?”</strong> — e basta uma evidência razoável. Diante de algo que nos desagrada, perguntamos: <strong>“Sou obrigado a acreditar nisso?”</strong> — e nenhuma evidência parece suficiente.</p>
+        <p>Um estudo clássico de 1979 (Lord, Ross e Lepper) mostrou a defensores e opositores da pena de morte os mesmos dois estudos fictícios, um a favor e outro contra. Cada grupo considerou mais bem-feito o estudo que confirmava sua posição e encontrou falhas no outro — e muitos saíram mais convictos do que entraram, embora tivessem visto exatamente o mesmo material.</p>` },
+
+      { t: 'conceito', titulo: 'Viés de confirmação: o filtro na entrada', html: `
+        <p>O <strong>viés de confirmação</strong> é a tendência de procurar, notar, lembrar e valorizar o que confirma o que já pensamos. Num experimento famoso de 1960, Peter Wason deu a pessoas a sequência 2-4-6 e pediu que descobrissem a regra que a gerava, propondo outras sequências. A maioria testava apenas sequências que confirmavam sua hipótese (8-10-12, 20-22-24…) e quase nunca uma que pudesse refutá-la — e por isso não descobria que a regra era simplesmente “números em ordem crescente”.</p>
+        <p>Uma forma simples de distinguir os mecanismos:</p>
+        <ul>
+          <li>o <strong>viés de confirmação</strong> seleciona o que entra;</li>
+          <li>o <strong>raciocínio motivado</strong> decide como interpretar o que entrou;</li>
+          <li>a <strong>dissonância</strong> ajuda a explicar por que sentimos necessidade de proteger a crença.</li>
+        </ul>
+        <p>Desconfiar de uma notícia ou pedir contexto não é viés. O sinal revelador é a <strong>assimetria</strong>: exigir provas rigorosas para o que contraria nossa posição e aceitar evidências frágeis para o que a favorece.</p>` },
+
+      { t: 'conceito', titulo: 'Identidade: quando mudar de opinião parece trair a si mesmo', html: `
+        <p>Para muitas pessoas, uma posição política, religiosa ou moral não é só uma opinião: ela responde à pergunta “quem sou eu?”. O psicólogo Henri Tajfel mostrou, nos anos 1970, como é fácil formar lealdade de grupo: em seus experimentos de “grupos mínimos”, pessoas divididas por critérios triviais (como preferir um pintor a outro) já passavam a favorecer o próprio grupo. Com John Turner, ele desenvolveu a <strong>teoria da identidade social</strong>.</p>
+        <p>Quando uma posição se torna parte da identidade, criticar o grupo pode ser sentido como um ataque pessoal. E pode surgir um raciocínio circular:</p>
+        <ol>
+          <li>“Eu sou uma pessoa que defende a democracia.”</li>
+          <li>“As pessoas que defendem a democracia estão do nosso lado.”</li>
+          <li>“Logo, o nosso lado é o lado da democracia.”</li>
+          <li>“Logo, quem critica o nosso lado ataca a democracia.”</li>
+        </ol>
+        <p>A democracia deixou de ser um critério para avaliar os grupos e passou a ser um atributo que o grupo reivindica para si. Troque “democracia” por “liberdade”, “família”, “justiça social” ou “os valores cristãos” e o mecanismo funciona igual. O resultado é uma espécie de <strong>cegueira moral seletiva</strong>: a mesma conduta parece inaceitável no adversário e tolerável no aliado.</p>` },
+
+      { t: 'aprofundar', titulo: 'Os dois lados fazem isso? E as pessoas nunca mudam?', html: `
+        <p><strong>Os dois lados.</strong> Uma meta-análise de 2019, conduzida por Peter Ditto e colegas e publicada em <em>Perspectives on Psychological Science</em>, reuniu dezenas de experimentos com milhares de participantes nos Estados Unidos e encontrou níveis semelhantes de viés partidário entre progressistas e conservadores — o título do artigo era “Pelo menos o viés é bipartidário”. Outros pesquisadores, como Jost e Baron, contestaram a conclusão e argumentaram que haveria diferenças; o debate continua. O ponto mais seguro: nenhum campo político é imune.</p>
+        <p><strong>Inteligência não protege.</strong> Em estudos de Dan Kahan e colegas, pessoas com mais facilidade com números às vezes ficaram <em>mais</em> polarizadas quando os mesmos dados tratavam de um tema político, como se usassem sua habilidade para defender a posição já escolhida. Os resultados são discutidos e nem sempre se repetem, mas a lição permanece: habilidade argumentativa e compromisso com a verdade são coisas diferentes.</p>
+        <p><strong>Mas as pessoas mudam.</strong> Durante algum tempo, falou-se muito num “efeito tiro pela culatra”: corrigir alguém faria a pessoa se apegar ainda mais ao erro. Pesquisas maiores, como as de Thomas Wood e Ethan Porter (2019), mostraram que esse efeito é raro: em geral, as pessoas ajustam um pouco suas crenças na direção da correção, mesmo quando ela desagrada ao seu lado. Mudamos menos do que deveríamos, mas não somos impermeáveis aos fatos.</p>` },
+
+      { t: 'classificar', id: 'mecanismos',
+        prompt: 'Qual mecanismo aparece principalmente em cada situação?',
+        categorias: ['Dissonância', 'Raciocínio motivado', 'Viés de confirmação', 'Identidade de grupo', 'Duplo padrão'],
+        itens: [
+          { txt: 'Depois de comprar um carro caro, Rita passa semanas lendo só avaliações elogiosas daquele modelo.', cat: ['Viés de confirmação', 'Dissonância'], exp: 'Ela seleciona o que confirma a escolha — e o desconforto de ter gastado muito ajuda a explicar por quê.' },
+          { txt: '“Esse estudo contra a minha dieta foi financiado pela indústria; já o que confirma foi feito por um médico sério.” (Sem verificar quem financiou o segundo.)', cat: ['Raciocínio motivado'], exp: 'Um critério razoável (conflito de interesses) aplicado só na direção conveniente.' },
+          { txt: '“Se nosso deputado foi pego, deve ser perseguição. Quando foi o deles, a Justiça funcionou.”', cat: ['Duplo padrão', 'Identidade de grupo'], exp: 'A mesma instituição é avaliada por critérios opostos conforme o lado — sinal de que a lealdade está decidindo antes dos fatos.' },
+          { txt: 'Carlos sempre se viu como honesto. Quando sonega um imposto, diz a si mesmo que “o governo desperdiça tudo mesmo”.', cat: ['Dissonância'], exp: 'Conflito entre a autoimagem e o ato, resolvido com uma justificativa.' },
+          { txt: 'Ana deixa de seguir um amigo antigo porque ele passou a votar no partido oposto: “não reconheço mais quem ele é”.', cat: ['Identidade de grupo'], exp: 'A posição política virou critério de quem a pessoa é — e de quem merece amizade.' },
+          { txt: 'Num debate, Pedro só pesquisa argumentos a favor da posição que já defende.', cat: ['Viés de confirmação', 'Raciocínio motivado'], exp: 'Pesquisar o próprio lado é natural num debate; o problema seria confundir isso com investigar a questão.' }
+        ] },
+
+      { t: 'escolha', id: 'assimetria',
+        prompt: 'Um amigo exige perícia, fonte primária e contexto completo para aceitar uma denúncia contra o candidato dele, mas compartilha sem verificar um vídeo sem fonte contra o adversário. O que isso mostra?',
+        opcoes: [
+          { txt: 'Que ele é desonesto.', ok: false, fb: 'Pode ser, mas é mais provável que ele nem perceba a assimetria — é o mais comum. Atribuir má-fé é uma explicação que dispensa a investigação e quase sempre piora a conversa.' },
+          { txt: 'Que ele aplica padrões de exigência diferentes conforme a conclusão que prefere — o sinal típico do raciocínio motivado.', ok: true, fb: 'Exato. Nenhuma das duas atitudes, sozinha, é um problema: exigir perícia é bom, e às vezes compartilhamos coisas por engano. O que revela o viés é a diferença de rigor. E a pergunta útil é se você faz o mesmo.' },
+          { txt: 'Que a denúncia contra o candidato dele é falsa.', ok: false, fb: 'A reação dele não diz nada sobre a verdade da denúncia. Isso só se decide examinando a própria denúncia.' }
+        ] },
+
+      { t: 'contraponto', unidade: 'u-dissonancia', id: 'firmeza', titulo: 'Toda convicção firme é viés?',
+        contexto: 'Depois de estudar tantos vieses, é tentador concluir que quem não muda de opinião está sempre se enganando.',
+        afirmacao: 'Se eu continuo convicto depois de ouvir bons argumentos contrários, provavelmente estou sendo vítima de raciocínio motivado.',
+        outro: { nome: 'A defesa da convicção', html: `
+          <p>G. K. Chesterton escreveu, numa frase muito citada de sua <em>Autobiografia</em> (1936), que o objetivo de abrir a mente, como o de abrir a boca, é fechá-la de novo sobre algo sólido. O cardeal John Henry Newman, em <em>Apologia pro vita sua</em> (1864), distinguiu dificuldades de dúvidas: dez mil dificuldades, dizia ele, não fazem uma dúvida.</p>
+          <p>O argumento é que uma convicção bem formada, apoiada em muitas razões e na experiência de uma vida, não deve cair diante do primeiro argumento que não sabemos responder na hora. Mudar de ideia a cada objeção engenhosa também é um defeito: o de quem é levado por quem argumenta melhor, não por quem tem razão.</p>` },
+        replica: '<p>Os dois pontos são válidos — e não anulam a unidade. A questão não é se você muda de ideia com frequência, mas <em>como</em> você mantém suas convicções: aplicando o mesmo rigor aos argumentos dos dois lados, sabendo dizer o que mudaria sua opinião e distinguindo uma dificuldade que você ainda não resolveu de uma evidência que você está evitando olhar.</p>',
+        refs: ['p:chesterton', 'b:b-chesterton-ortodoxia', 'u:u-investigador'] },
+
+      { t: 'passos', id: 'examinar', titulo: 'Examine uma convicção sua',
+        prompt: 'Escolha uma convicção de que você tem bastante certeza — política, religiosa, moral ou sobre uma pessoa.',
+        campos: [
+          { id: 'conviccao', rotulo: 'A convicção, em uma frase', dica: '' },
+          { id: 'contrario', rotulo: 'Qual o fato mais incômodo para ela que você conhece?', dica: 'Se não lembrar de nenhum, isso já é uma informação.' },
+          { id: 'reacao', rotulo: 'Como você costuma reagir a esse fato?', dica: 'Revisar, justificar a exceção, redefinir, desqualificar a fonte?' },
+          { id: 'troca', rotulo: 'Se o mesmo fato envolvesse o lado oposto, como você o avaliaria?', dica: 'O teste da troca.' },
+          { id: 'identidade', rotulo: 'O que esta convicção diz sobre quem você é?', dica: 'Quanto mais ela faz parte da sua identidade, mais difícil será revisá-la — e mais vale examiná-la.' }
+        ] },
+
+      { t: 'texto', titulo: 'Para continuar', html: `
+        <p>Leve essa convicção para o <a href="#/conviccoes">Exame de convicções</a>, que inclui o teste do duplo padrão e o da coerência entre o que se pensa e como se vive. A próxima unidade trata do mesmo fenômeno pelo lado da linguagem: o que acontece quando as palavras mudam de sentido conforme quem as usa.</p>` },
+
+      { t: 'comparar', ref: 'impressao', id: 'comparacao',
+        prompt: 'Releia o que você escreveu sobre sua reação a uma notícia incômoda. Que mecanismo desta unidade aparece ali? Você reagiria igual hoje?' },
+
+      { t: 'conexoes', itens: [
+        { ref: 'u:u-visoes', txt: 'Por que concordo com o que concordo: intuições morais e visões de mundo.' },
+        { ref: 'u:u-discordar', txt: 'As fontes razoáveis de discordância — nem toda divergência é viés.' },
+        { ref: 'u:u-duplipensar', txt: 'A próxima unidade: duplipensar e a disputa pelo sentido das palavras.' },
+        { ref: 'ferramenta:conviccoes', txt: 'O Exame de convicções.' },
+        { ref: 'p:festinger', txt: 'Ficha do pensador: Leon Festinger.' },
+        { ref: 'p:kahneman', txt: 'Ficha do pensador: Daniel Kahneman.' }
+      ] },
+
+      { t: 'leituras', ids: ['b-tavris', 'b-pense-novo', 'b-arte-pensar', 'b-dom-casmurro', 'b-orgulho', 'b-reparacao'] },
+      { t: 'sintese' }
+    ],
+    revisao: {
+      conceito: 'Dissonância cognitiva, raciocínio motivado, viés de confirmação, identidade de grupo.',
+      situacao: 'Um colega que você admira é acusado de assediar uma funcionária. Seu primeiro pensamento é “ele nunca faria isso”.',
+      prompt: 'Que mecanismos podem estar em ação nessa reação? O que seria uma reação justa — nem condenação automática, nem defesa automática?'
+    },
+    proximos: ['u:u-duplipensar', 'ferramenta:conviccoes', 'q:q-mesmo-criterio']
+  };
+
+  /* ---------------------------------------------------------
+     2. Duplipensar e a disputa pelas palavras
+     --------------------------------------------------------- */
+  U['u-duplipensar'] = {
+    id: 'u-duplipensar',
+    titulo: 'Duplipensar: quando as palavras mudam de dono',
+    pergunta: 'É possível acreditar em duas coisas contraditórias sem perceber? E o que acontece com o pensamento quando as palavras mudam de sentido conforme quem as usa?',
+    duracao: '35–40 min',
+    eixos: ['F', 'C', 'H', 'A'],
+    resumo: 'O duplipensar e a novilíngua de Orwell, o “ketman” de Miłosz, a linguagem do Terceiro Reich, as definições persuasivas, o uso de rótulos como arma e a falseabilidade de Popper: como contradições se tornam invisíveis — e como trazê-las de volta à vista.',
+    blocos: [
+      { t: 'importa', html: `
+        <p>A unidade anterior tratou de como protegemos convicções escolhendo e interpretando fatos. Esta trata de um mecanismo mais sutil: a mudança no sentido das palavras. Se “censura” passa a significar só o que o adversário faz, e “defesa da democracia” só o que o meu lado faz, a contradição desaparece — não porque foi resolvida, mas porque a linguagem deixou de permitir vê-la.</p>
+        <p>George Orwell levou essa ideia ao extremo em <em>1984</em>. Mas ele mesmo insistia que o problema não é só dos regimes totalitários: começa na linguagem frouxa do dia a dia, em qualquer lado.</p>` },
+
+      { t: 'impressao', id: 'impressao',
+        prompt: 'Defina em uma ou duas frases o que você entende por <strong>“liberdade de expressão”</strong> ou por <strong>“democracia”</strong>. Depois responda: há alguma situação em que você aceitaria que essa palavra fosse aplicada ao seu lado, mas não ao outro?' },
+
+      { t: 'conceito', titulo: 'O duplipensar em 1984', html: `
+        <p>No romance de Orwell (1949), o Partido proclama três lemas: <strong>Guerra é paz. Liberdade é escravidão. Ignorância é força.</strong> Não são simples mentiras. O Partido quer algo mais ambicioso: que as pessoas sejam capazes de sustentar duas ideias contraditórias ao mesmo tempo, aceitar as duas e esquecer que se contradizem — e esquecer também que esqueceram. É isso que o livro chama de <strong>duplipensar</strong>.</p>
+        <p>O Ministério da Verdade reescreve jornais antigos para que o passado concorde sempre com o presente. Se ontem a Oceânia estava em guerra com a Eurásia e hoje está em guerra com a Lestásia, então sempre esteve em guerra com a Lestásia. No fim do livro, Winston é levado a crer, sinceramente, que dois mais dois podem ser cinco, se o Partido assim disser.</p>
+        <p>Orwell descreve também a <strong>novilíngua</strong>, uma língua planejada para encolher a cada edição do dicionário: se não houver palavras para certos pensamentos, eles se tornarão impossíveis. E descreve o hábito de parar de pensar no limiar de um pensamento perigoso — uma espécie de reflexo de proteção que o Partido cultiva como virtude.</p>
+        <p><strong>A diferença em relação à dissonância:</strong> na dissonância, a contradição incomoda e procuramos reduzi-la. No duplipensar, o próprio incômodo foi eliminado. É uma imagem literária extrema — mas útil, porque mostra o ponto final de um caminho que começa com pequenas acomodações.</p>` },
+
+      { t: 'pensador', id: 'orwell' },
+
+      { t: 'aprofundar', titulo: 'Fora da ficção: o ketman e a língua do Terceiro Reich', html: `
+        <p>O poeta polonês <strong>Czesław Miłosz</strong>, que serviu ao governo comunista da Polônia antes de romper com ele em 1951, descreveu em <em>Mente cativa</em> (1953) como intelectuais brilhantes aderiram ao regime. Ele usou a palavra <strong>ketman</strong>, tirada de relatos sobre a Pérsia, para nomear a prática de aparentar adesão enquanto se guarda uma reserva interior — às vezes com uma sensação de superioridade sobre quem acredita de verdade. O ketman é quase o inverso do duplipensar: a pessoa vê a contradição, mas a esconde. E Miłosz mostrou o preço psicológico desse jogo duplo para quem o pratica por anos.</p>
+        <p>O filólogo judeu alemão <strong>Victor Klemperer</strong>, que sobreviveu ao nazismo em Dresden, registrou em seus diários a transformação do alemão cotidiano e publicou em 1947 <em>LTI — a linguagem do Terceiro Reich</em>. Ele observou, por exemplo, como a palavra “fanático”, antes negativa, virou elogio. Sua conclusão: as palavras podem agir como pequenas doses de arsênico, engolidas sem perceber, que produzem efeito com o tempo.</p>
+        <p>E <strong>Arthur Koestler</strong>, ex-comunista, mostrou no romance <em>O zero e o infinito</em> (1940) um velho bolchevique que confessa crimes que não cometeu — não só por medo, mas porque a lógica do Partido, que ele mesmo ajudou a construir, o convence de que confessar é seu último serviço à causa.</p>` },
+
+      { t: 'revelar', rotulo: 'Os eufemismos que Orwell apontou', html: `
+        <p>No ensaio “A política e a língua inglesa” (1946), Orwell mostrou como a linguagem política serve para tornar defensável o indefensável. Bombardear aldeias indefesas e incendiar suas cabanas vira <em>pacificação</em>. Expulsar milhões de camponeses de suas terras vira <em>transferência de população</em>. O eufemismo não esconde os fatos de quem os conhece; ele permite falar deles sem ter de imaginá-los.</p>
+        <p><strong>Experimente:</strong> encontre dois eufemismos usados hoje pelo campo político de que você gosta e dois usados pelo campo de que você não gosta. Se só encontrar no segundo, procure de novo.</p>` },
+
+      { t: 'conceito', titulo: 'Quando a palavra muda de dono', html: `
+        <p>Palavras como democracia, liberdade, fascismo, censura e autoritarismo carregam ao mesmo tempo uma <em>descrição</em> e uma <em>avaliação</em>: dizer que algo é censura já é condená-lo. Isso abre espaço para uma manobra que o filósofo Charles Stevenson chamou, em 1938, de <strong>definição persuasiva</strong>: conservar a carga emocional da palavra e mudar seu conteúdo. Assim, uma conduta passa a ser elogiada ou condenada não pelo que é, mas pelo nome que recebe.</p>
+        <table class="tabela-conceitos">
+          <thead><tr><th>Conduta</th><th>Descrição inicial</th><th>Rótulo conveniente</th></tr></thead>
+          <tbody>
+            <tr><td>Restringir a manifestação de adversários</td><td>Censura</td><td>Defesa da democracia</td></tr>
+            <tr><td>Impedir a divulgação de críticas ao próprio grupo</td><td>Restrição à liberdade</td><td>Combate à desinformação</td></tr>
+            <tr><td>Concentrar poder numa instituição</td><td>Risco autoritário</td><td>Proteção das instituições</td></tr>
+            <tr><td>Ignorar decisões judiciais desfavoráveis</td><td>Desrespeito à lei</td><td>Resistência legítima</td></tr>
+          </tbody>
+        </table>
+        <p>Nenhum rótulo da terceira coluna é necessariamente falso: uma restrição pode ter fundamento jurídico legítimo, combater desinformação pode ser um fim legítimo. O problema é usar a palavra positiva <strong>para dispensar o exame</strong> — conteúdo, base legal, proporcionalidade, consequências e garantias contra abusos.</p>
+        <p>O teste mais simples: <strong>o conceito continua valendo quando muda o beneficiário?</strong></p>` },
+
+      { t: 'aprofundar', titulo: 'Nem toda mudança de sentido é manipulação', html: `
+        <p>Seria fácil demais concluir que toda divergência sobre palavras é desonestidade. O filósofo W. B. Gallie argumentou, em 1956, que alguns conceitos são <strong>essencialmente contestados</strong>: seu sentido é disputado de boa-fé, porque eles nomeiam ideais complexos que admitem interpretações rivais razoáveis. Um de seus exemplos era justamente “democracia”. Wittgenstein, por sua vez, lembrava que o sentido de uma palavra está no seu uso — e os usos mudam.</p>
+        <p>A distinção útil, portanto, não é entre quem muda o sentido e quem não muda, mas entre quem <strong>explicita seus critérios</strong> e os aplica a todos, e quem muda os critérios conforme a conveniência sem dizer que mudou.</p>` },
+
+      { t: 'conceito', titulo: 'O rótulo que encerra a discussão', html: `
+        <p>Considere este raciocínio: “O candidato A é fascista. O fascismo é incompatível com a democracia. Portanto, votar no candidato B é votar pela democracia.” Mesmo que a primeira premissa fosse verdadeira, a conclusão não se segue: a inadequação de um candidato não prova a adequação do outro. É preciso examinar B por seus próprios atos e propostas. O raciocínio esconde um <strong>falso dilema</strong> e usa o rótulo como substituto do exame.</p>
+        <p>O mesmo vale ao contrário: “O candidato B é comunista; logo, votar em A é votar pela liberdade.” Fascismo e comunismo são fenômenos históricos com características que podem ser estudadas e confrontadas com evidências. Aplicar um desses nomes a alguém exige mostrar quais características estão presentes — não basta que o adversário nos desagrade.</p>` },
+
+      { t: 'conceito', titulo: 'A crença que nenhum fato pode contrariar', html: `
+        <p>Imagine alguém convencido de que certo grupo é autoritário. Se o grupo restringe liberdades, isso prova o autoritarismo. Se não restringe, “está disfarçando”. Se uma denúncia é confirmada, é prova; se é desmentida, “a investigação foi manipulada”. <strong>Qualquer resultado confirma a crença.</strong></p>
+        <p>O filósofo <strong>Karl Popper</strong> chamou atenção para esse padrão. Em sua juventude em Viena, ele se impressionou com o fato de que certas teorias da época — a interpretação da história de alguns marxistas, a psicologia de Adler — pareciam explicar tudo, e concluiu que isso era uma fraqueza, não uma força. Uma afirmação sobre a realidade precisa, em princípio, admitir condições sob as quais seria falsa: é a ideia de <strong>falseabilidade</strong>.</p>
+        <p>Juízos políticos e morais não são experimentos de laboratório, e Popper propôs seu critério para a ciência. Mas a pergunta que ele inspira vale para qualquer convicção sobre fatos: <strong>que evidência me faria mudar de ideia?</strong> Se a resposta é “nenhuma”, a crença deixou de ser testada — está sendo protegida de qualquer teste.</p>` },
+
+      { t: 'pensador', id: 'popper' },
+
+      { t: 'classificar', id: 'figuras',
+        prompt: 'Que fenômeno aparece principalmente em cada frase?',
+        categorias: ['Duplipensar', 'Eufemismo', 'Definição persuasiva', 'Rótulo e falso dilema', 'Crença infalsificável'],
+        itens: [
+          { txt: '“Não houve demissões; houve uma readequação do quadro de colaboradores.”', cat: ['Eufemismo'], exp: 'Um nome neutro para uma realidade dura.' },
+          { txt: '“Verdadeira liberdade é obedecer ao líder, que sabe o que é melhor para nós.”', cat: ['Definição persuasiva', 'Duplipensar'], exp: 'A palavra “liberdade” é mantida pela carga positiva, com conteúdo oposto ao habitual — no limite, o lema de 1984.' },
+          { txt: '“Quem não está conosco é fascista; quem é contra o fascismo vota em nós.”', cat: ['Rótulo e falso dilema'], exp: 'Duas alternativas apenas, e um rótulo que dispensa o exame. Funciona igual com “comunista”.' },
+          { txt: '“Se a vacina funcionou, foi sorte; se não funcionou, prova que é inútil; se os estudos dizem que funciona, foram comprados.”', cat: ['Crença infalsificável'], exp: 'Todo resultado possível é lido como confirmação. O mesmo padrão pode aparecer na defesa entusiasmada de qualquer medida.' },
+          { txt: 'Um funcionário do Ministério da Verdade apaga uma notícia antiga e, horas depois, sinceramente não se lembra de que ela dizia outra coisa.', cat: ['Duplipensar'], exp: 'Não é só mentira: é o esquecimento da própria contradição.' },
+          { txt: '“Nossos aliados fazem ‘ajustes institucionais’; os adversários fazem ‘ataques à democracia’.” (Para a mesma medida.)', cat: ['Definição persuasiva', 'Eufemismo'], exp: 'A palavra muda conforme o beneficiário — o teste desta unidade.' }
+        ] },
+
+      { t: 'escolha', id: 'critica',
+        prompt: 'Alguém afirma: “Quem critica esta medida está atacando a democracia.” Qual a melhor resposta crítica?',
+        opcoes: [
+          { txt: '“Vocês é que atacam a democracia.”', ok: false, fb: 'Inverte o rótulo, mas mantém o problema: continua usando a palavra como arma, sem examinar a medida.' },
+          { txt: '“Que critérios fazem esta medida ser democrática? Eles continuariam valendo se o outro lado a adotasse?”', ok: true, fb: 'Isso desloca a conversa do rótulo para os critérios — conteúdo, base legal, proporcionalidade, garantias — e aplica o teste da troca de beneficiário.' },
+          { txt: '“Democracia é um conceito vago; não dá para discutir.”', ok: false, fb: 'O conceito é contestado, mas não vazio. Desistir de defini-lo deixa o campo livre para quem quer usá-lo sem critério.' }
+        ] },
+
+      { t: 'perspectivas', titulo: 'Quem controla o sentido das palavras?', itens: [
+        { nome: 'George Orwell', html: 'Para Orwell, escrever com clareza era uma questão moral e política: a linguagem vaga protege o indefensável, e quem escreve com precisão não consegue esconder de si mesmo o que está dizendo.', ve: 'Que a clareza é uma forma de honestidade e de resistência ao poder.', limite: 'Nem toda complexidade é jargão: algumas ideias são difíceis de verdade.' },
+        { nome: 'C. S. Lewis', html: 'Em <em>A abolição do homem</em> (1943), Lewis criticou livros escolares que ensinavam que todo juízo de valor é “apenas” expressão de sentimentos. Para ele, isso produzia “homens sem peito”: pessoas sem a formação dos afetos que liga a razão à ação.', ve: 'Que a linguagem pode esvaziar valores tanto quanto distorcê-los, e que relativizar tudo também é uma manobra.', limite: 'Pressupõe uma ordem objetiva de valores (o Tao) que nem todos aceitam.' },
+        { nome: 'Michel Foucault', html: 'Para Foucault, cada época tem “regimes de verdade”: regras sobre quem pode falar com autoridade, sobre o quê e de que maneira. Definir o que conta como loucura, crime ou ciência é também exercer poder.', ve: 'Que as definições institucionais não são neutras e têm efeitos sobre pessoas concretas.', limite: 'Levado ao extremo, dissolve a distinção entre verdade e poder — e então não sobra critério nem para criticar o poder.' },
+        { nome: 'Ludwig Wittgenstein', html: 'O segundo Wittgenstein mostrou que o significado de uma palavra está em seu uso dentro de “jogos de linguagem”, que mudam com as práticas humanas.', ve: 'Que mudanças de sentido são normais e nem sempre manipuladoras.', limite: 'Não oferece, por si só, um critério para distinguir a evolução legítima da manipulação.' }
+      ] },
+
+      { t: 'contraponto', unidade: 'u-duplipensar', id: 'simetria', titulo: 'Se os dois lados fazem isso, são igualmente culpados?',
+        contexto: 'Esta unidade insistiu em aplicar os mesmos critérios aos dois lados. Daí é fácil passar a outra ideia.',
+        afirmacao: 'Se os dois lados distorcem palavras e fatos, então os dois são igualmente culpados.',
+        outro: { nome: 'A objeção da falsa equivalência', html: `
+          <p>Aplicar os mesmos critérios não garante chegar a conclusões simétricas. Num caso concreto, um lado pode estar distorcendo muito mais que o outro — e dizer “todos fazem isso” pode ser uma forma de evitar o julgamento, ou de proteger o lado que está mais errado. O método é simétrico; o resultado pode não ser.</p>` },
+        replica: '<p>A objeção é correta, mas pode ser usada do mesmo jeito que critica: “falsa equivalência!” também serve para isentar o próprio lado de qualquer exame. A saída é a mesma de sempre: examinar caso a caso, com critérios explícitos, e aceitar a conclusão — seja ela simétrica ou não.</p>',
+        refs: ['u:u-investigador', 'd:d-duvida'] },
+
+      { t: 'passos', id: 'dicionario', titulo: 'Seu dicionário de palavras disputadas',
+        prompt: 'Escolha uma palavra carregada: liberdade, democracia, censura, fascismo, comunismo, justiça, tolerância, família…',
+        campos: [
+          { id: 'palavra', rotulo: 'A palavra', dica: '' },
+          { id: 'criterios', rotulo: 'Seus critérios: o que algo precisa ter para merecer esse nome?', dica: 'Tente listar dois ou três critérios observáveis.' },
+          { id: 'meulado', rotulo: 'Um caso do seu lado que, pelos seus critérios, mereceria o nome', dica: 'Se a palavra é negativa, isso dói. É o ponto.' },
+          { id: 'outrolado', rotulo: 'Um caso do outro lado em que o nome costuma ser aplicado sem cumprir seus critérios', dica: '' },
+          { id: 'ajuste', rotulo: 'Seus critérios precisam de ajuste? Por quê?', dica: 'Ajustar critérios é legítimo — desde que valha para os dois lados.' }
+        ] },
+
+      { t: 'comparar', ref: 'impressao', id: 'comparacao',
+        prompt: 'Releia a definição que você escreveu no início. Ela passaria pelo teste da troca de beneficiário? O que você mudaria?' },
+
+      { t: 'conexoes', itens: [
+        { ref: 'u:u-palavra', txt: 'A unidade sobre palavra, conceito e coisa.' },
+        { ref: 'u:u-dissonancia', txt: 'A unidade anterior: quando os fatos ameaçam o que pensamos.' },
+        { ref: 'u:u-investigador', txt: 'A próxima: advogado ou investigador das próprias convicções.' },
+        { ref: 'b:b-1984', txt: 'O romance 1984, de George Orwell.' },
+        { ref: 'p:orwell', txt: 'Ficha do pensador: George Orwell.' },
+        { ref: 'p:popper', txt: 'Ficha do pensador: Karl Popper.' },
+        { ref: 'p:milosz', txt: 'Ficha do pensador: Czesław Miłosz.' }
+      ] },
+
+      { t: 'leituras', ids: ['b-1984', 'b-zero-infinito', 'b-mente-cativa', 'b-klemperer', 'b-orwell-ensaios', 'b-alice-espelho', 'b-rinoceronte'] },
+      { t: 'sintese' }
+    ],
+    revisao: {
+      conceito: 'Duplipensar, definição persuasiva, rótulo como arma, infalsificabilidade.',
+      situacao: 'Num grupo de mensagens, alguém escreve: “Isso não é censura, é responsabilidade.” Uma semana depois, sobre medida parecida do outro lado: “Isso é censura pura.”',
+      prompt: 'Que critérios distinguiriam honestamente “responsabilidade” de “censura”? Eles sustentam as duas frases?'
+    },
+    proximos: ['u:u-investigador', 'q:q-palavras', 'b:b-1984']
+  };
+
+  /* ---------------------------------------------------------
+     3. Advogado ou investigador?
+     --------------------------------------------------------- */
+  U['u-investigador'] = {
+    id: 'u-investigador',
+    titulo: 'Advogado ou investigador?',
+    pergunta: 'Defendo minhas convicções como um advogado defende um cliente — ou as investigo como quem quer descobrir se são verdadeiras?',
+    duracao: '30–35 min',
+    eixos: ['A', 'C', 'G'],
+    resumo: 'Duas maneiras de se relacionar com as próprias convicções, os três tipos de desacordo, e ferramentas práticas — o teste da troca, o pré-compromisso, o argumento mais forte do outro lado, os graus de confiança — sem abrir mão de ter convicções firmes.',
+    blocos: [
+      { t: 'importa', html: `
+        <p>Existem duas maneiras de se relacionar com o que se pensa. Na primeira, as crenças são <strong>hipóteses sobre a realidade</strong>: podem ser fortes, profundas e importantes, mas continuam sujeitas a revisão. Na segunda, elas são <strong>clientes a defender</strong>: os fatos passam a valer pela utilidade que têm para a defesa.</p>
+        <p>A diferença não está em ter ou não ter convicções, preferências ou ideologia — todos têm. Está na disposição de deixar que a realidade corrija os próprios filtros. Esta unidade reúne ferramentas para isso e discute seus limites.</p>` },
+
+      { t: 'impressao', id: 'impressao',
+        prompt: 'Pense no político, partido ou movimento que você mais admira. <strong>Que evidência faria você mudar de opinião sobre ele?</strong> Agora faça a mesma pergunta sobre o que você mais rejeita.',
+        dica: 'Compare as duas respostas: são igualmente concretas?' },
+
+      { t: 'conceito', titulo: 'O soldado e o explorador', html: `
+        <p>A escritora Julia Galef, em <em>The Scout Mindset</em> (2021), propôs uma imagem: muitas vezes raciocinamos como <strong>soldados</strong>, cuja tarefa é defender uma posição e derrubar as ameaças a ela; poderíamos raciocinar mais como <strong>exploradores</strong>, cuja tarefa é desenhar o mapa mais exato possível do terreno — inclusive onde ele não é o que gostaríamos.</p>
+        <p>Ela não diz que o soldado é tolo: a mentalidade de soldado protege a autoestima, a calma e o pertencimento ao grupo. O ponto é que esses benefícios podem ser obtidos de outras formas, e que o custo de um mapa errado costuma aparecer mais tarde.</p>
+        <p>O psicólogo Philip Tetlock, que acompanhou por anos as previsões de especialistas, encontrou algo parecido. Retomando uma imagem do poeta grego Arquíloco, popularizada por Isaiah Berlin, ele distinguiu os <strong>porcos-espinhos</strong>, que sabem “uma grande coisa” e encaixam tudo nela, das <strong>raposas</strong>, que sabem muitas coisas pequenas, desconfiam de grandes teorias e ajustam as estimativas aos poucos. Em média, as raposas previram melhor. Em torneios posteriores, ele identificou “superprevisores”: pessoas comuns que se destacavam sobretudo pela disposição de atualizar suas estimativas com novas informações.</p>` },
+
+      { t: 'revelar', rotulo: 'Três tipos de desacordo', html: `
+        <ol>
+          <li><strong>Divergência sobre os fatos.</strong> Duas pessoas discordam porque receberam informações diferentes ou interpretam os dados de modos distintos. Pode ser resolvida, ao menos em parte, com investigação.</li>
+          <li><strong>Divergência sobre valores.</strong> Concordam sobre os fatos, mas discordam sobre o que deve prevalecer — segurança ou liberdade, igualdade ou mérito. Não há contradição lógica: elas pesam valores de forma diferente.</li>
+          <li><strong>Resistência à correção.</strong> A conclusão se mantém diante de qualquer evidência, os critérios mudam conforme a conveniência, e as justificativas se sucedem para evitar a revisão.</li>
+        </ol>
+        <p>Muitas discussões emperram porque uma divergência de valores é tratada como erro factual (“você não conhece os dados”) ou uma resistência à correção é tratada como diferença de valores (“é minha opinião”). Saber em qual das três você está é metade do caminho.</p>` },
+
+      { t: 'conceito', titulo: 'Ferramentas do investigador', html: `
+        <dl class="camadas">
+          <dt>O teste da troca</dt><dd>Imagine a mesma conduta, a mesma notícia, o mesmo argumento — com os lados trocados. Seu julgamento seria igual? Se não, o que justifica a diferença? Galef chama isso de <em>teste do duplo padrão</em> e sugere outros parecidos: o do cético seletivo (eu aceitaria evidência tão fraca se ela me contrariasse?), o do conformismo (eu pensaria isso se meu grupo pensasse o contrário?), o do observador de fora (o que alguém sem interesse no caso concluiria?).</dd>
+          <dt>O pré-compromisso</dt><dd>Decidir <em>antes</em> de ver os dados o que contaria como evidência a favor e contra. Depois que os dados chegam, é muito mais fácil mudar o critério do que a conclusão.</dd>
+          <dt>A melhor versão do outro lado</dt><dd>Antes de criticar uma posição, apresentá-la tão bem que quem a defende diria: “é isso mesmo que eu penso”. O economista Bryan Caplan propôs, em 2011, um “teste de Turing ideológico”: você consegue escrever sobre a posição adversária de modo que um leitor não saiba de que lado você está?</dd>
+          <dt>Graus de confiança</dt><dd>Trocar “é verdade / é mentira” por “tenho 70% de confiança nisso”. Assim, uma evidência nova não precisa derrubar a crença inteira — basta movê-la um pouco, para cima ou para baixo. É assim que os bons previsores de Tetlock trabalham.</dd>
+          <dt>Separar o problema da pessoa</dt><dd>Perguntar “isso é verdade?” antes de “quem disse isso?”. A credibilidade da fonte importa, mas é um atalho — e atalhos sofrem os mesmos vieses.</dd>
+        </dl>
+        <p>John Stuart Mill resumiu a razão de tudo isso em <em>Sobre a liberdade</em> (1859): quem conhece apenas o seu lado da questão conhece pouco dela.</p>` },
+
+      { t: 'perspectivas', titulo: 'Investigar sem perder as convicções', itens: [
+        { nome: 'A dúvida metódica', html: 'Descartes propôs duvidar de tudo o que pudesse ser duvidado; Popper, tratar todas as teorias como conjecturas; Mill, procurar ativamente as objeções mais fortes.', ve: 'Uma proteção contra o dogmatismo e contra a autoridade usada como prova.', limite: 'Ninguém vive duvidando de tudo; a dúvida universal pode ser fingida, paralisante ou uma pose.' },
+        { nome: 'A confiança nas convicções formadas', html: 'Burke defendia os “preconceitos” no sentido de juízos formados pela experiência acumulada, que nos permitem agir sem reconstruir tudo do zero. Newman distinguia dificuldades de dúvidas; Chesterton dizia que a mente se abre para depois se fechar sobre algo sólido.', ve: 'Que convicções enraizadas condensam experiência e não devem cair ao primeiro argumento engenhoso.', limite: 'Também condensam erros; e “experiência acumulada” pode virar justificativa para nunca examinar nada.' },
+        { nome: 'O falibilismo sem dúvida fingida', html: 'O filósofo americano Charles S. Peirce recomendava não fingir duvidar em filosofia do que não duvidamos no coração — e, ao mesmo tempo, manter qualquer crença aberta à correção pela investigação.', ve: 'Uma posição intermediária: partimos das crenças que temos, mas não as tornamos imunes a revisão.', limite: 'Não diz quanto peso dar a uma evidência contrária; isso continua exigindo juízo.' },
+        { nome: 'A razão como conversa', html: 'Os cientistas cognitivos Hugo Mercier e Dan Sperber argumentam (em <em>The Enigma of Reason</em>, 2017) que a razão humana evoluiu sobretudo para argumentar e avaliar argumentos alheios. Sozinhos, somos parciais; em grupo, com discordância, os vieses tendem a se compensar.', ve: 'Que o melhor antídoto ao viés talvez não seja esforço individual, mas boas conversas com quem discorda — e instituições que as permitam.', limite: 'Grupos homogêneos fazem o contrário: amplificam o viés. A tese também é discutida entre psicólogos.' }
+      ] },
+
+      { t: 'escolha', id: 'nenhuma',
+        prompt: 'Você percebe que não consegue imaginar nenhuma evidência que mudaria uma convicção sua. O que isso indica?',
+        opcoes: [
+          { txt: 'Que ela é verdadeira.', ok: false, fb: 'A firmeza de uma crença não é evidência de que ela seja verdadeira. Pessoas com crenças opostas costumam ter a mesma sensação.' },
+          { txt: 'Depende: se for uma convicção sobre valores, pode ser natural; se for sobre fatos, ela deixou de ser testada.', ok: true, fb: 'Bem observado. “A tortura de inocentes é errada” não precisa de um experimento que a refute. Mas “esse governo é corrupto”, “esse remédio funciona” ou “esse grupo é perigoso” são afirmações sobre fatos — e deveriam admitir evidências contrárias. Muitas convicções misturam as duas coisas; separá-las é o primeiro passo.' },
+          { txt: 'Que você é dogmático e deveria abandoná-la.', ok: false, fb: 'Nem toda convicção firme é dogmatismo, e abandonar uma crença por ela ser firme seria tão arbitrário quanto mantê-la por isso.' }
+        ] },
+
+      { t: 'passos', id: 'julgamento', titulo: 'Um julgamento com critérios iguais',
+        prompt: 'Escolha um acontecimento político ou social recente sobre o qual você tem opinião formada.',
+        campos: [
+          { id: 'fato', rotulo: 'O que aconteceu, descrito da forma mais neutra possível', dica: 'Sem adjetivos. Como um jornalista de agência escreveria.' },
+          { id: 'tipo', rotulo: 'A divergência é sobre fatos, sobre valores ou é resistência à correção?', dica: '' },
+          { id: 'troca', rotulo: 'Se o outro lado tivesse feito exatamente isso, como você julgaria?', dica: '' },
+          { id: 'diferenca', rotulo: 'Há diferenças relevantes entre os casos que justificariam julgamentos diferentes?', dica: 'Elas existem às vezes. Pergunte se você as teria notado antes de saber quem era o autor.' },
+          { id: 'evidencia', rotulo: 'Que evidência faria você mudar de opinião sobre este caso?', dica: 'Escreva antes de procurar notícias novas: é o seu pré-compromisso.' },
+          { id: 'confianca', rotulo: 'Sua confiança na sua opinião, de 0 a 100 — e por quê', dica: '' }
+        ] },
+
+      { t: 'texto', titulo: 'Para continuar', html: `
+        <p>A <a href="#/debate/d-duvida">Arena de debates</a> tem uma controvérsia sobre exatamente isto: devo desconfiar das minhas convicções ou confiar nelas? E o <a href="#/conviccoes">Exame de convicções</a> permite registrar sua confiança ao longo do tempo. Repare se ela se move — e em que direção.</p>` },
+
+      { t: 'comparar', ref: 'impressao', id: 'comparacao',
+        prompt: 'Releia as evidências que você listou para o grupo que admira e para o que rejeita. Elas eram igualmente concretas? Você mudaria alguma?' },
+
+      { t: 'conexoes', itens: [
+        { ref: 'u:u-dissonancia', txt: 'Os mecanismos que protegem as convicções.' },
+        { ref: 'u:u-duplipensar', txt: 'A disputa pelo sentido das palavras.' },
+        { ref: 'u:u-visao', txt: 'Na Etapa 6: uma visão de mundo revisável.' },
+        { ref: 'd:d-duvida', txt: 'Debate: desconfiar ou confiar nas próprias convicções?' },
+        { ref: 'ferramenta:conviccoes', txt: 'O Exame de convicções.' },
+        { ref: 'p:mill', txt: 'Ficha do pensador: John Stuart Mill.' },
+        { ref: 'p:peirce', txt: 'Ficha do pensador: Charles S. Peirce.' }
+      ] },
+
+      { t: 'leituras', ids: ['b-galef', 'b-superprevisoes', 'b-pense-novo', 'b-weston', 'b-mill', 'b-doze-homens', 'b-inimigo-povo'] },
+      { t: 'sintese' }
+    ],
+    revisao: {
+      conceito: 'Soldado e explorador; três tipos de desacordo; teste da troca, pré-compromisso, melhor versão do outro lado, graus de confiança.',
+      situacao: 'Uma pesquisa divulgada hoje contraria algo que você vem defendendo há anos.',
+      prompt: 'Antes de ler os detalhes: o que, na pesquisa, faria você ajustar sua posição — e o que faria você desconfiar dela com razão?'
+    },
+    proximos: ['ferramenta:conviccoes', 'd:d-duvida', 'q:q-contradicao']
   };
 })();
 
@@ -5791,6 +6195,425 @@ details.mais-obras .grade-livros { padding-bottom: 1rem; }
 })();
 
 </script>
+  <script>/* js/conteudo/64-biblioteca-pensamento.js */
+/* =========================================================
+   Biblioteca ampliada (v1.3) — pensamento, linguagem,
+   contradições e conflitos internos.
+   Ficção que dramatiza o autoengano, a convicção e a disputa
+   pelas palavras (não necessariamente distopias) e não ficção
+   introdutória, em linguagem acessível.
+   ========================================================= */
+(function () {
+  const A = window.ATELIE;
+  const DP = 'O texto original está em domínio público. Traduções recentes podem ter direitos próprios; procure em bibliotecas públicas ou digitais.';
+  const PROT = 'Obra protegida por direitos autorais; disponível em livrarias e bibliotecas.';
+  const SEMPT = 'Até onde pude verificar, não há edição brasileira recente; o livro está disponível em inglês (e às vezes em espanhol). Vale procurar em bibliotecas e sebos.';
+  const add = (o) => A.livros.push(Object.assign({ alternativa: '', unidades: [] }, o));
+
+  /* =================== FICÇÃO =================== */
+  add({ id: 'b-zero-infinito', titulo: 'O zero e o infinito', autor: 'Arthur Koestler', ano: '1940', tipo: 'Romance', origem: 'Hungria / Inglaterra',
+    temas: ['verdade', 'poder', 'ética', 'pensamento'],
+    porque: 'Rubachov, um velho revolucionário, é preso pelo partido que ajudou a construir. Aos poucos, ele é levado a confessar crimes que não cometeu — e a lógica que o convence é a dele mesmo.',
+    encontrar: 'Diálogos de interrogatório que são verdadeiros duelos de ideias. O romance foi inspirado nos processos de Moscou dos anos 1930.',
+    conexao: 'Talvez o melhor retrato literário de como uma convicção pode exigir que se negue a própria percepção dos fatos. Koestler, ex-comunista, escreveu de dentro.',
+    acesso: 'Médio. Curto e tenso; exige atenção aos argumentos.',
+    perguntas: ['Por que Rubachov confessa?', 'Em que ponto a fidelidade a uma causa se torna traição à verdade?'],
+    leituras: [
+      { quem: 'Leitura anticomunista', html: 'O romance desmontou, para muitos leitores ocidentais, a ilusão sobre a União Soviética, e foi decisivo no pós-guerra francês.' },
+      { quem: 'Leitura moral', html: 'Mais que um livro sobre o comunismo, é sobre o princípio de que os fins justificam os meios — e sobre o momento em que Rubachov percebe o que fez aos outros antes de acontecer a ele.' },
+      { quem: 'Críticos de esquerda', html: 'Na época, intelectuais como Maurice Merleau-Ponty responderam ao livro defendendo que a violência revolucionária precisava ser julgada pela história; depois, o próprio Merleau-Ponty reviu sua posição.' }
+    ],
+    legal: PROT, unidades: ['u-duplipensar'], contraponto: 'b-1984' });
+
+  add({ id: 'b-rinoceronte', titulo: 'O rinoceronte', autor: 'Eugène Ionesco', ano: '1959', tipo: 'Teatro', origem: 'França (autor nascido na Romênia)',
+    temas: ['sociedade', 'pensamento', 'identidade', 'liberdade'],
+    porque: 'Numa cidade pacata, as pessoas começam a se transformar em rinocerontes. Primeiro, todos se espantam; depois, encontram razões; por fim, aderem. Só Bérenger, um homem comum e indeciso, resiste.',
+    encontrar: 'Uma farsa absurda e engraçada que vai ficando assustadora. Os argumentos que os personagens usam para aceitar a mudança são reconhecíveis.',
+    conexao: 'Ionesco escreveu pensando na adesão de amigos ao fascismo na Romênia dos anos 1930, mas a peça vale para qualquer contágio de opinião: como pessoas razoáveis passam a achar normal o que achavam monstruoso.',
+    acesso: 'Fácil e rápido de ler; ótimo para ler em voz alta.',
+    perguntas: ['Que argumento cada personagem usa para aceitar os rinocerontes?', 'Bérenger resiste por convicção ou por incapacidade de se adaptar?'],
+    legal: PROT, unidades: ['u-dissonancia', 'u-duplipensar'] });
+
+  add({ id: 'b-bruxas-salem', titulo: 'As bruxas de Salém', autor: 'Arthur Miller', ano: '1953', tipo: 'Teatro', origem: 'Estados Unidos',
+    temas: ['verdade', 'religião', 'sociedade', 'poder'],
+    porque: 'Em 1692, numa vila puritana de Massachusetts, meninas acusam vizinhos de bruxaria. Quem nega é tido como culpado; quem confessa, e acusa outros, se salva.',
+    encontrar: 'Uma tragédia sobre histeria coletiva, interesses escondidos sob acusações morais e o preço de não mentir.',
+    conexao: 'Um exemplo perfeito de crença infalsificável: negar a acusação passa a ser prova de culpa. Miller escreveu pensando no macarthismo, mas a lógica se aplica a qualquer “caça às bruxas”, de qualquer lado.',
+    acesso: 'Médio; a linguagem imita o inglês do século XVII, mas a ação é intensa.',
+    perguntas: ['Por que John Proctor se recusa a assinar a confissão?', 'Que acusações do nosso tempo funcionam de modo parecido?'],
+    leituras: [
+      { quem: 'Leitura política da época', html: 'Uma alegoria das investigações anticomunistas do senador McCarthy, que destruíram carreiras com base em suspeitas.' },
+      { quem: 'Leitura contemporânea', html: 'Muitos leitores veem paralelos com linchamentos virtuais e campanhas de cancelamento, em que a acusação basta para condenar.' },
+      { quem: 'Leitura histórica', html: 'Historiadores lembram que Miller alterou fatos (como a idade de Abigail) e que o macarthismo, embora injusto, lidava com uma espionagem soviética real, ao contrário das bruxas.' }
+    ],
+    legal: PROT, unidades: ['u-duplipensar'] });
+
+  add({ id: 'b-inimigo-povo', titulo: 'Um inimigo do povo', autor: 'Henrik Ibsen', ano: '1882', tipo: 'Teatro', origem: 'Noruega',
+    temas: ['verdade', 'sociedade', 'ciência', 'poder'],
+    porque: 'O médico de uma cidade-balneário descobre que as águas que sustentam a economia local estão contaminadas. Ele espera ser aplaudido. Em vez disso, a cidade inteira se volta contra ele.',
+    encontrar: 'Uma peça curta sobre o que acontece quando um fato ameaça interesses, empregos e a imagem que uma comunidade tem de si.',
+    conexao: 'Mostra, quase em câmera lenta, como jornalistas, políticos e cidadãos encontram razões para não acreditar no que é inconveniente.',
+    acesso: 'Fácil; cinco atos rápidos.',
+    perguntas: ['Em que momento cada personagem muda de lado — e por quê?', 'O doutor Stockmann é um herói ou também um fanático?'],
+    leituras: [
+      { quem: 'Leitura liberal', html: 'Uma defesa do indivíduo que diz a verdade contra a maioria e contra a imprensa acomodada.' },
+      { quem: 'Leitura crítica', html: 'Stockmann termina afirmando que a maioria nunca tem razão e flerta com um desprezo aristocrático pelo povo. A peça também pode ser lida como retrato de um homem certo sobre os fatos e arrogante sobre todo o resto.' },
+      { quem: 'Leitura contemporânea', html: 'Foi relida durante crises ambientais e sanitárias, por todos os lados, cada um vendo a si mesmo como Stockmann.' }
+    ],
+    legal: DP, unidades: ['u-dissonancia', 'u-investigador'], contraponto: 'b-pato-selvagem' });
+
+  add({ id: 'b-pato-selvagem', titulo: 'O pato selvagem', autor: 'Henrik Ibsen', ano: '1884', tipo: 'Teatro', origem: 'Noruega',
+    temas: ['verdade', 'família', 'ética', 'emoções'],
+    porque: 'Gregers, um idealista, decide revelar a um amigo a verdade sobre seu casamento, convencido de que viver na verdade o libertará. O resultado é uma tragédia.',
+    encontrar: 'O avesso de <em>Um inimigo do povo</em>: aqui, quem insiste na verdade a qualquer preço é posto em xeque. Um médico cético defende a “mentira vital” que permite às pessoas viver.',
+    conexao: 'Complica a lição desta trilha: há ilusões que sustentam vidas? Quem tem o direito de destruí-las?',
+    acesso: 'Médio; simbolismo discreto (o pato ferido no sótão).',
+    perguntas: ['Gregers age por amor à verdade ou por vaidade moral?', 'Existe uma “mentira vital” na sua vida — ou na de alguém próximo?'],
+    legal: DP, unidades: ['u-dissonancia'], contraponto: 'b-inimigo-povo' });
+
+  add({ id: 'b-visita-velha', titulo: 'A visita da velha senhora', autor: 'Friedrich Dürrenmatt', ano: '1956', tipo: 'Teatro', origem: 'Suíça',
+    temas: ['ética', 'sociedade', 'trabalho', 'poder'],
+    porque: 'Uma milionária volta à cidade empobrecida onde nasceu e oferece uma fortuna em troca da morte do homem que a abandonou na juventude. Os moradores recusam, indignados. Depois, começam a comprar a crédito.',
+    encontrar: 'Uma comédia trágica sobre como uma comunidade inteira vai mudando de valores sem jamais admitir que mudou — até chamar o crime de justiça.',
+    conexao: 'Talvez a melhor dramatização da redução da dissonância em grupo: cada pequena concessão exige uma nova justificativa, e as justificativas acabam por reescrever a moral.',
+    acesso: 'Fácil e rápido; muito encenada.',
+    perguntas: ['Em que momento a cidade decide — e quem percebe?', 'Que palavras os moradores usam para nomear o que fazem?'],
+    legal: PROT, unidades: ['u-dissonancia', 'u-duplipensar'] });
+
+  add({ id: 'b-reparacao', titulo: 'Reparação', autor: 'Ian McEwan', ano: '2001', tipo: 'Romance', origem: 'Inglaterra',
+    temas: ['verdade', 'percepção', 'memória', 'ética'],
+    porque: 'Numa tarde de 1935, a menina Briony, de treze anos e imaginação fértil, interpreta mal algumas cenas entre adultos e faz uma acusação que destrói vidas. Passará o resto da vida tentando reparar.',
+    encontrar: 'Uma narrativa sobre como uma convicção forma aquilo que acreditamos ter visto — e sobre os limites da literatura como reparação.',
+    conexao: 'Mostra o viés de confirmação em ação: uma vez formada a hipótese, cada detalhe passa a confirmá-la.',
+    acesso: 'Médio; a primeira parte é lenta e minuciosa, o resto acelera.',
+    perguntas: ['Briony mente ou acredita no que diz?', 'O final muda o sentido do livro?'],
+    legal: PROT, unidades: ['u-dissonancia'] });
+
+  add({ id: 'b-sao-bernardo', titulo: 'São Bernardo', autor: 'Graciliano Ramos', ano: '1934', tipo: 'Romance', origem: 'Brasil',
+    temas: ['identidade', 'trabalho', 'amor', 'poder'],
+    porque: 'Paulo Honório, um fazendeiro que subiu na vida à força, escreve suas memórias depois da morte da mulher. Tentando entender o que aconteceu, vai revelando, sem querer, o que não consegue ver em si mesmo.',
+    encontrar: 'Prosa seca, direta, e um narrador cujo ciúme transforma qualquer gesto da esposa em prova contra ela.',
+    conexao: 'Um estudo brasileiro do autoengano: a mentalidade de proprietário que trata pessoas como coisas e uma desconfiança que nenhum fato consegue desmentir.',
+    acesso: 'Médio; curto, mas exige ler nas entrelinhas.',
+    perguntas: ['Madalena era o que Paulo Honório imaginava?', 'O que ele descobre ao escrever?'],
+    legal: 'Graciliano morreu em 1953; o texto está em domínio público no Brasil desde 2024. Há várias edições.', unidades: ['u-dissonancia'], contraponto: 'b-dom-casmurro' });
+
+  add({ id: 'b-alice-espelho', titulo: 'Alice através do espelho', autor: 'Lewis Carroll', ano: '1871', tipo: 'Romance', origem: 'Inglaterra',
+    temas: ['linguagem', 'pensamento', 'verdade'],
+    porque: 'A continuação de <em>Alice no País das Maravilhas</em>. É aqui que Humpty Dumpty explica que, quando ele usa uma palavra, ela significa exatamente o que ele quer — e que a questão é saber quem manda.',
+    encontrar: 'Um livro infantil escrito por um professor de lógica, cheio de jogos com palavras, sentidos e raciocínios absurdos.',
+    conexao: 'O diálogo com Humpty Dumpty é talvez a melhor introdução à disputa pelo sentido das palavras: ela não é sobre o significado, mas sobre quem tem o poder de defini-lo.',
+    acesso: 'Fácil e curto; vale ler numa edição comentada.',
+    perguntas: ['Quem “manda” nas palavras na nossa sociedade?'],
+    legal: DP, unidades: ['u-duplipensar'] });
+
+  add({ id: 'b-assim-e', titulo: 'Assim é (se lhe parece)', autor: 'Luigi Pirandello', ano: '1917', tipo: 'Teatro', origem: 'Itália',
+    temas: ['verdade', 'percepção', 'sociedade'],
+    porque: 'Numa cidade do interior italiano, um funcionário e sua sogra contam versões opostas e incompatíveis sobre a mesma mulher. Os vizinhos, curiosos, querem descobrir quem mente.',
+    encontrar: 'Uma comédia sobre a impossibilidade de chegar à verdade quando cada um tem a sua — e sobre a crueldade da curiosidade alheia.',
+    conexao: 'Útil para pensar o limite do conhecimento: às vezes os fatos não estão disponíveis, e a convicção vem preencher o vazio. Pirandello recebeu o Nobel em 1934.',
+    acesso: 'Fácil; peça curta.',
+    perguntas: ['A peça defende que não existe verdade, ou que não temos acesso a ela?', 'Por que os vizinhos precisam tanto de uma resposta?'],
+    legal: DP, unidades: ['u-investigador'] });
+
+  add({ id: 'b-outra-volta', titulo: 'A outra volta do parafuso', autor: 'Henry James', ano: '1898', tipo: 'Novela', origem: 'Estados Unidos / Inglaterra',
+    temas: ['percepção', 'verdade', 'emoções'],
+    porque: 'Uma jovem preceptora, numa casa de campo inglesa, convence-se de que duas crianças estão sendo assombradas por fantasmas. Mas os fantasmas existem, ou estão na cabeça dela?',
+    encontrar: 'Uma história de terror ambígua até a última linha.',
+    conexao: 'Um exercício de leitura: cada detalhe pode ser lido como prova dos fantasmas ou como prova da obsessão da narradora. O leitor percebe o próprio viés de confirmação.',
+    acesso: 'Médio; o estilo de James é cheio de rodeios.',
+    perguntas: ['Em qual interpretação você acreditou primeiro? Que detalhe o fez mudar?'],
+    leituras: [
+      { quem: 'Leitura sobrenatural', html: 'Os fantasmas são reais, e a preceptora é uma heroína que tenta salvar as crianças.' },
+      { quem: 'Leitura psicológica', html: 'O crítico Edmund Wilson argumentou, em 1934, que os fantasmas são alucinações de uma mulher reprimida.' },
+      { quem: 'Leitura da ambiguidade', html: 'Muitos críticos hoje defendem que o texto foi construído para que as duas leituras sejam sustentáveis.' }
+    ],
+    legal: DP, unidades: ['u-dissonancia'] });
+
+  add({ id: 'b-duplo', titulo: 'O duplo', autor: 'Fiódor Dostoiévski', ano: '1846', tipo: 'Novela', origem: 'Rússia',
+    temas: ['identidade', 'emoções', 'consciência'],
+    porque: 'Um funcionário público tímido e ansioso encontra um homem idêntico a ele, que faz com sucesso tudo o que ele não consegue fazer. O duplo vai tomando seu lugar.',
+    encontrar: 'Uma novela de juventude, grotesca e cômica, sobre a divisão interna de um homem.',
+    conexao: 'Uma imagem literária do conflito interior: a parte de nós que queremos ser e a que tememos ser.',
+    acesso: 'Médio; o narrador confuso e repetitivo é proposital.',
+    perguntas: ['O duplo existe ou é a mente de Goliádkin se partindo?'],
+    traducao: 'Prefira traduções feitas diretamente do russo.', legal: DP, unidades: ['u-camadas'], contraponto: 'b-medico-monstro' });
+
+  add({ id: 'b-nome-rosa', titulo: 'O nome da rosa', autor: 'Umberto Eco', ano: '1980', tipo: 'Romance', origem: 'Itália',
+    temas: ['verdade', 'religião', 'linguagem', 'pensamento'],
+    porque: 'Em 1327, numa abadia beneditina, monges morrem misteriosamente. O frade franciscano Guilherme de Baskerville investiga, usando a lógica e a leitura de sinais.',
+    encontrar: 'Um romance policial que é também um tratado sobre interpretação, dogmatismo, riso e a guarda do conhecimento.',
+    conexao: 'Guilherme quase erra porque se apega a uma hipótese elegante que os fatos pareciam confirmar. O vilão teme o riso porque ele dissolve o medo — e com ele a autoridade.',
+    acesso: 'Médio a difícil; as primeiras cem páginas, propositalmente lentas, assustam muitos leitores. Há trechos em latim.',
+    perguntas: ['Qual foi o erro de Guilherme?', 'Por que alguém teria medo de um livro sobre o riso?'],
+    legal: PROT, unidades: ['u-investigador'] });
+
+  add({ id: 'b-papeis-avulsos', titulo: 'Papéis avulsos (com “Teoria do medalhão” e “O espelho”)', autor: 'Machado de Assis', ano: '1882', tipo: 'Conto', origem: 'Brasil',
+    temas: ['linguagem', 'identidade', 'sociedade'],
+    porque: 'Em “Teoria do medalhão”, um pai ensina ao filho como fazer carreira sem ter nenhuma ideia própria: basta repetir frases feitas. Em “O espelho”, um homem descobre que sua alma depende da farda que veste e do olhar dos outros.',
+    encontrar: 'Contos irônicos, curtos e precisos, entre os melhores de Machado.',
+    conexao: '“Teoria do medalhão” é uma aula sobre linguagem vazia que passa por pensamento; “O espelho”, sobre como a identidade social (o papel, o grupo) pode substituir a interior.',
+    acesso: 'Fácil; contos de poucas páginas, gratuitos na internet.',
+    perguntas: ['Que “medalhões” você reconhece hoje — e em que lado?', 'Qual é a sua “alma exterior”?'],
+    legal: DP, unidades: ['u-duplipensar', 'u-dissonancia'] });
+
+  add({ id: 'b-ensaio-lucidez', titulo: 'Ensaio sobre a lucidez', autor: 'José Saramago', ano: '2004', tipo: 'Romance', origem: 'Portugal',
+    temas: ['poder', 'sociedade', 'verdade'],
+    porque: 'Numa capital sem nome, a maioria dos eleitores vota em branco. O governo não consegue aceitar que não haja conspiração e passa a tratar os cidadãos como inimigos.',
+    encontrar: 'Uma continuação de <em>Ensaio sobre a cegueira</em>, com a mesma prosa longa e sem travessões.',
+    conexao: 'Um retrato de um poder que precisa de uma explicação conspiratória para não rever a si mesmo.',
+    acesso: 'Médio; o estilo de Saramago exige acostumar-se.',
+    perguntas: ['O governo do livro acredita no que diz?', 'Votar em branco é um ato político?'],
+    leituras: [
+      { quem: 'Leitura de esquerda', html: 'Saramago, comunista declarado, critica as democracias representativas e o poder que elas escondem.' },
+      { quem: 'Leitura liberal ou conservadora', html: 'O livro mostra, sem querer, o que acontece quando qualquer governo, de qualquer cor, trata a discordância como traição.' }
+    ],
+    legal: PROT, unidades: ['u-duplipensar'], contraponto: 'b-ensaio-cegueira' });
+
+  add({ id: 'b-tartufo', titulo: 'Tartufo', autor: 'Molière', ano: '1664–1669', tipo: 'Teatro', origem: 'França',
+    temas: ['religião', 'família', 'verdade', 'ética'],
+    porque: 'Orgon, um burguês rico, acolhe em casa Tartufo, um falso devoto. Toda a família vê que ele é um impostor; Orgon não vê — e quanto mais o acusam, mais o defende.',
+    encontrar: 'Uma comédia em versos, proibida por anos por pressão de grupos religiosos da corte.',
+    conexao: 'O retrato clássico de alguém que não consegue ver o que todos veem, porque admitir o erro seria admitir que foi enganado.',
+    acesso: 'Fácil; peça curta e divertida.',
+    perguntas: ['Por que Orgon é o último a perceber?', 'A peça critica a religião ou a hipocrisia religiosa?'],
+    leituras: [
+      { quem: 'Leitura religiosa', html: 'Molière não ataca a fé, mas sua falsificação; há um personagem de piedade sincera e sensata na peça.' },
+      { quem: 'Leitura anticlerical', html: 'Os inimigos de Molière na época e, depois, iluministas viram na peça um ataque à devoção em geral.' }
+    ],
+    legal: DP, unidades: ['u-dissonancia'] });
+
+  add({ id: 'b-xadrez', titulo: 'Xadrez (Novela de xadrez)', autor: 'Stefan Zweig', ano: '1942', tipo: 'Novela', origem: 'Áustria',
+    temas: ['consciência', 'identidade', 'liberdade'],
+    porque: 'Num navio, um misterioso passageiro enfrenta o campeão mundial de xadrez. Aos poucos ele conta como aprendeu: preso pela Gestapo em isolamento total, jogou contra si mesmo até sua mente se dividir.',
+    encontrar: 'Uma novela curta, escrita pouco antes do suicídio de Zweig no Brasil, em Petrópolis.',
+    conexao: 'Uma imagem extrema do conflito interno: um “eu” das brancas e um “eu” das pretas, cada um tentando vencer o outro.',
+    acesso: 'Fácil; pode ser lida numa tarde.',
+    perguntas: ['O que acontece com uma mente que só tem a si mesma como adversária?'],
+    legal: 'Zweig morreu em 1942; o original está em domínio público. Traduções recentes têm direitos próprios.', unidades: ['u-camadas'] });
+
+  add({ id: 'b-maos-sujas', titulo: 'As mãos sujas', autor: 'Jean-Paul Sartre', ano: '1948', tipo: 'Teatro', origem: 'França',
+    temas: ['poder', 'ética', 'identidade', 'verdade'],
+    porque: 'Hugo, um jovem intelectual comunista, é encarregado de matar um líder do próprio partido acusado de trair a linha oficial. Quando volta da prisão, a linha mudou — e o que foi crime passou a ser a política correta.',
+    encontrar: 'Um drama político sobre pureza, eficácia e a mudança das verdades de partido.',
+    conexao: 'Um caso de “a guerra sempre foi contra a Lestásia”: o partido reescreve o passado, e Hugo precisa decidir se aceita a nova versão.',
+    acesso: 'Médio; muito diálogo político.',
+    perguntas: ['Hugo matou por convicção, por ciúme ou para provar algo a si mesmo?', 'É possível agir na política sem “sujar as mãos”?'],
+    leituras: [
+      { quem: 'Leitura anticomunista', html: 'Foi encenada no Ocidente como denúncia do cinismo comunista, a ponto de Sartre, então próximo do Partido Comunista Francês, proibir montagens por alguns anos.' },
+      { quem: 'Leitura existencialista', html: 'Uma peça sobre a responsabilidade individual de dar sentido ao próprio ato, quando nenhuma doutrina garante esse sentido.' }
+    ],
+    legal: PROT, unidades: ['u-duplipensar'] });
+
+  add({ id: 'b-marca-humana', titulo: 'A marca humana', autor: 'Philip Roth', ano: '2000', tipo: 'Romance', origem: 'Estados Unidos',
+    temas: ['identidade', 'linguagem', 'sociedade', 'verdade'],
+    porque: 'Coleman Silk, professor universitário, é acusado de racismo por uma palavra ambígua dita em aula e tem a carreira destruída. Mas ele próprio guarda um segredo sobre sua identidade.',
+    encontrar: 'Um romance amplo, ambientado no verão de 1998, em pleno escândalo Clinton–Lewinsky.',
+    conexao: 'Sobre o poder de uma palavra isolada do contexto, a sede de pureza moral (que Roth vê nos dois lados) e as identidades que escolhemos ou escondemos.',
+    acesso: 'Médio a difícil; frases longas e muitos personagens.',
+    perguntas: ['Coleman é vítima ou também cúmplice do que lhe acontece?', 'O que o livro diz sobre o desejo de pureza?'],
+    legal: PROT, unidades: ['u-duplipensar'] });
+
+  add({ id: 'b-desonra', titulo: 'Desonra', autor: 'J. M. Coetzee', ano: '1999', tipo: 'Romance', origem: 'África do Sul',
+    temas: ['ética', 'identidade', 'sociedade', 'poder'],
+    porque: 'David Lurie, professor que se envolve com uma aluna, aceita ser punido, mas se recusa a fazer a confissão pública e o arrependimento que a universidade lhe pede. Depois, na fazenda da filha, enfrenta uma violência que vira sua vida.',
+    encontrar: 'Prosa seca e incômoda sobre culpa, vergonha e a África do Sul depois do apartheid.',
+    conexao: 'Distingue culpa real e ritual público de arrependimento — e questiona se as palavras que exigem de nós correspondem ao que sentimos.',
+    acesso: 'Médio; curto, mas perturbador. Contém violência sexual.',
+    perguntas: ['Lurie é honesto ou apenas orgulhoso ao recusar a confissão?'],
+    legal: PROT, unidades: ['u-investigador'] });
+
+  /* =================== NÃO FICÇÃO INTRODUTÓRIA =================== */
+  add({ id: 'b-tavris', titulo: 'Mistakes Were Made (But Not by Me)', autor: 'Carol Tavris e Elliot Aronson', ano: '2007 (3ª ed. 2020)', tipo: 'Divulgação científica', origem: 'Estados Unidos',
+    temas: ['pensamento', 'emoções', 'identidade', 'ética'], afinidades: ['psicologia'],
+    porque: 'O melhor livro introdutório sobre autojustificação: como a dissonância nos leva a defender decisões ruins, memórias falsas e erros profissionais — de casais a promotores e políticos.',
+    encontrar: 'Exemplos concretos e uma imagem central, a “pirâmide da escolha”: duas pessoas quase idênticas tomam decisões ligeiramente diferentes e, ao justificá-las, terminam em polos opostos.',
+    conexao: 'Complemento direto da unidade sobre dissonância. Aronson foi um dos principais herdeiros de Festinger.',
+    acesso: 'Fácil; escrito para o público geral. Atenção: anterior à grande réplica de 2024 sobre a dissonância.',
+    perguntas: ['Que escolha sua começou pequena e foi sendo justificada até virar convicção?'],
+    legal: SEMPT, unidades: ['u-dissonancia'] });
+
+  add({ id: 'b-galef', titulo: 'The Scout Mindset', autor: 'Julia Galef', ano: '2021', tipo: 'Divulgação científica', origem: 'Estados Unidos',
+    temas: ['pensamento', 'verdade', 'emoções'], afinidades: ['psicologia', 'conhecimento'],
+    porque: 'Por que algumas pessoas enxergam as coisas com mais clareza? Galef contrapõe a mentalidade de “soldado”, que defende posições, à de “explorador”, que quer o mapa mais exato, e mostra como cultivar a segunda sem perder a motivação.',
+    encontrar: 'Testes práticos (do duplo padrão, do cético seletivo, do conformismo) e a ideia de manter a identidade “leve”.',
+    conexao: 'Base da unidade “Advogado ou investigador?”.',
+    acesso: 'Fácil; curto e bem-humorado.',
+    perguntas: ['Em que assunto você é mais soldado? Por quê?'],
+    legal: SEMPT, unidades: ['u-investigador'] });
+
+  add({ id: 'b-profecia', titulo: 'When Prophecy Fails', autor: 'Leon Festinger, Henry Riecken e Stanley Schachter', ano: '1956', tipo: 'Divulgação científica', origem: 'Estados Unidos',
+    temas: ['religião', 'pensamento', 'sociedade'], afinidades: ['psicologia'],
+    porque: 'O relato clássico de psicólogos infiltrados num grupo que esperava o fim do mundo em dezembro de 1954 — e do que aconteceu quando o mundo não acabou.',
+    encontrar: 'Uma narrativa quase de romance, com personagens com nomes trocados.',
+    conexao: 'Leia junto com a reavaliação de Thomas Kelly (2025), que questiona a interferência dos pesquisadores: é uma aula sobre como avaliar um estudo célebre.',
+    acesso: 'Fácil a médio.',
+    perguntas: ['Os pesquisadores observaram o grupo ou o mudaram?'],
+    legal: SEMPT, unidades: ['u-dissonancia'] });
+
+  add({ id: 'b-pense-novo', titulo: 'Pense de novo', autor: 'Adam Grant', ano: '2021', tipo: 'Divulgação científica', origem: 'Estados Unidos',
+    temas: ['pensamento', 'trabalho', 'educação'], afinidades: ['psicologia'],
+    porque: 'Sobre o valor de repensar: saber o que não se sabe, duvidar das próprias certezas e ajudar outras pessoas a mudar de ideia sem humilhá-las.',
+    encontrar: 'Quatro “modos” em que costumamos pensar — pregador, promotor, político e cientista — e histórias de bombeiros, negociadores e debatedores.',
+    conexao: 'Introdução prática, voltada também à vida profissional, ao tema da unidade “Advogado ou investigador?”.',
+    acesso: 'Muito fácil; linguagem de livro de negócios.',
+    perguntas: ['Em que situações você costuma ser pregador, promotor ou político?'],
+    legal: 'Edição brasileira pela Sextante.', unidades: ['u-investigador', 'u-dissonancia'] });
+
+  add({ id: 'b-arte-pensar', titulo: 'A arte de pensar claramente', autor: 'Rolf Dobelli', ano: '2011', tipo: 'Divulgação científica', origem: 'Suíça',
+    temas: ['pensamento', 'emoções'], afinidades: ['psicologia'],
+    porque: 'Quase cem vieses e erros de raciocínio explicados em capítulos de três páginas, com exemplos do cotidiano.',
+    encontrar: 'Um catálogo para consultar aos poucos: viés de confirmação, custo afundado, prova social, ancoragem…',
+    conexao: 'Uma porta de entrada leve; para aprofundar, Kahneman.',
+    acesso: 'Muito fácil.',
+    perguntas: ['Qual viés você reconheceu em si mesmo?'],
+    alternativa: 'Para algo mais rigoroso, <em>Rápido e devagar</em>, de Kahneman.',
+    legal: 'Edição brasileira pela Objetiva.', unidades: ['u-dissonancia'] });
+
+  add({ id: 'b-armas-persuasao', titulo: 'As armas da persuasão', autor: 'Robert Cialdini', ano: '1984', tipo: 'Divulgação científica', origem: 'Estados Unidos',
+    temas: ['pensamento', 'sociedade', 'emoções'], afinidades: ['psicologia'],
+    porque: 'Os princípios que nos levam a dizer sim — reciprocidade, compromisso e coerência, prova social, afeição, autoridade, escassez — e como vendedores, seitas e políticos os exploram.',
+    encontrar: 'O capítulo sobre <em>compromisso e coerência</em> mostra como pequenas concessões públicas nos prendem a posições que depois defendemos.',
+    conexao: 'Ajuda a ver que muitas convicções não foram escolhidas por argumentos, mas por mecanismos de influência.',
+    acesso: 'Fácil.',
+    perguntas: ['A que posição você ficou preso por já tê-la defendido em público?'],
+    legal: 'Há edições brasileiras. Como em toda a psicologia social, alguns estudos citados foram reavaliados depois.', unidades: ['u-dissonancia'] });
+
+  add({ id: 'b-filtro-invisivel', titulo: 'O filtro invisível', autor: 'Eli Pariser', ano: '2011', tipo: 'Divulgação científica', origem: 'Estados Unidos',
+    temas: ['sociedade', 'percepção', 'poder'], afinidades: ['sociedade', 'critica'],
+    porque: 'O livro que popularizou a ideia de “bolha”: algoritmos que nos mostram aquilo que já concordamos, sem que percebamos o que ficou de fora.',
+    encontrar: 'Uma análise de como buscadores e redes sociais personalizam o que cada pessoa vê.',
+    conexao: 'O viés de confirmação, terceirizado para máquinas.',
+    acesso: 'Fácil.',
+    perguntas: ['Que tipo de notícia nunca aparece para você?'],
+    alternativa: 'Pesquisas posteriores sugerem que as bolhas algorítmicas são menos fechadas do que Pariser temia: em geral, nossas próprias escolhas filtram mais que os algoritmos.',
+    legal: 'Edição brasileira pela Zahar.', unidades: ['u-dissonancia'] });
+
+  add({ id: 'b-superprevisoes', titulo: 'Superprevisões', autor: 'Philip Tetlock e Dan Gardner', ano: '2015', tipo: 'Divulgação científica', origem: 'Estados Unidos / Canadá',
+    temas: ['pensamento', 'verdade', 'tempo'], afinidades: ['conhecimento', 'psicologia'],
+    porque: 'Quem prevê melhor o futuro? Não os especialistas mais confiantes, mas pessoas que pensam em probabilidades, desconfiam de grandes teorias e mudam de ideia aos poucos.',
+    encontrar: 'Histórias dos “superprevisores” de um grande torneio de previsões e o contraste entre raposas e porcos-espinhos.',
+    conexao: 'Mostra, com dados, as vantagens de tratar convicções como hipóteses com graus de confiança.',
+    acesso: 'Fácil a médio.',
+    perguntas: ['Você é mais raposa ou porco-espinho? Em que temas?'],
+    legal: 'Edição brasileira pela Objetiva.', unidades: ['u-investigador'] });
+
+  add({ id: 'b-schopenhauer-debate', titulo: 'Como vencer um debate sem precisar ter razão', autor: 'Arthur Schopenhauer', ano: 'c. 1831 (publicado em 1864)', tipo: 'Ensaio', origem: 'Alemanha',
+    temas: ['linguagem', 'pensamento', 'verdade'], afinidades: ['conhecimento'],
+    porque: 'Trinta e oito “estratagemas” para ganhar uma discussão mesmo estando errado: generalizar a tese do outro, mudar de assunto, apelar à autoridade, irritar o adversário…',
+    encontrar: 'Um manual irônico e cínico — e, por isso mesmo, um ótimo manual de defesa.',
+    conexao: 'O retrato perfeito do “advogado” de que fala a unidade final desta trilha. Reconhecer os estratagemas, inclusive os próprios, é o primeiro passo para não usá-los.',
+    acesso: 'Fácil e curto.',
+    perguntas: ['Qual estratagema você mais usa?'],
+    legal: 'O original está em domínio público; há edições brasileiras com títulos e traduções diferentes.', unidades: ['u-investigador'] });
+
+  add({ id: 'b-weston', titulo: 'A construção do argumento', autor: 'Anthony Weston', ano: '1987', tipo: 'Introdução', origem: 'Estados Unidos',
+    temas: ['pensamento', 'linguagem', 'educação'], afinidades: ['conhecimento'],
+    porque: 'Um livrinho com regras simples para construir e avaliar argumentos: distinguir premissas e conclusão, usar exemplos, avaliar fontes, reconhecer falácias.',
+    encontrar: 'Regras curtas, cada uma com exemplos. Dá para ler em uma ou duas tardes.',
+    conexao: 'A caixa de ferramentas básica de quem quer investigar em vez de apenas defender.',
+    acesso: 'Muito fácil.',
+    perguntas: ['Escolha um argumento seu e aplique as regras do livro.'],
+    legal: 'Edição brasileira pela Martins Fontes.', unidades: ['u-investigador', 'u-argumento'] });
+
+  add({ id: 'b-carnielli', titulo: 'Pensamento crítico: o poder da lógica e da argumentação', autor: 'Walter Carnielli e Richard L. Epstein', ano: '2009', tipo: 'Introdução', origem: 'Brasil / Estados Unidos',
+    temas: ['pensamento', 'linguagem', 'educação'], afinidades: ['conhecimento'],
+    porque: 'Um manual completo de pensamento crítico, adaptado ao Brasil por um lógico da Unicamp, com exercícios.',
+    encontrar: 'Argumentos, falácias, raciocínio causal, avaliação de afirmações, exercícios resolvidos.',
+    conexao: 'Para quem quer estudar com método as ferramentas da Etapa 1 e desta trilha.',
+    acesso: 'Médio; é um livro-texto, mas escrito com clareza.',
+    perguntas: ['Que tipo de exercício foi mais difícil para você?'],
+    legal: 'Edição brasileira pela Rideel.', unidades: ['u-argumento', 'u-investigador'] });
+
+  add({ id: 'b-magee-popper', titulo: 'As ideias de Popper', autor: 'Bryan Magee', ano: '1973', tipo: 'Introdução', origem: 'Inglaterra',
+    temas: ['ciência', 'pensamento', 'liberdade'], afinidades: ['conhecimento', 'liberdade'],
+    porque: 'Uma introdução curta e clara ao pensamento de Popper — falseabilidade, conhecimento por tentativa e erro, sociedade aberta —, escrita por um divulgador que o conhecia pessoalmente.',
+    encontrar: 'Um panorama em menos de 150 páginas.',
+    conexao: 'Aprofunda a ideia de crença infalsificável e sua aplicação à política.',
+    acesso: 'Fácil a médio.',
+    perguntas: ['Que convicção sua é falseável? Qual não é?'],
+    legal: 'Edição brasileira antiga (Cultrix); mais fácil de achar em sebos.', unidades: ['u-duplipensar'] });
+
+  add({ id: 'b-klemperer', titulo: 'LTI: a linguagem do Terceiro Reich', autor: 'Victor Klemperer', ano: '1947', tipo: 'Memória e testemunho', origem: 'Alemanha',
+    temas: ['linguagem', 'poder', 'história'], afinidades: ['critica', 'liberdade'],
+    porque: 'Um filólogo judeu que sobreviveu em Dresden anotou, dia após dia, como o nazismo mudou o alemão cotidiano — e como as palavras mudavam as pessoas.',
+    encontrar: 'Capítulos curtos sobre palavras, abreviações, superlativos, eufemismos. Parte diário, parte análise.',
+    conexao: 'O caso histórico mais documentado do que Orwell imaginou na novilíngua.',
+    acesso: 'Médio; os capítulos são curtos e podem ser lidos separadamente.',
+    perguntas: ['Que palavra mudou de sentido no seu tempo de vida?'],
+    legal: 'Edição brasileira pela Contraponto.', unidades: ['u-duplipensar'] });
+
+  add({ id: 'b-mente-cativa', titulo: 'Mente cativa', autor: 'Czesław Miłosz', ano: '1953', tipo: 'Ensaio', origem: 'Polônia',
+    temas: ['pensamento', 'poder', 'liberdade', 'identidade'], afinidades: ['liberdade', 'religiosa'],
+    porque: 'Por que intelectuais brilhantes aderiram ao stalinismo? Miłosz, que serviu ao regime antes de romper com ele, responde com lucidez e sem desprezo.',
+    encontrar: 'Retratos de quatro escritores (“Alfa”, “Beta”, “Gama” e “Delta”), a pílula de Murti-Bing e o conceito de <em>ketman</em>.',
+    conexao: 'Mostra como uma ideologia pode satisfazer necessidades profundas — de sentido, de pertencimento, de segurança — e por isso se tornar impermeável a fatos.',
+    acesso: 'Médio; ensaio literário, não acadêmico.',
+    perguntas: ['Que “pílula de Murti-Bing” o nosso tempo oferece?'],
+    legal: 'Há edição brasileira.', unidades: ['u-duplipensar'], contraponto: 'b-zero-infinito' });
+
+  add({ id: 'b-pinker-racionalidade', titulo: 'Racionalidade', autor: 'Steven Pinker', ano: '2021', tipo: 'Divulgação científica', origem: 'Estados Unidos',
+    temas: ['pensamento', 'ciência', 'verdade'], afinidades: ['conhecimento'],
+    porque: 'Lógica, probabilidade, raciocínio bayesiano, correlação e causa, teoria dos jogos — e uma pergunta: se somos capazes de tudo isso, por que o mundo parece tão irracional?',
+    encontrar: 'Um capítulo final sobre o “raciocínio motivado em grupo” e a diferença entre crenças que testamos e crenças que usamos para pertencer.',
+    conexao: 'Uma visão otimista (e discutida) da razão, útil para equilibrar a lista de vieses.',
+    acesso: 'Médio; alguns capítulos têm matemática simples.',
+    perguntas: ['Que crenças suas são “para pertencer” e quais são “para testar”?'],
+    legal: 'Edição brasileira pela Intrínseca.', unidades: ['u-investigador'], contraponto: 'b-haidt' });
+
+  add({ id: 'b-historia-unica', titulo: 'O perigo de uma história única', autor: 'Chimamanda Ngozi Adichie', ano: '2009 (palestra) · 2019 (livro)', tipo: 'Ensaio', origem: 'Nigéria',
+    temas: ['identidade', 'cultura', 'linguagem'], afinidades: ['critica'],
+    porque: 'Uma palestra curta e pessoal sobre como uma única narrativa sobre um povo, um lugar ou uma pessoa cria estereótipos — não porque seja falsa, mas porque é incompleta.',
+    encontrar: 'Histórias da infância da autora na Nigéria e de sua chegada aos Estados Unidos.',
+    conexao: 'Uma versão narrativa do viés de confirmação: quando só conhecemos uma história, todo fato novo é encaixado nela.',
+    acesso: 'Muito fácil; a palestra original tem cerca de 20 minutos e está disponível em vídeo.',
+    perguntas: ['Sobre que grupo você conhece só “uma história”?'],
+    leituras: [{ quem: 'Leitura progressista', html: 'Uma defesa da diversidade de vozes e da representatividade.' }, { quem: 'Leitura conservadora', html: 'O mesmo argumento vale contra a “história única” que certos ambientes culturais contam sobre religiosos, interioranos ou conservadores.' }],
+    legal: 'Edição brasileira pela Companhia das Letras.', unidades: ['u-dissonancia'] });
+
+  add({ id: 'b-hoffer', titulo: 'The True Believer (O verdadeiro crente)', autor: 'Eric Hoffer', ano: '1951', tipo: 'Ensaio', origem: 'Estados Unidos',
+    temas: ['sociedade', 'identidade', 'religião', 'poder'], afinidades: ['sociedade', 'liberdade'],
+    porque: 'Um estivador autodidata escreveu este pequeno livro de aforismos sobre o fanatismo: por que movimentos de massa — religiosos, nacionalistas, revolucionários — atraem os frustrados, e por que são intercambiáveis.',
+    encontrar: 'Observações curtas e afiadas, como a de que o fanático de um movimento se converte facilmente em fanático de outro.',
+    conexao: 'Explica por que a adesão a uma causa pode ter menos a ver com seu conteúdo do que com a necessidade de escapar de si mesmo.',
+    acesso: 'Fácil; parágrafos curtos.',
+    perguntas: ['Que necessidade sua uma causa política ou religiosa satisfaz?'],
+    legal: SEMPT, unidades: ['u-dissonancia'] });
+
+  add({ id: 'b-arendt-verdade', titulo: '“Verdade e política” (em Entre o passado e o futuro)', autor: 'Hannah Arendt', ano: '1967', tipo: 'Ensaio', origem: 'Estados Unidos (autora nascida na Alemanha)',
+    temas: ['verdade', 'poder', 'sociedade'], afinidades: ['sociedade'],
+    porque: 'Arendt distingue verdades de razão e verdades de fato, e mostra que as segundas são as mais frágeis: podem ser transformadas em opinião, e depois em mentira organizada.',
+    encontrar: 'Um ensaio de cerca de 40 páginas, escrito depois da polêmica sobre seu livro a respeito de Eichmann.',
+    conexao: 'Quando os fatos passam a ser tratados como opiniões entre outras, o desacordo deixa de ter chão comum — o ponto final da trilha.',
+    acesso: 'Médio a difícil; vale ler devagar.',
+    perguntas: ['Que fato do seu tempo está sendo tratado como “opinião”?'],
+    legal: 'Edição brasileira pela Perspectiva.', unidades: ['u-duplipensar', 'u-investigador'] });
+
+  /* ======== Obras já existentes que se ligam a esta trilha ======== */
+  const ligar = {
+    'b-1984': ['u-duplipensar'], 'b-revolucao-bichos': ['u-duplipensar'], 'b-orwell-ensaios': ['u-duplipensar'],
+    'b-dom-casmurro': ['u-dissonancia'], 'b-alienista': ['u-duplipensar'], 'b-otelo': ['u-dissonancia'],
+    'b-ensaio-cegueira': ['u-dissonancia'], 'b-doze-homens': ['u-investigador'], 'b-queda': ['u-dissonancia'],
+    'b-vestigios-dia': ['u-dissonancia'], 'b-submissao': ['u-dissonancia'], 'b-orgulho': ['u-dissonancia'],
+    'b-kahneman': ['u-dissonancia'], 'b-haidt': ['u-dissonancia'], 'b-abolicao': ['u-duplipensar'],
+    'b-berlin': ['u-investigador'], 'b-sagan-mundo': ['u-investigador'], 'b-rosling': ['u-investigador'],
+    'b-crime': ['u-dissonancia'], 'b-ivan-ilitch': ['u-dissonancia'], 'b-mill': ['u-investigador'],
+    'b-brincadeira': ['u-duplipensar'], 'b-processo': ['u-duplipensar'], 'b-admiravel': ['u-duplipensar'],
+    'b-fahrenheit': ['u-duplipensar'], 'b-nos-zamiatin': ['u-duplipensar'], 'b-chesterton-ortodoxia': ['u-investigador']
+  };
+  A.livros.forEach((b) => { if (ligar[b.id]) b.unidades = [...new Set((b.unidades || []).concat(ligar[b.id]))]; });
+
+  /* Submissão: uma leitura a mais, ligada ao autoengano */
+  const sub = A.livros.find((b) => b.id === 'b-submissao');
+  if (sub) {
+    sub.leituras = (sub.leituras || []).concat([{ quem: 'Leitura sobre autoengano', html: 'François não se converte por convicção, mas por conveniência — e o romance mostra como ele vai encontrando razões para aceitar o que já lhe convém: o cargo, o salário, o conforto. O contraste com Huysmans, o escritor que ele estuda, cuja conversão ao catolicismo foi vivida como drama interior, torna o autoengano mais nítido.' }]);
+    sub.perguntas = (sub.perguntas || []).concat(['Em que momento François decide — e quando ele percebe que decidiu?']);
+  }
+  const orgulho = A.livros.find((b) => b.id === 'b-orgulho');
+  if (orgulho) orgulho.perguntas = (orgulho.perguntas || []).concat(['O romance se chamaria originalmente “Primeiras impressões”. Como as primeiras impressões de Elizabeth filtram tudo o que ela vê depois?']);
+})();
+
+</script>
   <script>/* js/conteudo/70-pensadores.js */
 /* =========================================================
    Pensadores — fichas de contexto
@@ -6478,6 +7301,88 @@ details.mais-obras .grade-livros { padding-bottom: 1rem; }
 })();
 
 </script>
+  <script>/* js/conteudo/76-pensadores-pensamento.js */
+/* =========================================================
+   Pensadores acrescentados na versão 1.3
+   Tema: convicção, contradição, linguagem e autoengano
+   ========================================================= */
+(function () {
+  const A = window.ATELIE;
+  A.pensadores.push(
+    {
+      id: 'festinger', nome: 'Leon Festinger', epoca: '1919–1989 · Estados Unidos', afinidades: ['psicologia'],
+      problema: 'O que fazemos quando nossas crenças, valores e ações entram em conflito?',
+      contexto: 'Psicólogo social, aluno de Kurt Lewin. Trabalhou em Minnesota, Stanford e na New School, em Nova York; no fim da vida, dedicou-se à arqueologia e à história.',
+      ideia: 'A teoria da <strong>dissonância cognitiva</strong> (1957): perceber uma incompatibilidade entre coisas que pensamos ou fazemos gera desconforto, e somos motivados a reduzi-lo — mudando a crença, mudando o comportamento ou acrescentando justificativas.',
+      exemplo: 'Em <em>When Prophecy Fails</em> (1956), com Riecken e Schachter, relatou que membros de um grupo que esperava o fim do mundo intensificaram a crença depois que a profecia falhou.',
+      permite: 'Ver por que justificamos escolhas já feitas, por que é tão difícil admitir erros e por que um fato contrário pode, às vezes, endurecer uma crença em vez de enfraquecê-la.',
+      limites: 'Alguns de seus estudos mais famosos foram reavaliados: uma grande réplica de 2024, com 39 laboratórios, não encontrou o efeito central do experimento de “obediência induzida”, e uma pesquisa histórica de 2025 apontou interferência dos pesquisadores no grupo da profecia. A teoria também é tão flexível que às vezes explica tudo — o que, pelo critério de Popper, é uma fraqueza.',
+      critico: 'O psicólogo Daryl Bem propôs nos anos 1960 a “teoria da autopercepção”: em vez de reduzir um desconforto, apenas inferimos nossas atitudes observando nosso próprio comportamento. O debate entre as duas explicações durou décadas.',
+      relacoes: 'Base de grande parte da psicologia social posterior, inclusive dos trabalhos de Elliot Aronson e Carol Tavris sobre autojustificação.',
+      uso: 'Quando você se pegar defendendo com energia uma decisão que já tomou, pergunte: estou avaliando a decisão ou protegendo a imagem de quem a tomou?',
+      simplificacao: 'Festinger também propôs uma influente teoria da comparação social (1954), que fica de fora aqui.',
+      livros: ['b-profecia', 'b-tavris'], unidades: ['u-dissonancia']
+    },
+    {
+      id: 'orwell', nome: 'George Orwell', epoca: '1903–1950 · Inglaterra (nascido na Índia)', afinidades: ['liberdade', 'critica'],
+      problema: 'Como o poder se apodera da linguagem — e, por meio dela, do pensamento e da memória?',
+      contexto: 'Eric Arthur Blair foi policial colonial na Birmânia, viveu na pobreza em Paris e Londres por escolha, e lutou na Guerra Civil Espanhola numa milícia antistalinista, onde viu a propaganda comunista perseguir os próprios aliados. Definia-se como socialista democrático e foi um crítico implacável do totalitarismo, de esquerda e de direita.',
+      ideia: 'Em <em>1984</em> (1949), imaginou um Estado que controla o passado, a língua e a própria capacidade de perceber contradições: o <strong>duplipensar</strong> e a <strong>novilíngua</strong>. Em ensaios como “A política e a língua inglesa” (1946), defendeu a clareza como dever moral.',
+      exemplo: 'Mostrou como eufemismos — “pacificação”, “transferência de população” — permitem falar de violências sem precisar imaginá-las.',
+      permite: 'Reconhecer a manipulação da linguagem e da memória, inclusive no próprio campo político.',
+      limites: 'Seus romances são alegorias, não análises sociológicas; e ele próprio entregou em 1949 a um órgão do governo britânico uma lista de pessoas que considerava simpatizantes comunistas, episódio que até hoje divide seus leitores.',
+      critico: 'Comunistas e parte da esquerda o acusaram de dar armas à propaganda anticomunista da Guerra Fria; leitores conservadores, por sua vez, às vezes ignoram que ele se dizia socialista até o fim.',
+      relacoes: 'Dialoga com Huxley (<em>Admirável mundo novo</em>), Koestler e Zamiátin; foi lido por Miłosz, Soljenítsin e Havel como um retrato fiel do que viviam.',
+      uso: 'Diante de uma palavra política carregada, traduza-a para a descrição mais concreta possível do que está acontecendo. O que sobra?',
+      simplificacao: 'Fica de fora sua obra de jornalismo e memória, como <em>Homenagem à Catalunha</em> e <em>Na pior em Paris e Londres</em>.',
+      livros: ['b-1984', 'b-revolucao-bichos', 'b-orwell-ensaios'], unidades: ['u-duplipensar', 'u-palavra']
+    },
+    {
+      id: 'popper', nome: 'Karl Popper', epoca: '1902–1994 · Áustria e Inglaterra', afinidades: ['conhecimento', 'liberdade'],
+      problema: 'O que distingue o conhecimento científico de crenças que apenas parecem científicas? E como uma sociedade pode corrigir seus erros?',
+      contexto: 'Nasceu em Viena numa família de origem judaica e deixou a Áustria antes da anexação nazista, indo para a Nova Zelândia e depois para a London School of Economics.',
+      ideia: 'Em <em>A lógica da pesquisa científica</em> (1934), propôs que uma teoria científica precisa ser <strong>falseável</strong>: deve proibir certos resultados, de modo que a observação possa refutá-la. O conhecimento avança por conjecturas e refutações. Em <em>A sociedade aberta e seus inimigos</em> (1945), aplicou a ideia à política: o valor da democracia está em permitir trocar governantes e corrigir erros sem violência.',
+      exemplo: 'Contrastava a teoria de Einstein, que fez uma previsão arriscada sobre a curvatura da luz e poderia ter falhado, com teorias que pareciam confirmar-se em qualquer caso.',
+      permite: 'Perguntar de qualquer crença sobre fatos: o que contaria contra ela?',
+      limites: 'Historiadores e filósofos da ciência, como Thomas Kuhn e Imre Lakatos, mostraram que os cientistas não abandonam teorias à primeira anomalia, e que isso muitas vezes é razoável. E o critério vale para a ciência, não para toda forma de conhecimento.',
+      critico: 'Kuhn argumentou que a ciência normal trabalha dentro de paradigmas que não são postos em xeque a cada experimento; marxistas e platônicos rejeitaram sua leitura de Marx, Hegel e Platão como precursores do totalitarismo.',
+      relacoes: 'Amigo e interlocutor de Hayek; crítico do Círculo de Viena; influenciou muitos cientistas e políticos liberais e social-democratas.',
+      uso: 'Antes de defender uma convicção sobre fatos, escreva o que a refutaria. Se não conseguir, pergunte se ela é uma afirmação sobre o mundo ou um valor.',
+      simplificacao: 'Fica de fora sua crítica ao “historicismo” e sua teoria dos três mundos.',
+      livros: ['b-magee-popper'], unidades: ['u-duplipensar']
+    },
+    {
+      id: 'milosz', nome: 'Czesław Miłosz', epoca: '1911–2004 · Polônia e Estados Unidos', afinidades: ['liberdade', 'religiosa'],
+      problema: 'Por que pessoas inteligentes e cultas aderem a regimes que contradizem o que elas sabem?',
+      contexto: 'Poeta polonês que viveu a ocupação nazista em Varsóvia e serviu como diplomata da Polônia comunista até romper com o regime e pedir asilo na França, em 1951. Depois ensinou literatura em Berkeley. Recebeu o Nobel de Literatura em 1980.',
+      ideia: 'Em <em>Mente cativa</em> (1953), descreve com simpatia e lucidez quatro escritores que aderiram ao comunismo, e as forças que os levaram a isso: a necessidade de sentido, a sedução de uma doutrina que explica tudo, o medo, o cansaço. Nomeia o <strong>ketman</strong>: aparentar adesão enquanto se guarda uma reserva interior.',
+      exemplo: 'Usa a imagem da “pílula de Murti-Bing”, de um romance de Witkiewicz: uma pílula que traz serenidade e uma filosofia pronta, eliminando a angústia — e a liberdade.',
+      permite: 'Entender a adesão a ideologias de dentro, sem reduzir quem adere a tolo ou mau.',
+      limites: 'Fala de uma situação extrema (um regime totalitário); transpor suas categorias para democracias exige cuidado.',
+      critico: 'Emigrados poloneses o acusaram de ter colaborado tempo demais com o regime; comunistas, de traição. Ele próprio foi um crítico duro de si mesmo.',
+      relacoes: 'Dialoga com Orwell e Koestler; sua poesia, marcada pelo catolicismo e pela história, é sua obra principal.',
+      uso: 'Pergunte que necessidade uma ideologia satisfaz em quem adere a ela — inclusive em você.',
+      simplificacao: 'Sua poesia, a parte mais importante de sua obra, fica de fora.',
+      livros: ['b-mente-cativa'], unidades: ['u-duplipensar']
+    },
+    {
+      id: 'kahneman', nome: 'Daniel Kahneman', epoca: '1934–2024 · Israel e Estados Unidos', afinidades: ['psicologia', 'conhecimento'],
+      problema: 'Por que pessoas inteligentes cometem erros previsíveis de julgamento?',
+      contexto: 'Psicólogo nascido em Tel Aviv e criado na França ocupada. Com Amos Tversky, estudou desde os anos 1970 os atalhos mentais que usamos para julgar e decidir. Recebeu o Nobel de Economia em 2002.',
+      ideia: 'Em <em>Rápido e devagar</em> (2011), popularizou a distinção entre um <strong>Sistema 1</strong>, rápido, intuitivo e automático, e um <strong>Sistema 2</strong>, lento, deliberado e preguiçoso. Muitos erros vêm de deixar o Sistema 1 responder a perguntas que exigiriam o Sistema 2 — e de o Sistema 2 apenas justificar o que o 1 já decidiu.',
+      exemplo: 'O efeito de ancoragem: um número qualquer, mesmo sorteado, influencia estimativas feitas logo depois.',
+      permite: 'Desconfiar da própria sensação de certeza e criar procedimentos (listas, opiniões independentes, estatísticas de base) que compensem os vieses.',
+      limites: 'Parte dos estudos citados no livro, especialmente sobre “priming”, não resistiu às tentativas de replicação — e o próprio Kahneman reconheceu publicamente que confiara demais neles.',
+      critico: 'Gerd Gigerenzer argumenta que heurísticas não são defeitos, mas ferramentas adaptadas a ambientes reais, e que muitos “vieses” desaparecem quando os problemas são apresentados de forma natural.',
+      relacoes: 'Base da economia comportamental (Thaler, Sunstein); dialoga com Haidt sobre intuição e raciocínio.',
+      uso: 'Antes de uma decisão importante, pergunte: qual é a taxa de base? O que alguém de fora, sem envolvimento, estimaria?',
+      simplificacao: 'Fica de fora a teoria da perspectiva, sobre decisões em situação de risco, que lhe valeu o Nobel.',
+      livros: ['b-kahneman', 'b-arte-pensar'], unidades: ['u-dissonancia']
+    }
+  );
+})();
+
+</script>
   <script>/* js/conteudo/80-oficina.js */
 /* =========================================================
    Oficina de interpretação — casos em nove etapas
@@ -7142,6 +8047,124 @@ details.mais-obras .grade-livros { padding-bottom: 1rem; }
     { a: 'sagrado', b: 'sentido', por: 'Para muitas tradições, o sentido da vida está ligado a algo que nos ultrapassa.', limite: 'Pensadores seculares encontram sentido sem referência ao sagrado.' },
     { a: 'sagrado', b: 'etica', por: 'A santidade é um dos fundamentos morais descritos por Haidt.', limite: 'Apelos ao sagrado também justificaram exclusões e violências.' },
     { a: 'sagrado', b: 'morte', por: 'Rituais diante da morte estão entre as práticas sagradas mais universais.', limite: 'As formas variam enormemente entre culturas.' }
+  );
+})();
+
+</script>
+  <script>/* js/conteudo/97-trilha-autoengano.js */
+/* =========================================================
+   Trilha “Convicção, contradição e autoengano” (v1.3)
+   Módulo no percurso, perguntas, debate e conceitos do mapa.
+   ========================================================= */
+(function () {
+  const A = window.ATELIE;
+
+  /* ------------------------- módulo (Etapa 2) ------------------------- */
+  const etapa = A.etapas.find((e) => e.id === 'investigar');
+  if (etapa) {
+    const i = etapa.modulos.findIndex((m) => m.id === 'm-linguagem');
+    etapa.modulos.splice(i + 1, 0, {
+      id: 'm-autoengano', titulo: 'Convicção, contradição e autoengano',
+      descricao: 'O que acontece quando deixamos de usar as convicções para interpretar os fatos e passamos a usar os fatos para proteger as convicções: dissonância, raciocínio motivado, duplipensar, a disputa pelas palavras e as ferramentas de quem quer investigar em vez de apenas defender.',
+      unidades: ['u-dissonancia', 'u-duplipensar', 'u-investigador'],
+      vejaTambem: ['ferramenta:conviccoes', 'd:d-duvida'],
+      planejadas: [
+        { titulo: 'A mentira vital', pergunta: 'Há ilusões que sustentam uma vida? Quem tem o direito de desfazê-las?' },
+        { titulo: 'Quando o grupo pensa por mim', pergunta: 'Como saber se uma opinião é minha ou do grupo a que pertenço?' }
+      ]
+    });
+  }
+
+  /* ------------------------- perguntas ------------------------- */
+  A.perguntas.push(
+    {
+      id: 'q-contradicao', tema: 'Pensamento e conhecimento', nivel: 2, eixos: ['A', 'C', 'E'],
+      pergunta: 'É possível acreditar em duas coisas contraditórias ao mesmo tempo?',
+      intro: '<p>Na lógica, uma contradição não pode ser verdadeira. Na vida, convivemos com muitas: valorizamos a saúde e adiamos o médico; defendemos um princípio e abrimos exceções para os amigos. Orwell imaginou um regime que transformou essa capacidade em sistema — o duplipensar. Onde termina a ambivalência humana e começa o autoengano?</p>',
+      caminhos: ['Distinguir contradição real de tensão entre valores que precisam ser equilibrados.', 'Perguntar se a contradição incomoda (dissonância) ou se já deixou de ser percebida.', 'Procurar uma contradição sua que você só vê quando alguém aponta.'],
+      atividade: 'Escreva duas crenças suas que pareçam estar em tensão. Elas se contradizem de fato, ou há uma distinção que as reconcilia? Essa distinção existia antes de você precisar dela?',
+      conexoes: ['u:u-dissonancia', 'u:u-duplipensar', 'b:b-1984'],
+      leituras: ['b-1984', 'b-duplo', 'b-subsolo', 'b-tavris']
+    },
+    {
+      id: 'q-mesmo-criterio', tema: 'Ética e sentido', nivel: 2, eixos: ['G', 'H', 'A'],
+      pergunta: 'Aplico ao meu lado os critérios que aplico ao outro?',
+      intro: '<p>Quase todos dizemos que sim. Mas é fácil notar o duplo padrão no adversário e muito difícil notá-lo em nós mesmos. A pergunta decisiva talvez não seja “de que lado você está?”, mas “que critérios você aceita aplicar ao seu próprio lado, mesmo quando isso o prejudica?”.</p>',
+      caminhos: ['Usar o teste da troca em três casos recentes.', 'Separar diferenças relevantes entre casos de diferenças inventadas depois.', 'Pensar em alguém do seu lado que você deixou de criticar — e por quê.'],
+      atividade: 'Escolha uma notícia sobre alguém que você admira. Reescreva-a trocando o nome por alguém que você rejeita. Seu julgamento mudou? O que justificaria a mudança?',
+      conexoes: ['u:u-dissonancia', 'u:u-investigador', 'ferramenta:conviccoes'],
+      leituras: ['b-galef', 'b-haidt', 'b-bruxas-salem']
+    },
+    {
+      id: 'q-palavras', tema: 'Linguagem e interpretação', nivel: 2, eixos: ['F', 'H'],
+      pergunta: 'Quem decide o que as palavras significam?',
+      intro: '<p>Os dicionários registram usos; não os criam. Palavras como liberdade, democracia ou fascismo são disputadas porque carregam avaliação, e quem consegue defini-las ganha uma vantagem no debate. Nem toda mudança de sentido é manipulação — a língua muda —, mas algumas são.</p>',
+      caminhos: ['Comparar o uso de uma palavra política em dois campos opostos.', 'Distinguir conceitos genuinamente contestados de definições persuasivas.', 'Ler o diálogo de Alice com Humpty Dumpty.'],
+      atividade: 'Escolha uma palavra carregada e escreva seus critérios para aplicá-la. Depois encontre um caso do seu lado que se encaixa nos critérios.',
+      conexoes: ['u:u-duplipensar', 'u:u-palavra', 'p:orwell'],
+      leituras: ['b-orwell-ensaios', 'b-klemperer', 'b-alice-espelho', 'b-papeis-avulsos']
+    }
+  );
+
+  /* ------------------------- debate ------------------------- */
+  A.debates.push({
+    id: 'd-duvida', titulo: 'Devo desconfiar das minhas convicções ou confiar nelas?',
+    pergunta: 'Diante de tudo o que se sabe sobre vieses, devo tratar minhas convicções como suspeitas até prova em contrário — ou confiar nelas até ter boas razões para abandoná-las?',
+    contexto: 'Uma questão antiga da filosofia do conhecimento, que ganhou urgência com a psicologia dos vieses e com a polarização política.',
+    polos: [
+      {
+        nome: 'A dúvida como método',
+        tese: 'Como somos parciais sem perceber, devemos submeter nossas convicções a exame constante, procurar as objeções mais fortes e manter graus de confiança revisáveis.',
+        argumentos: [
+          'Os vieses são sistemáticos e invisíveis para quem os tem; só um método deliberado os compensa.',
+          'Quem conhece apenas o seu lado conhece pouco dele (Mill).',
+          'O progresso do conhecimento depende de tratar teorias como conjecturas (Popper).'
+        ],
+        melhor: 'Na melhor versão, não é ceticismo universal, mas humildade aplicada: as crenças podem ser firmes, mas devem continuar testáveis — e o teste mais importante é o que aplicamos ao nosso próprio lado.',
+        autores: ['p:mill', 'p:popper', 'p:descartes', 'p:kahneman'],
+        obras: ['b-mill', 'b-galef', 'b-superprevisoes', 'b-magee-popper'],
+        criticas: 'Ninguém vive duvidando de tudo; a dúvida permanente pode paralisar, corroer lealdades legítimas e deixar a pessoa à mercê de quem argumenta melhor — ou de quem duvida seletivamente.'
+      },
+      {
+        nome: 'A confiança nas convicções formadas',
+        tese: 'Convicções formadas pela experiência, pela tradição e pela vida merecem confiança inicial; não devem cair diante de qualquer argumento engenhoso.',
+        argumentos: [
+          'Os “preconceitos” no sentido de Burke condensam experiência que nenhum indivíduo consegue reconstruir.',
+          'Dez mil dificuldades não fazem uma dúvida (Newman).',
+          'A mente se abre para depois se fechar sobre algo sólido (Chesterton).'
+        ],
+        melhor: 'Na melhor versão, é uma defesa da estabilidade necessária para viver, criar filhos e manter compromissos — e um alerta contra a vaidade de quem acha que pode refazer tudo pela razão.',
+        autores: ['p:burke', 'p:chesterton', 'p:oakeshott', 'p:scruton'],
+        obras: ['b-burke', 'b-chesterton-ortodoxia', 'b-scruton-conservador'],
+        criticas: 'Também convicções erradas foram transmitidas por gerações; e a confiança inicial pode virar imunidade permanente, sobretudo quando a convicção faz parte da identidade de grupo.'
+      }
+    ],
+    ignorados: 'Os dois lados costumam misturar convicções sobre valores (que não se testam como hipóteses) com convicções sobre fatos (que deveriam se testar). Uma pessoa pode ser firme nas primeiras e aberta nas segundas.',
+    terceira: 'Peirce propôs um caminho intermediário: não fingir duvidar do que não duvidamos — partimos das crenças que temos —, mas nunca tornar nenhuma crença imune à investigação. Mercier e Sperber acrescentam que a correção vem sobretudo da conversa com quem discorda, não da dúvida solitária.',
+    perguntas: ['Que convicção sua você mantém por confiança, e qual por ter examinado?', 'Que convicção você abandonou na vida — e foi por um argumento ou por uma experiência?']
+  });
+
+  /* ------------------------- mapa de ideias ------------------------- */
+  A.mapa.nos.push(
+    { id: 'dissonancia', nome: 'Dissonância cognitiva', desc: 'O desconforto de perceber que crenças, valores ou atos não combinam — e o impulso de reduzi-lo.', refs: ['u:u-dissonancia', 'p:festinger'] },
+    { id: 'motivado', nome: 'Raciocínio motivado', desc: 'Processar informações de modo a chegar à conclusão que já se deseja.', refs: ['u:u-dissonancia', 'u:u-investigador'] },
+    { id: 'duplipensar', nome: 'Duplipensar', desc: 'Na imagem de Orwell, aceitar duas ideias contraditórias e esquecer que se contradizem.', refs: ['u:u-duplipensar', 'b:b-1984'] },
+    { id: 'falseabilidade', nome: 'Falseabilidade', desc: 'A possibilidade, em princípio, de uma afirmação ser mostrada falsa pela experiência.', refs: ['u:u-duplipensar', 'p:popper'] }
+  );
+  A.mapa.arestas.push(
+    { a: 'dissonancia', b: 'identidade', por: 'Quanto mais uma crença faz parte de quem sou, mais dissonância um fato contrário provoca.', limite: 'Identidades fortes também podem dar coragem para admitir erros (“sou alguém que reconhece quando erra”).' },
+    { a: 'dissonancia', b: 'emocao', por: 'A dissonância é vivida como desconforto, não como cálculo.', limite: 'Nem todo desconforto diante de uma ideia é dissonância; às vezes é um bom sinal moral.' },
+    { a: 'dissonancia', b: 'motivado', por: 'O raciocínio motivado é uma das formas de reduzir a dissonância.', limite: 'Também pode haver raciocínio motivado sem conflito interno — por simples desejo.' },
+    { a: 'motivado', b: 'verdade', por: 'Quando a conclusão vem antes, a verdade passa a ser buscada só onde convém.', limite: 'Ter um desejo sobre a conclusão não torna a conclusão falsa.' },
+    { a: 'motivado', b: 'interpretacao', por: 'Os mesmos dados recebem interpretações opostas conforme o que se quer concluir.', limite: 'Interpretações diferentes também vêm de pressupostos razoáveis distintos.' },
+    { a: 'motivado', b: 'poder', por: 'Grupos e líderes exploram nossa disposição de acreditar no que nos favorece.', limite: 'Atribuir toda crença alheia à manipulação também é raciocínio motivado.' },
+    { a: 'duplipensar', b: 'linguagem', por: 'Na novilíngua, encolher o vocabulário serve para tornar certos pensamentos impossíveis.', limite: 'Pensamos também sem palavras, e línguas reais não se deixam controlar tão facilmente.' },
+    { a: 'duplipensar', b: 'memoria', por: 'O Ministério da Verdade reescreve o passado para que ele sempre concorde com o presente.', limite: 'Toda memória reconstrói; nem toda reconstrução é manipulação.' },
+    { a: 'duplipensar', b: 'poder', por: 'Controlar a percepção das contradições é a forma mais completa de poder.', limite: 'É uma imagem literária extrema; regimes reais nunca conseguiram isso por inteiro.' },
+    { a: 'duplipensar', b: 'dissonancia', por: 'O duplipensar seria a dissonância eliminada: a contradição já não incomoda.', limite: 'Na dissonância, a contradição ainda é percebida — o que deixa uma porta aberta.' },
+    { a: 'falseabilidade', b: 'ciencia', por: 'Para Popper, uma teoria científica precisa proibir certos resultados.', limite: 'Cientistas não abandonam teorias à primeira anomalia, e com razão (Kuhn, Lakatos).' },
+    { a: 'falseabilidade', b: 'conhecimento', por: 'Saber o que contaria contra uma crença é parte de sabê-la bem.', limite: 'Convicções sobre valores não se testam como hipóteses empíricas.' },
+    { a: 'falseabilidade', b: 'motivado', por: 'Uma crença que reinterpreta toda evidência como confirmação deixou de ser testada.', limite: 'Às vezes a evidência é realmente ambígua.' }
   );
 })();
 
