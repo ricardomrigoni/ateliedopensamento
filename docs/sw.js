@@ -4,7 +4,7 @@
    conexão, usa a cópia guardada. Não toca nas chamadas ao Supabase
    (outro domínio) nem guarda dados pessoais: eles ficam no navegador
    e na sua nuvem, como antes. */
-const VERSAO = 'atelie-v1.4.1';
+const VERSAO = 'atelie-v1.5';
 const ARQUIVOS = ['./', './index.html', './config-nuvem.js', './manifest.webmanifest', './icone-192.png', './icone-512.png', './icone-maskable-512.png', './icone.svg', './apple-touch-icon.png'];
 
 self.addEventListener('install', (e) => {

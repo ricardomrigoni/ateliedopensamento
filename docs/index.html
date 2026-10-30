@@ -789,6 +789,83 @@ html { background-color: var(--papel); }
 :root[data-theme="light"] { color-scheme: light; }
 :root[data-theme="dark"] { color-scheme: dark; }
 
+/* ---------- v1.5: botão Voltar ---------- */
+.btn-voltar-topo[hidden], .voltar-flutuante[hidden] { display: none !important; }
+.btn-voltar-topo { padding: .45rem .55rem; }
+.voltar-flutuante { display: none; }
+@media (min-width: 960px) {
+  .voltar-flutuante {
+    display: inline-flex; align-items: center; gap: .35rem; position: fixed; top: .85rem; left: calc(268px + 1.25rem); z-index: 25;
+    padding: .4rem .85rem .4rem .6rem; border-radius: 999px; border: 1px solid var(--linha); background: color-mix(in srgb, var(--superficie) 94%, transparent);
+    backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); color: var(--tinta-2); font: 500 .88rem var(--f-ui); cursor: pointer; box-shadow: 0 1px 3px rgba(0,0,0,.06);
+  }
+  .voltar-flutuante:hover { color: var(--acento-forte); border-color: var(--acento); }
+  body.pode-voltar main { padding-top: 3.6rem; }
+}
+
+/* ---------- v1.5: explorar por tema, lições rápidas, versão curta ---------- */
+@media (min-width: 760px) { .painel-temas { grid-column: 1 / -1; } }
+.pt-cab { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; margin-bottom: .7rem; }
+.pt-cab .rotulo { margin: 0; }
+.chips-temas { display: flex; flex-wrap: wrap; gap: .45rem; }
+.chip-tema { display: inline-flex; align-items: center; gap: .4rem; padding: .45rem .8rem; border-radius: 999px; border: 1px solid var(--linha); background: var(--papel-2); color: var(--tinta); text-decoration: none; font: 500 .88rem var(--f-ui); }
+.chip-tema .ic { width: 1.05rem; height: 1.05rem; color: var(--acento); }
+.chip-tema:hover { border-color: var(--acento); color: var(--acento-forte); }
+.licao-do-dia { display: flex; flex-direction: column; gap: .25rem; margin-top: 1rem; padding: 1rem 1.1rem; border-radius: var(--raio-p); background: var(--terracota-tinta); color: var(--tinta); text-decoration: none; border: 1px solid transparent; }
+.licao-do-dia:hover { border-color: var(--terracota-claro); }
+.licao-do-dia .rotulo { color: var(--terracota); display: flex; align-items: center; gap: .35rem; margin: 0; }
+.ld-titulo { font-family: var(--f-titulo); font-size: 1.2rem; font-weight: 600; }
+.ld-pergunta { color: var(--tinta-2); font-size: .95rem; }
+
+.grade-temas { display: grid; gap: .8rem; margin-top: 1.4rem; }
+@media (min-width: 640px) { .grade-temas { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 1200px) { .grade-temas { grid-template-columns: 1fr 1fr 1fr; } }
+.cartao-tema { display: flex; flex-direction: column; gap: .4rem; padding: 1.15rem 1.2rem; border-radius: var(--raio); border: 1px solid var(--linha); background: var(--superficie); color: var(--tinta); text-decoration: none; }
+.cartao-tema:hover { border-color: var(--acento); box-shadow: var(--sombra); }
+.ct-icone { width: 2.4rem; height: 2.4rem; border-radius: .7rem; display: grid; place-items: center; background: var(--acento-tinta); color: var(--acento-forte); }
+.ct-icone .ic { width: 1.35rem; height: 1.35rem; }
+.ct-nome { font-family: var(--f-titulo); font-size: 1.22rem; font-weight: 600; line-height: 1.25; }
+.ct-gancho { color: var(--tinta-2); font-size: .95rem; flex: 1; }
+.ct-meta { display: flex; justify-content: space-between; gap: .5rem; font: .8rem var(--f-ui); color: var(--tinta-3); margin-top: .3rem; }
+
+.busca-tema { margin-top: .4rem; padding: 1rem 1.1rem; border-radius: var(--raio); background: var(--papel-2); border: 1px solid var(--linha); }
+.busca-tema .entrada { min-height: 2.7rem; padding: .55rem .8rem; line-height: 1.4; }
+.sugestoes { display: grid; gap: .4rem; margin-top: .8rem; }
+
+.tema-desc { color: var(--tinta-2); max-width: 46rem; }
+.tema-prog { display: flex; align-items: center; gap: .8rem; font: .85rem var(--f-ui); color: var(--tinta-3); max-width: 28rem; }
+.tema-prog .barra { flex: 1; }
+.tema-comecar { display: flex; flex-wrap: wrap; gap: .6rem; margin: 0 0 1.8rem; }
+.tema-sec { margin: 0 0 2rem; }
+.tema-sec h2 { font-size: 1.25rem; margin-bottom: .7rem; }
+.tema-sec h2 small { font: 400 .82rem var(--f-ui); color: var(--tinta-3); margin-left: .4rem; }
+.tema-duplo { display: grid; gap: 1.5rem; }
+@media (min-width: 760px) { .tema-duplo { grid-template-columns: 1fr 1fr; } }
+.grade-licoes { display: grid; gap: .6rem; }
+@media (min-width: 640px) { .grade-licoes { grid-template-columns: 1fr 1fr; } }
+.cartao-licao { display: flex; flex-direction: column; gap: .25rem; padding: .9rem 1rem; border-radius: var(--raio-p); border: 1px solid var(--linha); background: var(--superficie); color: var(--tinta); text-decoration: none; border-left: 3px solid var(--terracota-claro); }
+.cartao-licao:hover { border-color: var(--terracota-claro); }
+.cartao-licao.feita { border-left-color: var(--acento); }
+.cl-min { display: flex; align-items: center; gap: .3rem; font: .78rem var(--f-ui); color: var(--tinta-3); }
+.cl-min .ic { width: .95rem; height: .95rem; }
+.cartao-licao .cl-titulo { font-family: var(--f-titulo); font-weight: 600; font-size: 1.05rem; line-height: 1.3; }
+.cl-tema { font: .8rem var(--f-ui); color: var(--acento-forte); }
+.iu-num { display: inline-grid; place-items: center; width: 1.5rem; height: 1.5rem; border-radius: 50%; background: var(--acento-tinta); color: var(--acento-forte); font: 600 .78rem var(--f-ui); margin-right: .5rem; vertical-align: .1em; }
+
+.licao-ideia, .licao-exemplo, .licao-vez, .licao-desafio { border-radius: var(--raio); }
+.licao-exemplo { background: var(--papel-2); padding: 1rem 1.15rem; border: 1px solid var(--linha); }
+.licao-desafio { background: var(--acento-tinta); padding: 1rem 1.15rem; }
+.licao-desafio .rotulo { color: var(--acento-forte); display: flex; align-items: center; gap: .35rem; }
+
+.versao-unidade { display: inline-flex; margin: .9rem 0 .2rem; padding: .2rem; border-radius: 999px; background: var(--papel-2); border: 1px solid var(--linha); flex-wrap: wrap; }
+.versao-unidade button { display: inline-flex; align-items: center; gap: .3rem; border: 0; background: transparent; color: var(--tinta-2); font: 500 .84rem var(--f-ui); padding: .4rem .85rem; border-radius: 999px; cursor: pointer; }
+.versao-unidade button .ic { width: .95rem; height: .95rem; }
+.versao-unidade button.ativa { background: var(--superficie); color: var(--acento-forte); box-shadow: 0 1px 2px rgba(0,0,0,.08); }
+.aviso-curta { display: grid; gap: .6rem; padding: 1rem 1.15rem; border-radius: var(--raio); border: 1px dashed var(--linha-forte); background: var(--papel-2); margin: 1.5rem 0; }
+.aviso-curta > .ic { width: 1.3rem; height: 1.3rem; color: var(--terracota); }
+.aviso-curta p { margin: 0; }
+.aviso-curta .btn { justify-self: start; }
+
 </style>
 </head>
 <body>
@@ -9124,6 +9201,406 @@ html { background-color: var(--papel); }
 })();
 
 </script>
+  <script>/* js/conteudo/99-temas.js */
+/* =========================================================
+   Explorar por tema (v1.5)
+   ---------------------------------------------------------
+   Oito grandes temas. Cada um reúne, numa ordem própria,
+   unidades de qualquer etapa, lições rápidas, exercícios,
+   perguntas, debates, livros, pensadores e conceitos do mapa.
+   O percurso em etapas continua existindo como caminho
+   sugerido; os temas são outra porta de entrada.
+
+   Lições rápidas: 5 a 10 minutos, com uma ideia, um exemplo,
+   uma pergunta para responder e um desafio para o dia.
+   ========================================================= */
+(function () {
+  const A = window.ATELIE;
+
+  A.temas = [
+    {
+      id: 't-vieses', nome: 'Vieses e contradições', icone: 'espelho',
+      gancho: 'Por que acredito no que acredito — e por que é tão difícil perceber quando estou me enganando?',
+      descricao: 'Viés de confirmação, opiniões absorvidas por repetição, atalhos mentais, dissonância cognitiva e as contradições que todos carregamos. O objetivo não é desconfiar de tudo, mas aprender a perceber quando uma conclusão veio antes das razões.',
+      palavras: 'viés vies confirmação confirmacao contradição contradicao dissonância dissonancia autoengano repetição opinião crença certeza erro heurística atalho bolha algoritmo mudar de ideia',
+      licoes: ['l-confirmacao', 'l-repeticao', 'l-dois-pesos', 'l-contradicao', 'l-ponto-cego'],
+      unidades: ['u-absorver', 'u-dissonancia', 'u-atalhos', 'u-investigador', 'u-nao-sei', 'u-saber'],
+      praticar: ['ferramenta:conviccoes', 'x:x-j', 'c:c-viral'],
+      debater: ['d:d-duvida', 'q:q-contradicao', 'q:q-mudar-ideia', 'q:q-nao-sei'],
+      livros: ['b-tavris', 'b-kahneman', 'b-arte-pensar', 'b-galef', 'b-pense-novo', 'b-tartufo', 'b-dom-casmurro', 'b-reparacao'],
+      pensadores: ['festinger', 'kahneman', 'haidt', 'popper'],
+      conceitos: ['confirmacao', 'motivado', 'dissonancia', 'repeticao', 'heuristica']
+    },
+    {
+      id: 't-politica', nome: 'Política, identidade e polarização', icone: 'balanca',
+      gancho: 'Por que julgo com rigor o que prejudica meu lado e com indulgência o que o favorece?',
+      descricao: 'Política como identidade, polarização afetiva, dois pesos e duas medidas, visões de mundo, fundamentos morais e a disputa pelas palavras. Para entender o outro lado na melhor versão — e o seu próprio com o mesmo rigor.',
+      palavras: 'política politica identidade polarização polarizacao esquerda direita conservador progressista eleição partido nós eles tribo whataboutism democracia censura fascismo comunismo liberdade de expressão',
+      licoes: ['l-politica-identidade', 'l-troca', 'l-outro-lado', 'l-fundamentos', 'l-whatabout'],
+      unidades: ['u-nos-eles', 'u-visoes', 'u-discordar', 'u-duplipensar', 'u-tradicao'],
+      praticar: ['x:x-i', 'ferramenta:conviccoes', 'ferramenta:debates'],
+      debater: ['d:d-tradicao', 'd:d-expressao', 'd:d-desigualdade', 'd:d-mercado', 'q:q-mesmo-criterio', 'q:q-autoridade'],
+      livros: ['b-haidt', 'b-biografia-abismo', 'b-sowell-visoes', 'b-1984', 'b-zero-infinito', 'b-rinoceronte', 'b-burke', 'b-mill'],
+      pensadores: ['haidt', 'sowell', 'burke', 'orwell', 'mill', 'milosz'],
+      conceitos: ['polarizacao', 'identidade', 'poder', 'duplipensar']
+    },
+    {
+      id: 't-verdade', nome: 'Verdade, notícias e palavras', icone: 'olho',
+      gancho: 'Como saber o que é verdade quando tanta coisa é recorte, versão ou palavra carregada?',
+      descricao: 'Fato, interpretação e opinião; desinformação e truques com números; como checadores profissionais leem; o sentido das palavras e quem o disputa.',
+      palavras: 'verdade notícia noticia fake news desinformação desinformacao checagem fonte estatística número gráfico palavra linguagem eufemismo jornal imprensa rede social vídeo',
+      licoes: ['l-fato-opiniao', 'l-sift', 'l-numeros', 'l-eufemismo'],
+      unidades: ['u-desinformacao', 'u-fato', 'u-saber', 'u-palavra', 'u-duplipensar', 'u-causa'],
+      praticar: ['c:c-viral', 'c:c-transito', 'x:x-g'],
+      debater: ['q:q-noticia', 'q:q-palavras', 'q:q-interpretacao', 'd:d-expressao'],
+      livros: ['b-educacao-midiatica', 'b-mentir-estatistica', 'b-klemperer', 'b-orwell-ensaios', 'b-honra-katharina', 'b-alice-espelho', 'b-sowell-falacias'],
+      pensadores: ['orwell', 'wittgenstein', 'arendt', 'popper'],
+      conceitos: ['desinformacao', 'verdade', 'linguagem', 'interpretacao']
+    },
+    {
+      id: 't-pensar', nome: 'Pensar com clareza', icone: 'ideia',
+      gancho: 'Como montar um bom argumento, perceber um ruim e fazer perguntas que levam a algum lugar?',
+      descricao: 'As ferramentas básicas: pressupostos, argumentos, causas, falácias, perguntas e explicações. Servem para todos os outros temas.',
+      palavras: 'argumento lógica logica falácia falacia pressuposto causa correlação pergunta raciocínio raciocinio pensamento crítico critico explicar debate discutir',
+      licoes: ['l-pressuposto', 'l-correlacao', 'l-espantalho', 'l-pergunta-boa'],
+      unidades: ['u-pressupostos', 'u-argumento', 'u-causa', 'u-falacias', 'u-perguntas', 'u-explicar', 'u-reflexao'],
+      praticar: ['x:x-a', 'x:x-g', 'c:c-silencio', 'c:c-semmelweis'],
+      debater: ['q:q-unica-causa', 'q:q-conceitos', 'q:q-certos'],
+      livros: ['b-weston', 'b-carnielli', 'b-warburton', 'b-sagan-mundo', 'b-schopenhauer-debate', 'b-doze-homens'],
+      pensadores: ['socrates', 'aristoteles', 'descartes', 'peirce', 'popper'],
+      conceitos: ['falacia', 'causalidade', 'conhecimento', 'verdade']
+    },
+    {
+      id: 't-eu', nome: 'Quem sou eu', icone: 'pessoas',
+      gancho: 'O que faz de mim a mesma pessoa ao longo da vida — e o que posso mudar em mim?',
+      descricao: 'Identidade, personalidade, memória, emoções e a história que contamos sobre nós mesmos. Das doze camadas de Olavo de Carvalho aos cinco grandes traços da psicologia.',
+      palavras: 'identidade eu personalidade autoconhecimento memória emoção emocao raiva ansiedade introvertido camadas olavo caráter carater temperamento mudar história de vida',
+      licoes: ['l-teseu', 'l-juizo', 'l-camada', 'l-historia-de-mim'],
+      unidades: ['u-mesma', 'u-camadas', 'u-emocao', 'u-natural', 'u-visao'],
+      praticar: ['ferramenta:intuicao', 'x:x-h'],
+      debater: ['q:q-si-mesmo', 'q:q-identidade-ideia', 'q:q-escolhido', 'q:q-livre', 'd:d-natureza'],
+      livros: ['b-montaigne', 'b-confissoes', 'b-12regras', 'b-poder-quietos', 'b-duplo', 'b-desassossego', 'b-xadrez'],
+      pensadores: ['montaigne', 'agostinho', 'hume', 'olavo', 'peterson'],
+      conceitos: ['identidade', 'memoria', 'narrativa', 'emocao']
+    },
+    {
+      id: 't-sentido', nome: 'Sentido, sofrimento e fé', icone: 'estrela',
+      gancho: 'A vida tem um sentido que descubro ou que construo? E o que fazer com o sofrimento?',
+      descricao: 'Sentido da vida, sofrimento, morte, tempo e transcendência — com Frankl, Dostoiévski, Pascal, os estoicos, Camus e a tradição cristã.',
+      palavras: 'sentido da vida propósito proposito sofrimento dor morte luto fé fe deus religião religiao tempo vazio angústia angustia esperança',
+      licoes: ['l-frankl', 'l-brevidade', 'l-ivan', 'l-coracao'],
+      unidades: ['u-sentido', 'u-tempo', 'u-cosmos', 'u-camadas', 'u-visao'],
+      praticar: ['ferramenta:intuicao', 'x:x-h'],
+      debater: ['d:d-sentido', 'q:q-vida-significativa', 'q:q-sofrimento', 'q:q-nada'],
+      livros: ['b-frankl', 'b-karamazov', 'b-ivan-ilitch', 'b-pascal', 'b-cristianismo-puro', 'b-sisifo', 'b-confissao-tolstoi', 'b-consolacao'],
+      pensadores: ['frankl', 'pascal', 'dostoievski', 'kierkegaard', 'camus', 'agostinho', 'cslewis'],
+      conceitos: ['sentido', 'morte', 'sagrado', 'tempo']
+    },
+    {
+      id: 't-viver', nome: 'Como viver bem', icone: 'broto',
+      gancho: 'O que é uma vida boa — e como agir bem com os outros, com o dinheiro e com as próprias emoções?',
+      descricao: 'Ética, virtudes, amizade, amor, emoções e escolhas do dia a dia: Aristóteles, os estoicos, Kant, a tradição cristã e o pensamento contemporâneo.',
+      palavras: 'ética etica moral virtude felicidade amizade amor relacionamento família familia dinheiro trabalho escolha decisão decisao estoicismo raiva perdão perdao',
+      licoes: ['l-controle', 'l-meio-termo', 'l-amizade', 'l-pessoa-fim'],
+      unidades: ['u-acao-boa', 'u-emocao', 'u-sentido', 'u-dinheiro'],
+      praticar: ['c:c-louca', 'c:c-reestruturacao'],
+      debater: ['d:d-moral', 'd:d-individuo', 'q:q-outra-pessoa', 'q:q-autoridade'],
+      livros: ['b-etica-nicomaco', 'b-manual', 'b-seneca', 'b-meditacoes', 'b-quatro-amores', 'b-arte-amar', 'b-pequeno-tratado', 'b-12regras'],
+      pensadores: ['aristoteles', 'estoicos', 'kant', 'aquino', 'macintyre', 'weil'],
+      conceitos: ['etica', 'valor', 'responsabilidade', 'liberdade']
+    },
+    {
+      id: 't-sociedade', nome: 'Tradição, sociedade e mudança', icone: 'mapa',
+      gancho: 'O que vale a pena conservar, o que precisa mudar — e quem sabe o suficiente para decidir?',
+      descricao: 'Tradição e reforma, instituições, mercado, natureza e cultura, e como as visões de mundo mudam ao longo da história.',
+      palavras: 'tradição tradicao conservar conservadorismo sociedade instituição instituicao mercado economia dinheiro cultura natural história historia mudança reforma revolução revolucao estado',
+      licoes: ['l-cerca', 'l-pelotoes', 'l-lapis', 'l-papel'],
+      unidades: ['u-tradicao', 'u-natural', 'u-dinheiro', 'u-visoes', 'u-cosmos', 'u-explicar'],
+      praticar: ['c:c-transito', 'c:c-reestruturacao'],
+      debater: ['d:d-tradicao', 'd:d-natureza', 'd:d-mercado', 'q:q-conservar', 'q:q-instituicao', 'q:q-natural'],
+      livros: ['b-burke', 'b-scruton-conservador', 'b-tocqueville', 'b-hayek-servidao', 'b-paine', 'b-leopardo', 'b-pais-filhos', 'b-sapiens'],
+      pensadores: ['burke', 'chesterton', 'tocqueville', 'hayek', 'marx', 'weber'],
+      conceitos: ['tradicao', 'instituicao', 'cultura', 'historia']
+    }
+  ];
+
+  /* =========================== lições rápidas =========================== */
+  A.licoes = [
+    /* ---------- Vieses e contradições ---------- */
+    { id: 'l-confirmacao', tema: 't-vieses', titulo: 'Viés de confirmação em cinco minutos', min: 5,
+      ideia: '<p>Tendemos a procurar, notar e lembrar o que confirma o que já pensamos — e a passar rápido pelo que contraria. Não é desonestidade: é economia mental. Mas o efeito acumulado é que nossas crenças parecem cada vez mais bem fundamentadas, mesmo que só tenhamos olhado para um lado.</p><p>Em 1960, Peter Wason deu a pessoas a sequência 2-4-6 e pediu que descobrissem a regra que a gerava. Quase todas testaram sequências que <em>confirmavam</em> sua hipótese (8-10-12…) e quase nenhuma tentou uma que pudesse refutá-la. A regra era só “números em ordem crescente”.</p>',
+      exemplo: '<p>Quem desconfia de um político lê a notícia contra ele até o fim e a manchete a favor só de passagem. Um mês depois, “lembra” de muitas provas contra e poucas a favor — porque foi isso que leu com atenção.</p>',
+      pergunta: 'Pense numa crença sua sobre uma pessoa, um grupo ou um tema. Que tipo de informação você costuma procurar sobre ele? E qual costuma evitar?',
+      desafio: 'Hoje, procure de propósito uma informação séria que contrarie algo em que você acredita. Leia até o fim.',
+      refs: ['u:u-dissonancia', 'u:u-absorver', 'n:confirmacao'] },
+    { id: 'l-repeticao', tema: 't-vieses', titulo: 'Ouvi tantas vezes que virou verdade', min: 5,
+      ideia: '<p>O <strong>efeito de verdade ilusória</strong>, observado desde 1977, mostra que uma afirmação repetida parece mais verdadeira — mesmo quando é falsa, e mesmo quando sabemos a resposta certa. A mente usa a familiaridade como pista de verdade.</p><p>Somado ao esquecimento da fonte (lembramos o conteúdo, não de onde veio), isso explica como uma opinião se instala sem nunca ter sido examinada.</p>',
+      exemplo: '<p>“Usamos só 10% do cérebro” é um mito repetido há décadas. Quase ninguém que o repete sabe de onde ele veio — e quase todo mundo já o ouviu muitas vezes.</p>',
+      pergunta: 'Escreva uma opinião que você tem sobre algo que nunca estudou. Onde você a ouviu? Quantas vezes?',
+      desafio: 'Na próxima vez que pensar “todo mundo sabe que…”, pergunte: de onde eu sei isso?',
+      refs: ['u:u-absorver', 'n:repeticao'] },
+    { id: 'l-dois-pesos', tema: 't-vieses', titulo: '“Posso acreditar?” ou “sou obrigado a acreditar?”', min: 5,
+      ideia: '<p>O psicólogo Thomas Gilovich resumiu o raciocínio motivado em duas perguntas. Diante do que nos agrada, perguntamos “posso acreditar nisso?” — e uma evidência razoável basta. Diante do que nos desagrada, perguntamos “sou obrigado a acreditar nisso?” — e nenhuma evidência parece suficiente.</p><p>O sinal revelador não é exigir provas, o que é bom, mas exigir provas <em>diferentes</em> conforme a conclusão.</p>',
+      exemplo: '<p>Um estudo que favorece sua dieta é “ciência”; um que a contraria “foi financiado pela indústria” — sem que você tenha verificado o financiamento de nenhum dos dois.</p>',
+      pergunta: 'Lembre-se de uma notícia recente que você aceitou rápido e de outra que rejeitou rápido. Você usou o mesmo critério nas duas?',
+      desafio: 'Antes de aceitar ou rejeitar a próxima notícia política, escreva o que exigiria como prova — e aplique o mesmo critério à do outro lado.',
+      refs: ['u:u-dissonancia', 'u:u-investigador', 'q:q-mesmo-criterio'] },
+    { id: 'l-contradicao', tema: 't-vieses', titulo: 'A raposa e as uvas: as contradições que todos temos', min: 5,
+      ideia: '<p>Na fábula de Esopo, a raposa não alcança as uvas e conclui que elas estavam verdes. É a melhor ilustração antiga do que Leon Festinger chamou, em 1957, de <strong>dissonância cognitiva</strong>: quando o que queremos, pensamos e fazemos não combinam, ajustamos a interpretação para reduzir o desconforto.</p><p>Às vezes mudamos a crença; às vezes, a conduta; muitas vezes, apenas acrescentamos uma justificativa. Os experimentos clássicos foram questionados recentemente, mas a experiência cotidiana é reconhecível.</p>',
+      exemplo: '<p>Quem valoriza a saúde e não consegue largar o cigarro passa a dizer que “o avô fumou e viveu até os noventa”.</p>',
+      pergunta: 'Qual é uma contradição sua — entre o que você defende e o que faz? Como você costuma justificá-la?',
+      desafio: 'Escolha uma pequena contradição e, em vez de justificá-la, escreva o que seria preciso para resolvê-la.',
+      refs: ['u:u-dissonancia', 'q:q-contradicao', 'b:b-tavris'] },
+    { id: 'l-ponto-cego', tema: 't-vieses', titulo: 'Por que vejo os vieses dos outros e não os meus', min: 5,
+      ideia: '<p>Em 2002, Emily Pronin e colegas mostraram que as pessoas reconhecem facilmente vieses nos outros, mas se acham menos sujeitas a eles: o <strong>ponto cego do viés</strong>. Pior: conhecer a lista de vieses não protege — pode até dar um vocabulário mais sofisticado para criticar os outros.</p><p>O que ajuda são procedimentos que funcionam mesmo quando não percebemos o viés: aplicar o mesmo critério aos dois lados, decidir antes o que contaria como evidência, consultar quem discorda.</p>',
+      exemplo: '<p>“Ele só pensa assim porque vê aquele canal.” E eu, por que penso como penso?</p>',
+      pergunta: 'Que viés você acusou alguém de ter recentemente? Em que situação você poderia ter o mesmo?',
+      desafio: 'Hoje, antes de apontar um viés em alguém, procure o mesmo em você.',
+      refs: ['u:u-nao-sei', 'u:u-investigador'] },
+
+    /* ---------- Política, identidade e polarização ---------- */
+    { id: 'l-politica-identidade', tema: 't-politica', titulo: 'Quando a política vira identidade', min: 6,
+      ideia: '<p>Para muita gente, uma posição política deixou de ser uma opinião sobre impostos ou segurança e passou a responder “quem sou eu?”. Quando isso acontece, discordar parece um ataque pessoal, e mudar de ideia parece traição ao grupo.</p><p>Dan Kahan chamou de <strong>cognição de proteção da identidade</strong> a tendência de avaliar informações de modo a preservar nosso lugar no grupo. Do ponto de vista individual, isso tem lógica: errar sobre um fato custa pouco; ser visto como traidor custa caro.</p>',
+      exemplo: '<p>Duas pessoas que concordam em quase tudo deixam de se falar por causa de um único voto. O que se rompeu não foi uma discordância: foi o sentimento de pertencer ao mesmo “nós”.</p>',
+      pergunta: 'Que posição política sua você sentiria como uma perda pessoal se precisasse abandonar? Por quê?',
+      desafio: 'Converse hoje com alguém do outro lado sobre algo em que vocês concordam.',
+      refs: ['u:u-nos-eles', 'u:u-dissonancia', 'b:b-biografia-abismo'] },
+    { id: 'l-troca', tema: 't-politica', titulo: 'O teste da troca, em um minuto', min: 5,
+      ideia: '<p>A ferramenta mais simples contra os dois pesos e duas medidas: imagine a mesma conduta com os lados trocados. Se seu julgamento muda, pergunte se há uma diferença relevante entre os casos — ou se ela só apareceu depois de saber quem era o autor.</p><p>A troca não exige concluir que todos são iguais. Às vezes um lado está mesmo mais errado. Ela exige apenas que o critério seja o mesmo.</p>',
+      exemplo: '<p>“É censura quando eles derrubam perfis; é responsabilidade quando nós derrubamos.” Qual critério separa as duas coisas — e ele valeria se os papéis se invertessem?</p>',
+      pergunta: 'Escolha uma notícia política da semana. Como você a julgaria se o protagonista fosse do lado oposto?',
+      desafio: 'Faça o teste da inversão completo na unidade “Nós e eles”.',
+      refs: ['u:u-nos-eles', 'q:q-mesmo-criterio'] },
+    { id: 'l-outro-lado', tema: 't-politica', titulo: 'Como você imagina o outro lado?', min: 5,
+      ideia: '<p>Pesquisas nos Estados Unidos (como <em>The Perception Gap</em>, de 2019, e os estudos de Moore-Berg e colegas, de 2020) mostraram que cada lado imagina o outro muito mais radical e hostil do que ele é. Quem mais consumia notícias tinha a imagem mais distorcida.</p><p>A razão provável: conhecemos o outro lado por seus representantes mais barulhentos, que aparecem justamente por serem extremos. E, quando a percepção é corrigida, a hostilidade diminui.</p>',
+      exemplo: '<p>Pense no eleitor “típico” do partido que você rejeita. A imagem veio de pessoas reais que você conhece ou de vídeos e postagens?</p>',
+      pergunta: 'Descreva o eleitor típico do lado oposto. Depois descreva uma pessoa real que você conhece e vota nesse lado. As descrições batem?',
+      desafio: 'Leia hoje um texto de um autor sério do outro lado, escrito para os próprios leitores dele.',
+      refs: ['u:u-nos-eles', 'x:x-i'] },
+    { id: 'l-fundamentos', tema: 't-politica', titulo: 'Seis intuições morais', min: 6,
+      ideia: '<p>O psicólogo Jonathan Haidt propôs que a moral humana se apoia em várias intuições: <strong>cuidado</strong>, <strong>justiça</strong>, <strong>liberdade</strong>, <strong>lealdade</strong>, <strong>autoridade</strong> e <strong>santidade</strong>. Em suas pesquisas, progressistas se apoiam mais nas duas primeiras; conservadores usam as seis de modo mais equilibrado.</p><p>A teoria é discutida, mas ajuda a mudar a pergunta de “por que eles não têm valores?” para “que valor eles estão pesando mais do que eu?”.</p>',
+      exemplo: '<p>Na discussão sobre uma festa religiosa na praça, um defende a tradição (autoridade, santidade, lealdade), outro a neutralidade do Estado (justiça), outro o sossego dos vizinhos (cuidado). Todos falam de valores reais.</p>',
+      pergunta: 'Pense numa discordância política sua. Que fundamento você pesa mais? E o outro lado?',
+      desafio: 'Na próxima discussão, tente nomear o valor que o outro está defendendo antes de responder.',
+      refs: ['u:u-visoes', 'p:haidt', 'b:b-haidt'] },
+    { id: 'l-whatabout', tema: 't-politica', titulo: '“E o outro lado?”: desvio ou coerência?', min: 5,
+      ideia: '<p>Responder a uma crítica apontando um erro do outro lado (o <em>whataboutism</em>) é um desvio: a corrupção de um não absolve a do outro. Mas há uma versão legítima: perguntar se quem critica aplica o mesmo critério ao próprio lado.</p><p>A diferença está no que vem depois. O desvio encerra o assunto. O teste de coerência volta ao critério e aceita a conclusão para os dois casos.</p>',
+      exemplo: '<p>“Vocês falam do nosso deputado, mas e o de vocês?” — desvio. “Então vamos condenar os dois” — coerência.</p>',
+      pergunta: 'Lembre-se de uma vez em que você usou “e o outro lado?”. Foi desvio ou teste de coerência?',
+      desafio: 'Hoje, quando alguém criticar seu lado, responda primeiro à crítica — e só depois, se for o caso, à coerência de quem criticou.',
+      refs: ['u:u-nos-eles', 'u:u-falacias'] },
+
+    /* ---------- Verdade, notícias e palavras ---------- */
+    { id: 'l-fato-opiniao', tema: 't-verdade', titulo: 'Fato, interpretação ou opinião?', min: 5,
+      ideia: '<p>Quase toda notícia mistura três coisas: <strong>fatos</strong> (o que pode ser verificado), <strong>interpretações</strong> (o que se conclui deles) e <strong>opiniões</strong> (juízos de valor). Misturá-las não é necessariamente desonesto, mas separá-las é o primeiro passo para avaliar o que se lê.</p>',
+      exemplo: '<p>“O desemprego caiu para 8,4% (fato), o que mostra que a política econômica funciona (interpretação), e só um mal-intencionado não reconhece isso (opinião).”</p>',
+      pergunta: 'Copie a primeira frase de uma notícia de hoje e separe nela o fato, a interpretação e a opinião.',
+      desafio: 'Faça isso com uma notícia que favorece seu lado — é onde a mistura passa despercebida.',
+      refs: ['u:u-fato', 'u:u-desinformacao'] },
+    { id: 'l-sift', tema: 't-verdade', titulo: 'Antes de compartilhar: quatro passos', min: 5,
+      ideia: '<p>Checadores profissionais quase não leem o site suspeito: abrem outras abas para descobrir <em>quem</em> está por trás dele — a “leitura lateral”, estudada por Sam Wineburg e Sarah McGrew em Stanford. Mike Caulfield resumiu o método em quatro passos (SIFT):</p><ol><li><strong>Pare</strong> e note a emoção que a notícia provocou.</li><li><strong>Investigue a fonte</strong>: quem publicou, com que interesse?</li><li><strong>Encontre cobertura melhor</strong>: outras fontes sérias dizem o mesmo?</li><li><strong>Rastreie até a origem</strong>: o estudo, a fala completa, a foto original.</li></ol>',
+      exemplo: '<p>Uma foto de enchente com a legenda “o governo abandonou essa cidade” pode ser de outro ano, de outro lugar — ou exatamente o que diz. Só os passos dizem qual.</p>',
+      pergunta: 'Qual foi a última informação que você repassou? Ela passaria pelos quatro passos?',
+      desafio: 'Hoje, aplique os quatro passos antes de compartilhar qualquer coisa.',
+      refs: ['u:u-desinformacao', 'c:c-viral'] },
+    { id: 'l-numeros', tema: 't-verdade', titulo: '300% de quê?', min: 5,
+      ideia: '<p>Números impressionam porque parecem objetivos. Mas o mesmo dado pode ser apresentado de modos muito diferentes:</p><ul><li><strong>percentual sem base</strong>: “aumentou 300%” pode ser de 3 para 12;</li><li><strong>risco relativo sem absoluto</strong>: “dobra o risco” pode ser de 1 para 2 em 100 mil;</li><li><strong>período escolhido</strong>: começar a série no ponto mais conveniente;</li><li><strong>gráfico com eixo cortado</strong>: uma diferença de 2% parece enorme.</li></ul>',
+      exemplo: '<p>“Remédio X dobra o risco de trombose.” Antes de entrar em pânico: dobra de quanto para quanto?</p>',
+      pergunta: 'Encontre um número numa notícia de hoje. Qual é a base? O que ele não diz?',
+      desafio: 'Sempre que vir um percentual impressionante, pergunte: “de quanto para quanto?”.',
+      refs: ['u:u-desinformacao', 'b:b-mentir-estatistica', 'c:c-viral'] },
+    { id: 'l-eufemismo', tema: 't-verdade', titulo: 'Palavras que escondem', min: 5,
+      ideia: '<p>Em 1946, George Orwell mostrou como a linguagem política torna aceitável o inaceitável: bombardear aldeias vira “pacificação”; expulsar camponeses vira “transferência de população”. O eufemismo não esconde os fatos de quem os conhece — permite falar deles sem imaginá-los.</p><p>O filósofo Charles Stevenson chamou de <strong>definição persuasiva</strong> o truque de manter a carga emocional de uma palavra e trocar seu conteúdo.</p>',
+      exemplo: '<p>“Readequação do quadro” (demissões), “ajuste” (corte), “resposta proporcional” (ataque). Todos os lados têm os seus.</p>',
+      pergunta: 'Cite dois eufemismos usados pelo campo político de que você gosta.',
+      desafio: 'Traduza hoje uma frase política para a descrição mais concreta possível do que está acontecendo.',
+      refs: ['u:u-duplipensar', 'b:b-orwell-ensaios', 'p:orwell'] },
+
+    /* ---------- Pensar com clareza ---------- */
+    { id: 'l-pressuposto', tema: 't-pensar', titulo: 'O que esta frase precisa assumir?', min: 5,
+      ideia: '<p>Toda afirmação se apoia em coisas que não diz. São os <strong>pressupostos</strong>. “Precisamos de mais policiais para reduzir o crime” pressupõe que a falta de policiais é uma causa importante do crime. Pode ser verdade — mas é algo a verificar, não a aceitar sem ver.</p><p>Encontrar pressupostos não serve para desmontar frases, mas para saber onde está a verdadeira discussão.</p>',
+      exemplo: '<p>“Ele é inteligente, deveria ter percebido.” Pressupõe que inteligência basta para perceber — e que havia sinais visíveis.</p>',
+      pergunta: 'Escolha uma frase que você disse ou ouviu hoje e liste o que ela precisa assumir para fazer sentido.',
+      desafio: 'Numa discussão, pergunte: “o que você está pressupondo aí?” — e pergunte o mesmo a si.',
+      refs: ['u:u-pressupostos'] },
+    { id: 'l-correlacao', tema: 't-pensar', titulo: 'Aconteceu depois, logo foi por causa?', min: 5,
+      ideia: '<p>Quando duas coisas aparecem juntas, a mente quer ligá-las por causa e efeito. Mas pode haver uma terceira causa, a ordem pode ser inversa, ou pode ser coincidência.</p><p>O exemplo clássico: a venda de sorvetes e os afogamentos sobem juntos — porque os dois aumentam no verão, e não porque sorvete afoga.</p>',
+      exemplo: '<p>“Depois que o novo prefeito assumiu, o desemprego caiu.” Caiu também nas cidades vizinhas? No país?</p>',
+      pergunta: 'Pense numa relação de causa em que você acredita (sobre saúde, economia ou educação). Que outra explicação seria possível?',
+      desafio: 'Hoje, quando ouvir “X causa Y”, procure uma terceira causa possível.',
+      refs: ['u:u-causa', 'q:q-unica-causa'] },
+    { id: 'l-espantalho', tema: 't-pensar', titulo: 'O espantalho e o homem de aço', min: 5,
+      ideia: '<p>O <strong>espantalho</strong> é deformar a posição do outro para refutá-la facilmente. O antídoto é o <strong>homem de aço</strong>: apresentar a posição contrária na sua versão mais forte, de modo que quem a defende diria “é exatamente isso que penso”.</p><p>Só depois disso a crítica vale alguma coisa.</p>',
+      exemplo: '<p>“Eles querem acabar com a propriedade privada” (sobre quem defende imposto maior sobre heranças). “Eles querem que os pobres passem fome” (sobre quem defende cortar um programa social). Dois espantalhos, de lados opostos.</p>',
+      pergunta: 'Escreva, em duas frases, a melhor versão de uma posição de que você discorda.',
+      desafio: 'Use o exercício “Defenda o argumento contrário”, no Laboratório.',
+      refs: ['u:u-falacias', 'x:x-i', 'u:u-discordar'] },
+    { id: 'l-pergunta-boa', tema: 't-pensar', titulo: 'Uma pergunta melhor', min: 5,
+      ideia: '<p>Muitas discussões não andam porque a pergunta está mal feita. Ajuda separar três tipos:</p><ul><li><strong>conceituais</strong> (o que queremos dizer com “justo”?);</li><li><strong>empíricas</strong> (o que acontece quando…?);</li><li><strong>de valor</strong> (o que deveríamos preferir?).</li></ul><p>“A redução da maioridade penal é boa?” mistura os três. Separados, viram perguntas que podem ser investigadas.</p>',
+      exemplo: '<p>“Por que os jovens não leem?” pressupõe que não leem. Uma pergunta melhor: “O que e quanto os jovens leem hoje, comparado a antes?”.</p>',
+      pergunta: 'Escreva uma pergunta que você tem sobre um tema atual. Ela é conceitual, empírica ou de valor? Reescreva-a melhor.',
+      desafio: 'Leve uma pergunta para a ferramenta “Da intuição à ideia”.',
+      refs: ['u:u-perguntas', 'ferramenta:intuicao'] },
+
+    /* ---------- Quem sou eu ---------- */
+    { id: 'l-teseu', tema: 't-eu', titulo: 'O navio de Teseu e você', min: 5,
+      ideia: '<p>Plutarco conta que os atenienses conservaram o navio de Teseu trocando, ao longo dos anos, cada tábua apodrecida. Os filósofos discutiam: é o mesmo navio? Nosso corpo troca suas células, nossas opiniões mudam, nossa memória se reconstrói. O que faz de você a mesma pessoa de dez anos atrás?</p><p>Respostas clássicas: a continuidade do corpo, da memória, do caráter, de uma alma — ou da história que contamos.</p>',
+      exemplo: '<p>Alguém diz “aquele não era eu” sobre o que fez aos vinte anos. Faz sentido? Ele é responsável pelo que fez?</p>',
+      pergunta: 'O que em você continua igual desde a infância? E o que mudou tanto que parece de outra pessoa?',
+      desafio: 'Leia algo que você escreveu há anos. Quem era essa pessoa?',
+      refs: ['u:u-mesma', 'n:identidade'] },
+    { id: 'l-juizo', tema: 't-eu', titulo: 'Entre o fato e a raiva há uma interpretação', min: 5,
+      ideia: '<p>O estoico Epicteto escreveu no <em>Manual</em> que não são as coisas que nos perturbam, mas os juízos que fazemos sobre elas. A psicologia cognitiva moderna chegou a algo parecido: entre um acontecimento e uma emoção costuma haver uma interpretação, muitas vezes automática.</p><p>Isso não significa que toda emoção é errada, nem que basta pensar diferente para não sofrer. Significa que há um espaço — às vezes pequeno — onde podemos examinar a interpretação.</p>',
+      exemplo: '<p>Um amigo não responde à mensagem. “Ele está me ignorando” produz mágoa; “ele deve estar ocupado” produz outra coisa. O fato é o mesmo.</p>',
+      pergunta: 'Qual foi a última vez que você sentiu raiva ou mágoa? Que interpretação estava entre o fato e a emoção?',
+      desafio: 'Na próxima irritação, escreva o fato, a interpretação e uma interpretação alternativa.',
+      refs: ['u:u-emocao', 'p:estoicos', 'b:b-manual'] },
+    { id: 'l-camada', tema: 't-eu', titulo: 'Em que camada está o meu conflito?', min: 6,
+      ideia: '<p>Olavo de Carvalho propôs que a personalidade se forma em <strong>doze camadas</strong>, do caráter inato à relação com Deus, passando pela busca de afeto, pela autoafirmação, pelas habilidades, pelo papel social, pela consciência da morte e pela vida intelectual e moral. Uma leitura da teoria é que muito sofrimento adulto vem de viver os problemas de uma camada com os recursos de outra.</p><p>É uma antropologia filosófica, não uma teoria científica testada; parte dela (a astrocaracterologia) não tem apoio empírico. Mas pode servir como linguagem para nomear onde está um conflito.</p>',
+      exemplo: '<p>Alguém que, já adulto, organiza toda decisão profissional em torno de ser aprovado (afeto) quando a situação pede competência (habilidades) ou responsabilidade (vida moral).</p>',
+      pergunta: 'Pense num conflito atual seu. Ele é sobre aprovação, autonomia, competência, papel social, sentido ou outra coisa?',
+      desafio: 'Faça o exercício de autoexame da unidade “As camadas de uma pessoa”.',
+      refs: ['u:u-camadas', 'p:olavo'] },
+    { id: 'l-historia-de-mim', tema: 't-eu', titulo: 'A história que conto sobre mim', min: 6,
+      ideia: '<p>O psicólogo Dan McAdams estuda a <strong>identidade narrativa</strong>: a história que cada pessoa constrói para dar sentido à própria vida. Ele observou dois padrões: nas sequências de <em>redenção</em>, algo ruim leva a algo bom (“perdi o emprego e descobri minha vocação”); nas de <em>contaminação</em>, algo bom é estragado (“tudo ia bem até que…”). Histórias com mais redenção aparecem associadas a maior bem-estar.</p><p>Não se trata de inventar finais felizes, mas de perceber que a mesma vida pode ser contada de mais de um jeito.</p>',
+      exemplo: '<p>Duas pessoas passaram pela mesma doença. Uma conta como o fim de algo; a outra, como o começo de outra coisa.</p>',
+      pergunta: 'Escolha um episódio difícil da sua vida. Como você costuma contá-lo? Há outra forma honesta de contá-lo?',
+      desafio: 'Conte hoje a alguém uma história sua de “redenção” — sem esconder o que doeu.',
+      refs: ['u:u-camadas', 'u:u-sentido', 'n:narrativa'] },
+
+    /* ---------- Sentido, sofrimento e fé ---------- */
+    { id: 'l-frankl', tema: 't-sentido', titulo: 'Sofrimento com sentido', min: 6,
+      ideia: '<p>Viktor Frankl, psiquiatra vienense que sobreviveu a Auschwitz, observou que os prisioneiros com algo pelo que viver — uma pessoa, uma obra, uma fé — tinham mais força para resistir. Ele cita Nietzsche: quem tem um porquê suporta quase qualquer como.</p><p>Para Frankl, há uma liberdade que nada pode tirar: a de escolher a atitude diante do que não se pode mudar. O sentido não se inventa à vontade; descobre-se numa tarefa, num amor ou na forma de suportar um sofrimento inevitável.</p>',
+      exemplo: '<p>Frankl conta de um médico que não superava a morte da esposa. Perguntou-lhe: e se ele tivesse morrido primeiro? “Ela teria sofrido muito.” Então, disse Frankl, o senhor a poupou desse sofrimento — ao preço de sofrer em seu lugar.</p>',
+      pergunta: 'Qual é hoje o seu “porquê”? Ele resistiria a um sofrimento grande?',
+      desafio: 'Escreva três coisas pelas quais você se sente responsável — pessoas, tarefas, causas.',
+      refs: ['u:u-sentido', 'p:frankl', 'b:b-frankl'] },
+    { id: 'l-brevidade', tema: 't-sentido', titulo: 'A vida é curta ou desperdiçada?', min: 5,
+      ideia: '<p>Em <em>Sobre a brevidade da vida</em>, Sêneca argumenta que não recebemos uma vida curta: nós a tornamos curta ao desperdiçá-la. Damos nosso tempo a qualquer um que o peça, adiamos o que importa e só percebemos o valor dele quando acaba.</p><p>Para o estoico, viver bem não é viver muito, mas viver cada dia com atenção ao que de fato vale.</p>',
+      exemplo: '<p>Quantas horas da semana passada foram para o que você considera importante — e quantas para o que só preencheu o tempo?</p>',
+      pergunta: 'Se você soubesse que tem mais cinco anos de vida, o que deixaria de fazer amanhã?',
+      desafio: 'Proteja hoje uma hora para algo que você vive adiando.',
+      refs: ['u:u-tempo', 'b:b-seneca', 'p:estoicos'] },
+    { id: 'l-ivan', tema: 't-sentido', titulo: 'A vida “correta” de Ivan Ilitch', min: 6,
+      ideia: '<p>Na novela de Tolstói (1886), Ivan Ilitch é um juiz que fez tudo como se deve: carreira, casamento, casa decorada com bom gosto. Ao adoecer e perceber que vai morrer, descobre que sua vida foi “a mais simples, a mais comum e, portanto, a mais terrível”. Só seu criado, Guerássim, que aceita a morte com simplicidade, lhe oferece verdade e consolo.</p><p>O livro pergunta se é possível viver de forma impecável e, ainda assim, não ter vivido.</p>',
+      exemplo: '<p>As pessoas ao redor de Ivan fingem que ele não está morrendo. A mentira, mais que a dor, é o que o atormenta.</p>',
+      pergunta: 'Que parte da sua vida você vive porque “é o que se faz”, e não porque escolheu?',
+      desafio: 'Leia a novela: tem menos de cem páginas.',
+      refs: ['b:b-ivan-ilitch', 'u:u-sentido', 'b:b-confissao-tolstoi'] },
+    { id: 'l-coracao', tema: 't-sentido', titulo: '“O coração tem razões…”', min: 6,
+      ideia: '<p>Pascal, matemático e físico do século XVII, escreveu nos <em>Pensamentos</em> que o coração tem razões que a razão desconhece. Não era um elogio à emoção contra a lógica: para ele, conhecemos certas verdades — os primeiros princípios, a fé — por uma forma de percepção que não é dedução.</p><p>Pascal também descreveu o “divertimento”: nossa fuga constante do silêncio e de nós mesmos, para não pensar na morte e no sentido.</p>',
+      exemplo: '<p>“Toda a infelicidade dos homens vem de não saber ficar quietos num quarto” — uma frase sua muito citada, que soa estranhamente atual na era do celular.</p>',
+      pergunta: 'Em que você acredita sem conseguir demonstrar? Isso é um problema?',
+      desafio: 'Fique dez minutos em silêncio, sem tela. Observe o que aparece.',
+      refs: ['p:pascal', 'b:b-pascal', 'u:u-sentido'] },
+
+    /* ---------- Como viver bem ---------- */
+    { id: 'l-controle', tema: 't-viver', titulo: 'O que depende de mim', min: 5,
+      ideia: '<p>O <em>Manual</em> de Epicteto começa com uma distinção: algumas coisas dependem de nós (nossos juízos, escolhas e desejos), outras não (o corpo, a reputação, os bens, o que os outros fazem). Grande parte da inquietação, diz ele, vem de tratar as segundas como se fossem as primeiras.</p><p>Não é resignação: é concentrar o esforço onde ele pode fazer diferença.</p>',
+      exemplo: '<p>Você não controla se será promovido; controla a qualidade do seu trabalho e como reage à decisão.</p>',
+      pergunta: 'Liste uma preocupação atual. O que nela depende de você e o que não depende?',
+      desafio: 'Hoje, quando se preocupar, pergunte: isso depende de mim? Se não, o que depende?',
+      refs: ['b:b-manual', 'p:estoicos', 'u:u-emocao'] },
+    { id: 'l-meio-termo', tema: 't-viver', titulo: 'Coragem entre dois extremos', min: 5,
+      ideia: '<p>Para Aristóteles, na <em>Ética a Nicômaco</em>, a virtude é uma disposição adquirida pelo hábito e situa-se entre dois vícios: a coragem entre a covardia e a temeridade; a generosidade entre a avareza e o esbanjamento. O meio-termo não é a média matemática, mas o que é adequado à situação — e encontrá-lo exige prudência.</p><p>E nos tornamos corajosos agindo com coragem: a virtude é prática, não só conhecimento.</p>',
+      exemplo: '<p>Dizer a verdade a um amigo pode ser franqueza, ou grosseria, ou covardia calar — depende do momento, da forma e do que está em jogo.</p>',
+      pergunta: 'Em que virtude você tende a errar pelo excesso? E em qual pela falta?',
+      desafio: 'Escolha uma virtude e pratique um pequeno ato dela hoje.',
+      refs: ['b:b-etica-nicomaco', 'p:aristoteles', 'u:u-acao-boa'] },
+    { id: 'l-amizade', tema: 't-viver', titulo: 'Três tipos de amizade', min: 5,
+      ideia: '<p>Aristóteles distinguiu amizades por <strong>utilidade</strong> (o colega útil), por <strong>prazer</strong> (a companhia divertida) e por <strong>virtude</strong> (quando se quer o bem do outro pelo que ele é). As duas primeiras são legítimas, mas acabam quando acaba a utilidade ou o prazer. A terceira é rara, exige tempo e convivência — e é, para ele, uma das partes mais importantes de uma vida boa.</p>',
+      exemplo: '<p>C. S. Lewis, em <em>Os quatro amores</em>, notou que amantes ficam frente a frente, e amigos lado a lado, olhando para a mesma coisa.</p>',
+      pergunta: 'Quais das suas amizades são de que tipo? Você tem alguma do terceiro?',
+      desafio: 'Procure hoje um amigo de verdade sem nenhum motivo prático.',
+      refs: ['b:b-etica-nicomaco', 'b:b-quatro-amores', 'p:aristoteles'] },
+    { id: 'l-pessoa-fim', tema: 't-viver', titulo: 'Usar alguém como meio', min: 5,
+      ideia: '<p>Kant propôs um teste moral: agir de modo a tratar a humanidade, em você e nos outros, sempre também como fim, e nunca apenas como meio. Usamos uns aos outros o tempo todo — o padeiro me vende pão —, e isso não é errado. O errado é tratar alguém <em>apenas</em> como instrumento, desconsiderando que ele tem fins e dignidade próprios.</p>',
+      exemplo: '<p>Elogiar alguém só para conseguir um favor, sem nenhum respeito real, é tratá-lo apenas como meio. Pedir o favor com franqueza não é.</p>',
+      pergunta: 'Em que relação sua alguém pode estar sendo tratado apenas como meio — por você ou por outros?',
+      desafio: 'Hoje, numa interação comum (atendente, motorista, colega), trate a pessoa como alguém, não como função.',
+      refs: ['p:kant', 'u:u-acao-boa'] },
+
+    /* ---------- Tradição, sociedade e mudança ---------- */
+    { id: 'l-cerca', tema: 't-sociedade', titulo: 'A cerca de Chesterton', min: 5,
+      ideia: '<p>G. K. Chesterton imaginou um reformador que encontra uma cerca no meio da estrada e diz: “não vejo para que serve; vamos derrubá-la”. Um reformador mais sábio responderia: “se não vê para que serve, não vou deixá-lo derrubá-la. Vá descobrir por que foi posta; depois conversamos”.</p><p>A ideia não proíbe mudanças. Exige entender antes de mudar — porque instituições antigas podem guardar razões que esquecemos.</p>',
+      exemplo: '<p>Uma empresa elimina uma etapa “burocrática” e, meses depois, descobre que ela evitava fraudes.</p>',
+      pergunta: 'Que costume, regra ou tradição você gostaria de abolir? Você sabe por que ele surgiu?',
+      desafio: 'Pesquise a origem de uma regra que parece inútil.',
+      refs: ['u:u-tradicao', 'p:chesterton', 'q:q-conservar'] },
+    { id: 'l-pelotoes', tema: 't-sociedade', titulo: 'Os pequenos pelotões', min: 5,
+      ideia: '<p>Edmund Burke escreveu que amar o “pequeno pelotão” a que pertencemos na sociedade — a família, a vizinhança, a comunidade — é o primeiro princípio, o germe, dos afetos públicos. Alexis de Tocqueville, ao visitar os Estados Unidos em 1831, admirou-se com as associações voluntárias que resolviam problemas sem esperar pelo governo.</p><p>Para os dois, a liberdade depende dessas instituições intermediárias entre o indivíduo e o Estado.</p>',
+      exemplo: '<p>Um mutirão de vizinhos que conserta a praça antes de a prefeitura agir.</p>',
+      pergunta: 'A que “pequenos pelotões” você pertence? Eles estão mais fortes ou mais fracos do que há dez anos?',
+      desafio: 'Faça hoje algo concreto por um grupo a que você pertence.',
+      refs: ['p:burke', 'p:tocqueville', 'u:u-tradicao'] },
+    { id: 'l-lapis', tema: 't-sociedade', titulo: 'Ninguém sabe fazer um lápis', min: 6,
+      ideia: '<p>Num ensaio de 1958, Leonard Read deu voz a um lápis que observa: nenhuma pessoa no mundo sabe fazê-lo sozinha — da madeira ao grafite, da borracha ao metal, milhares de pessoas colaboram sem se conhecer. Friedrich Hayek, em 1945, argumentara algo parecido: o conhecimento necessário para organizar uma economia está disperso em milhões de pessoas, e os preços transmitem parte dele.</p><p>Críticos lembram que mercados também falham e que coordenação espontânea não resolve tudo. Mas a ideia ajuda a desconfiar de quem acha que sabe o bastante para planejar tudo.</p>',
+      exemplo: '<p>Quando um produto fica escasso, o preço sobe e, sem ninguém mandar, consumidores economizam e produtores fabricam mais.</p>',
+      pergunta: 'Pense num problema social que você gostaria de ver resolvido por uma decisão central. Que conhecimento essa decisão exigiria?',
+      desafio: 'Escolha um objeto da sua mesa e tente listar quantas pessoas foram necessárias para fazê-lo.',
+      refs: ['p:hayek', 'd:d-mercado', 'b:b-hayek-servidao'] },
+    { id: 'l-papel', tema: 't-sociedade', titulo: 'Por que um papel vale alguma coisa?', min: 5,
+      ideia: '<p>Uma cédula vale porque todos acreditam que os outros a aceitarão — e porque há instituições que sustentam essa confiança. O filósofo John Searle chama de <strong>fatos institucionais</strong> as realidades que existem porque concordamos que existem: dinheiro, casamento, fronteiras, cargos.</p><p>Isso não as torna falsas nem frágeis: muitas são enormemente estáveis. Mas mostra que dependem de confiança, e confiança se perde.</p>',
+      exemplo: '<p>Em hiperinflações, como a do Brasil antes do Plano Real, as pessoas corriam para gastar o dinheiro no dia em que recebiam: a confiança na moeda tinha ido embora.</p>',
+      pergunta: 'Que outras coisas da sua vida existem porque concordamos que existem?',
+      desafio: 'Pergunte a alguém mais velho como era viver com a inflação dos anos 1980.',
+      refs: ['u:u-dinheiro', 'n:instituicao'] }
+  ];
+
+  /* =========================== livros novos =========================== */
+  const add = (o) => A.livros.push(Object.assign({ alternativa: '', unidades: [] }, o));
+  add({ id: 'b-etica-nicomaco', titulo: 'Ética a Nicômaco', autor: 'Aristóteles', ano: 'séc. IV a.C.', tipo: 'Clássico da filosofia', origem: 'Grécia antiga',
+    temas: ['ética', 'sentido da vida', 'amor'], afinidades: ['antiguidade', 'tradicao'],
+    porque: 'O livro fundador da ética das virtudes: a felicidade como florescimento, a virtude como hábito, o meio-termo, a prudência e a amizade.',
+    encontrar: 'Livros curtos e independentes; os livros II (virtude), VIII e IX (amizade) são ótimas portas de entrada.',
+    conexao: 'Base das lições rápidas sobre o meio-termo e a amizade, e de boa parte da ética que vem depois, de Tomás de Aquino a MacIntyre.',
+    acesso: 'Médio; é um texto de aula, às vezes seco. Uma edição com notas ajuda muito.',
+    perguntas: ['Felicidade é um sentimento ou uma forma de viver?', 'Você concorda que nos tornamos bons praticando o bem?'],
+    legal: 'Texto em domínio público; há várias traduções brasileiras.', unidades: ['u-acao-boa'] });
+  add({ id: 'b-quatro-amores', titulo: 'Os quatro amores', autor: 'C. S. Lewis', ano: '1960', tipo: 'Ensaio', origem: 'Inglaterra',
+    temas: ['amor', 'religião', 'família'], afinidades: ['religiosa', 'tradicao'],
+    porque: 'Afeição, amizade, eros e caridade: Lewis examina as quatro formas de amor, seus encantos e o modo como cada uma pode se corromper.',
+    encontrar: 'Observações agudas sobre a vida comum — a família, os amigos, o apaixonar-se — à luz da fé cristã.',
+    conexao: 'Complementa a lição sobre amizade e o tema “Como viver bem”.',
+    acesso: 'Fácil a médio; prosa clara e bem-humorada.',
+    perguntas: ['Qual dos quatro amores mais falta na sua vida hoje?'],
+    legal: 'Obra protegida; há edições brasileiras.', unidades: ['u-acao-boa', 'u-emocao'], contraponto: 'b-arte-amar' });
+  add({ id: 'b-arte-amar', titulo: 'A arte de amar', autor: 'Erich Fromm', ano: '1956', tipo: 'Ensaio', origem: 'Alemanha / Estados Unidos',
+    temas: ['amor', 'emoções', 'sociedade'], afinidades: ['psicologia', 'critica'],
+    porque: 'Para Fromm, amar não é um sentimento que nos acontece, mas uma arte que se aprende, com disciplina, atenção e paciência.',
+    encontrar: 'Uma crítica ao amor como consumo e uma descrição do amor como cuidado, responsabilidade, respeito e conhecimento.',
+    conexao: 'Uma visão humanista e secular para dialogar com C. S. Lewis.',
+    acesso: 'Fácil; curto.',
+    perguntas: ['O amor pode ser aprendido?'],
+    legal: 'Obra protegida; há edições brasileiras.', unidades: ['u-emocao'], contraponto: 'b-quatro-amores' });
+  add({ id: 'b-pequeno-tratado', titulo: 'Pequeno tratado das grandes virtudes', autor: 'André Comte-Sponville', ano: '1995', tipo: 'Introdução', origem: 'França',
+    temas: ['ética', 'sentido da vida'], afinidades: ['antiguidade', 'existencia'],
+    porque: 'Dezoito virtudes — da polidez ao amor, passando por coragem, justiça, humildade, humor — em capítulos curtos e claros, com os grandes filósofos ao fundo.',
+    encontrar: 'Uma introdução à ética pela prática, escrita por um filósofo ateu que dialoga com a tradição cristã.',
+    conexao: 'Uma boa porta para o tema “Como viver bem”.',
+    acesso: 'Fácil a médio; capítulos independentes.',
+    perguntas: ['Qual virtude você mais admira nos outros? Qual mais lhe falta?'],
+    legal: 'Obra protegida; edição brasileira pela Martins Fontes.', unidades: ['u-acao-boa'] });
+  add({ id: 'b-confissao-tolstoi', titulo: 'Uma confissão', autor: 'Liev Tolstói', ano: '1882', tipo: 'Memória e testemunho', origem: 'Rússia',
+    temas: ['sentido da vida', 'religião', 'morte'], afinidades: ['religiosa', 'existencia'],
+    porque: 'No auge da fama, rico e saudável, Tolstói é tomado pela pergunta “para quê?” e chega perto do suicídio. Este relato curto conta como ele procurou a resposta na ciência, na filosofia e, por fim, na fé simples dos camponeses.',
+    encontrar: 'Um dos testemunhos mais honestos já escritos sobre a crise de sentido.',
+    conexao: 'Lido junto com <em>A morte de Ivan Ilitch</em>, mostra a mesma pergunta em forma de ficção e de vida.',
+    acesso: 'Fácil; menos de cem páginas.',
+    perguntas: ['A resposta de Tolstói convence você?'],
+    traducao: 'Prefira traduções diretas do russo.', legal: 'Texto em domínio público; há edições brasileiras.', unidades: ['u-sentido'], contraponto: 'b-sisifo' });
+  add({ id: 'b-poder-quietos', titulo: 'O poder dos quietos', autor: 'Susan Cain', ano: '2012', tipo: 'Divulgação científica', origem: 'Estados Unidos',
+    temas: ['identidade', 'trabalho', 'emoções'], afinidades: ['psicologia'],
+    porque: 'Uma defesa dos introvertidos num mundo que valoriza quem fala mais alto, com pesquisas sobre temperamento e personalidade.',
+    encontrar: 'Histórias e estudos sobre introversão, sensibilidade e o “ideal da extroversão”.',
+    conexao: 'Uma porta de entrada acessível para os traços de personalidade discutidos na unidade “As camadas de uma pessoa”.',
+    acesso: 'Fácil.',
+    perguntas: ['Em que situações você força um temperamento que não é o seu?'],
+    alternativa: 'Alguns pesquisadores acham que o livro simplifica a distinção introversão–extroversão, que na psicologia é um contínuo.',
+    legal: 'Obra protegida; edição brasileira pela Agir.', unidades: ['u-camadas'] });
+})();
+
+</script>
 
   <!-- Configuração opcional da sincronização (fica fora do arquivo único para ser editada à parte) -->
   <script src="config-nuvem.js"></script>
@@ -9190,6 +9667,7 @@ html { background-color: var(--papel); }
     debates: {},           // id -> { antes, depois, historico: [], campos: {} }
     conviccoes: [],        // Exame de convicções
     reacoes: {},           // chave -> { voto, porque, rotulo, href, data, historico: [] }
+    licoes: {},            // lições rápidas: id -> { resposta, feita }
     ultimaUnidade: null,
     ultimoBackup: null
   });
@@ -9204,7 +9682,7 @@ html { background-color: var(--papel); }
     r.preferencias = Object.assign(AP.estadoInicial().preferencias, d.preferencias || {});
     r.mapa = Object.assign({ nos: [], arestas: [], notas: {} }, d.mapa || {});
     r.desenvolvimento = Object.assign({ entradas: [] }, d.desenvolvimento || {});
-    ['unidades', 'respostas', 'datas', 'notas', 'resumosModulo', 'perguntas', 'casos', 'lab', 'livros', 'revisoes', 'revisoesPeriodicas', 'debates', 'reacoes']
+    ['unidades', 'respostas', 'datas', 'notas', 'resumosModulo', 'perguntas', 'casos', 'lab', 'livros', 'revisoes', 'revisoesPeriodicas', 'debates', 'reacoes', 'licoes']
       .forEach((k) => { if (!r[k] || typeof r[k] !== 'object' || Array.isArray(r[k])) r[k] = {}; });
     ['favoritos', 'ideias', 'conviccoes'].forEach((k) => { if (!Array.isArray(r[k])) r[k] = []; });
     r.versao = AP.VERSAO_DADOS;
@@ -9300,6 +9778,8 @@ html { background-color: var(--papel); }
       case 'x': { const x = A.laboratorio.find((e) => e.id === id); return x && { tipo: 'Laboratório', titulo: `${x.letra}. ${x.titulo}`, href: '#/lab/' + id }; }
       case 'n': { const n = A.mapa.nos.find((e) => e.id === id) || AP.S.mapa.nos.find((e) => e.id === id); return n && { tipo: 'Mapa', titulo: n.nome, href: '#/mapa/' + id }; }
       case 'd': { const d = (A.debates || []).find((x) => x.id === id); return d && { tipo: 'Debate', titulo: d.titulo, href: '#/debate/' + id }; }
+      case 'l': { const l = (A.licoes || []).find((x) => x.id === id); return l && { tipo: 'Lição rápida', titulo: l.titulo, href: '#/licao/' + id }; }
+      case 't': { const t = (A.temas || []).find((x) => x.id === id); return t && { tipo: 'Tema', titulo: t.nome, href: '#/tema/' + id }; }
       case 'ferramenta': {
         const f = { debates: ['Ferramenta', 'Arena de debates', '#/debates'], conviccoes: ['Ferramenta', 'Exame de convicções', '#/conviccoes'], intuicao: ['Ferramenta', 'Da intuição à ideia', '#/intuicao'], desenvolvimento: ['Ferramenta', 'Desenvolvimento', '#/desenvolvimento'], laboratorio: ['Ferramenta', 'Laboratório de expressão', '#/laboratorio'], oficina: ['Ferramenta', 'Oficina de interpretação', '#/oficina'], biblioteca: ['Ferramenta', 'Biblioteca de ideias', '#/biblioteca'], mapa: ['Ferramenta', 'Mapa de ideias', '#/mapa'], perguntas: ['Ferramenta', 'Perguntas fundamentais', '#/perguntas'] }[id];
         return f && { tipo: f[0], titulo: f[1], href: f[2] };
@@ -9357,6 +9837,8 @@ html { background-color: var(--papel); }
     espelho: '<rect x="6" y="3" width="12" height="15" rx="6"/><path d="M12 18v3M9 21h6"/>',
     balanca: '<path d="M3 5.5A1.5 1.5 0 0 1 4.5 4h8A1.5 1.5 0 0 1 14 5.5v5a1.5 1.5 0 0 1-1.5 1.5H8l-3 2.5V12h-.5A1.5 1.5 0 0 1 3 10.5z"/><path d="M17 9h2.5A1.5 1.5 0 0 1 21 10.5v5a1.5 1.5 0 0 1-1.5 1.5H19v2.5L16 17h-4.5A1.5 1.5 0 0 1 10 15.5V15"/>',
     alvo: '<circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="1" fill="currentColor"/>',
+    temas: '<rect x="3.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.5"/><circle cx="17" cy="17" r="3.6"/>',
+    relogio: '<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/>',
     olho: '<path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z"/><circle cx="12" cy="12" r="2.8"/>'
   };
   AP.icone = (nome, cls) => `<svg class="ic ${cls || ''}" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${IC[nome] || ''}</svg>`;
@@ -9809,6 +10291,7 @@ html { background-color: var(--papel); }
       ${AP.cabecalho({ titulo: 'Painel', sub: 'Seu ponto de partida a cada visita.' })}
       ${backup}
       <div class="painel-grade">
+        ${typeof AP.painelTemas === 'function' ? AP.painelTemas() : ''}
         <section class="painel-continuar">${continuar}</section>
         <section class="painel-progresso" aria-labelledby="t-prog">
           <h2 id="t-prog" class="rotulo">Percurso</h2>
@@ -9869,7 +10352,7 @@ html { background-color: var(--papel); }
     }).join('');
     const geral = AP.progresso(AP.ordemUnidades());
     return `<div class="pagina pagina-percurso">
-      ${AP.cabecalho({ titulo: 'Percurso', sub: `Seis etapas, de despertar a integrar. A ordem é uma sugestão: você pode abrir qualquer unidade. O progresso considera as ${geral.total} unidades já disponíveis; as marcadas “em preparação” indicam como o percurso pode crescer.`, extra: AP.barra(geral.pct, 'Progresso geral') })}
+      ${AP.cabecalho({ titulo: 'Percurso', sub: `Seis etapas, de despertar a integrar. A ordem é só uma sugestão: você pode abrir qualquer unidade, em qualquer ordem — ou <a href="#/temas">explorar por tema</a>. O progresso considera as ${geral.total} unidades já disponíveis; as marcadas “em preparação” indicam como o percurso pode crescer.`, extra: AP.barra(geral.pct, 'Progresso geral') })}
       <nav class="indice-etapas" aria-label="Etapas">${A.etapas.map((e) => `<a href="#/percurso/${e.id}">${e.num}. ${esc(e.titulo)}</a>`).join('')}</nav>
       ${etapas}</div>`;
   });
@@ -9890,11 +10373,16 @@ html { background-color: var(--papel); }
     AP.S.ultimaUnidade = id;
     AP.salvar();
     const { etapa, modulo } = AP.localizar(id);
-    const ordem = AP.ordemUnidades();
+    const tema = (A.temas || []).find((t) => t.id === args[1] && t.unidades.includes(id));
+    const ordem = tema ? tema.unidades : AP.ordemUnidades();
     const i = ordem.indexOf(id);
     const ant = ordem[i - 1], prox = ordem[i + 1];
+    const sufixo = tema ? '/' + tema.id : '';
+    const curta = AP.S.preferencias.versaoUnidade === 'curta';
+    const visiveis = curta ? AP.blocosCurtos(u) : u.blocos;
+    const ocultos = u.blocos.length - visiveis.length;
     const eixos = u.eixos.map((k) => `<span class="tag">${esc(A.eixos[k].curto)}</span>`).join('');
-    const blocos = u.blocos.map((b, i) => AP.renderBloco(b, u, i)).join('');
+    const blocos = visiveis.map((b) => AP.renderBloco(b, u, u.blocos.indexOf(b))).join('') + (curta && ocultos ? `<aside class="aviso-curta">${AP.icone('relogio')}<p>Você está na <strong>versão curta</strong>. Há mais ${AP.plural(ocultos, 'bloco', 'blocos')} nesta unidade — exercícios, perspectivas, contrapontos e leituras. Suas respostas ficam salvas: você pode voltar à versão completa quando tiver tempo.</p><button type="button" class="btn btn-secundario" data-acao="versao-unidade" data-v="completa">Ver a versão completa</button></aside>` : '');
     const st = AP.statusUnidade(id);
     let conclusao;
     if (st === 'concluida' || st === 'revisitada') {
@@ -9906,10 +10394,11 @@ html { background-color: var(--papel); }
     const proximos = (u.proximos || []).map((r) => AP.linkRef(r)).join('');
     return `<article class="pagina pagina-unidade">
       <header class="cab-unidade">
-        <p class="trilha"><a href="#/percurso/${etapa.id}">Etapa ${etapa.num} · ${esc(etapa.titulo)}</a> <span aria-hidden="true">/</span> ${esc(modulo.titulo)}</p>
+        <p class="trilha">${tema ? `<a href="#/tema/${tema.id}">Tema · ${esc(tema.nome)}</a> <span aria-hidden="true">·</span> ${i + 1} de ${ordem.length}` : `<a href="#/percurso/${etapa.id}">Etapa ${etapa.num} · ${esc(etapa.titulo)}</a> <span aria-hidden="true">/</span> ${esc(modulo.titulo)}`}</p>
         <h1>${esc(u.titulo)}</h1>
         <p class="pergunta-central">${esc(u.pergunta)}</p>
         <div class="cab-meta"><span>${AP.icone('percurso')} ${esc(u.duracao)}</span>${eixos}${AP.chipStatus(id)}</div>
+        <div class="versao-unidade" role="group" aria-label="Tamanho da unidade"><button type="button" class="${curta ? '' : 'ativa'}" data-acao="versao-unidade" data-v="completa" aria-pressed="${!curta}">Completa · ${esc(u.duracao)}</button><button type="button" class="${curta ? 'ativa' : ''}" data-acao="versao-unidade" data-v="curta" aria-pressed="${curta}">${AP.icone('relogio')} Curta · ~10 min</button></div>
         <div class="cab-acoes">${AP.botaoFavorito('u:' + id)}<a class="btn btn-icone" href="#anotacoes-unidade" data-acao="ir-anotacoes">${AP.icone('nota')}<span>Anotações</span></a></div>
       </header>
       <div class="corpo-unidade">${blocos}</div>
@@ -9923,8 +10412,8 @@ html { background-color: var(--papel); }
         ${AP.campo(['notas', 'u:' + id], { dica: 'Um espaço livre: dúvidas, associações, coisas para pesquisar depois.', rows: 6 })}
       </details>
       <nav class="nav-unidades" aria-label="Unidades vizinhas">
-        ${ant ? `<a href="#/unidade/${ant}" class="nav-ant">${AP.icone('esq')}<span><small>Anterior</small>${esc(A.unidades[ant].titulo)}</span></a>` : '<span></span>'}
-        ${prox ? `<a href="#/unidade/${prox}" class="nav-prox"><span><small>Próxima</small>${esc(A.unidades[prox].titulo)}</span>${AP.icone('dir')}</a>` : '<span></span>'}
+        ${ant ? `<a href="#/unidade/${ant}${sufixo}" class="nav-ant">${AP.icone('esq')}<span><small>Anterior</small>${esc(A.unidades[ant].titulo)}</span></a>` : '<span></span>'}
+        ${prox ? `<a href="#/unidade/${prox}${sufixo}" class="nav-prox"><span><small>${tema ? 'Próxima no tema' : 'Próxima'}</small>${esc(A.unidades[prox].titulo)}</span>${AP.icone('dir')}</a>` : '<span></span>'}
       </nav>
     </article>`;
   });
@@ -11065,6 +11554,8 @@ html { background-color: var(--papel); }
     A.pensadores.forEach((p) => { const e = I.find((x) => x.href === '#/pensador/' + p.id); if (e) e.texto += ' ' + [p.critico, p.limites, (p.afinidades || []).map((a) => A.afinidades[a]).join(' ')].join(' '); });
     A.livros.forEach((b) => { const e = I.find((x) => x.href === '#/livro/' + b.id); if (e) e.texto += ' ' + [(b.afinidades || []).map((a) => A.afinidades[a]).join(' '), (b.leituras || []).map((l) => l.quem + ' ' + l.html).join(' ')].join(' '); });
     if (typeof AP.indiceConfronto === 'function') AP.indiceConfronto().forEach((x) => I.push(x));
+    (A.temas || []).forEach((t) => I.push({ tipo: 'Tema', titulo: t.nome, href: '#/tema/' + t.id, texto: [t.nome, t.gancho, t.descricao, t.palavras].join(' ') }));
+    (A.licoes || []).forEach((l) => I.push({ tipo: 'Lição rápida', titulo: l.titulo, href: '#/licao/' + l.id, texto: [l.titulo, l.ideia, l.exemplo, l.pergunta, l.desafio].join(' ') }));
     I.forEach((x) => { x.n = AP.norm(AP.semHtml(x.texto)); x.nt = AP.norm(x.titulo); x.texto = AP.semHtml(x.texto); });
     return I;
   };
@@ -11083,6 +11574,7 @@ html { background-color: var(--papel); }
     Object.entries(AP.S.notas).forEach(([ref, v]) => { if (v && ok(v)) { const r = AP.refInfo(ref); if (r) R.push({ tipo: 'Minha anotação', titulo: r.titulo, href: r.href, texto: v }); } });
     Object.entries(AP.S.perguntas).forEach(([id, v]) => { const t = [v.atividade, v.notas].join(' '); if (t.trim() && ok(t)) { const r = AP.refInfo('q:' + id); if (r) R.push({ tipo: 'Minha anotação', titulo: r.titulo, href: r.href, texto: t }); } });
     Object.entries(AP.S.livros).forEach(([id, v]) => { const t = [v.impressoes, v.perguntas, v.conexoes].join(' '); if (t.trim() && ok(t)) { const r = AP.refInfo('b:' + id); if (r) R.push({ tipo: 'Minha anotação', titulo: r.titulo, href: r.href, texto: t }); } });
+    Object.entries(AP.S.licoes || {}).forEach(([id, v]) => { const l = (A.licoes || []).find((x) => x.id === id); if (l && v && (v.resposta || '').trim() && ok(v.resposta)) R.push({ tipo: 'Minha resposta', titulo: l.titulo, href: '#/licao/' + id, texto: v.resposta }); });
     AP.S.conviccoes.forEach((c) => { const t = [c.tese, ...Object.values(c.campos || {}).filter((v) => typeof v === 'string')].join(' '); if (ok(t)) R.push({ tipo: 'Minha convicção', titulo: c.tese || 'Convicção', href: '#/conviccao/' + c.id, texto: t }); });
     Object.entries(AP.S.debates).forEach(([id, r]) => { const t = Object.values(r).filter((v) => typeof v === 'string').join(' '); const d = (A.debates || []).find((x) => x.id === id); if (d && t.trim() && ok(t)) R.push({ tipo: 'Meu debate', titulo: d.titulo, href: '#/debate/' + id, texto: t }); });
     AP.S.ideias.forEach((i) => { const t = [i.titulo, i.original, ...Object.values(i.etapas).map((v) => typeof v === 'object' ? Object.values(v).join(' ') : v)].join(' '); if (ok(t)) R.push({ tipo: 'Minha ideia', titulo: i.titulo || 'Ideia', href: '#/intuicao/' + i.id, texto: t }); });
@@ -11267,6 +11759,8 @@ html { background-color: var(--papel); }
       L.push('');
     }
     if (typeof AP.markdownConfronto === 'function') { const mc = AP.markdownConfronto(); if (mc.trim()) L.push(mc); }
+    const lic = (A.licoes || []).filter((l) => AP.S.licoes[l.id] && (AP.S.licoes[l.id].resposta || '').trim());
+    if (lic.length) { L.push('## Lições rápidas', ''); lic.forEach((l) => { L.push(`### ${l.titulo}`, '', `_${AP.semHtml(l.pergunta)}_`, '', bloco(AP.S.licoes[l.id].resposta), ''); }); }
     const rev = Object.entries(AP.S.revisoes).filter(([, v]) => v.length);
     const per = Object.entries(AP.S.revisoesPeriodicas).filter(([, v]) => v.length);
     if (rev.length || per.length || AP.S.desenvolvimento.entradas.length) {
@@ -11305,14 +11799,14 @@ html { background-color: var(--papel); }
 
   /* ------------------------- montagem da interface ------------------------- */
   const NAV = [
-    ['Começar', [['painel', 'Painel', 'inicio'], ['percurso', 'Percurso', 'percurso']]],
+    ['Começar', [['painel', 'Painel', 'inicio'], ['temas', 'Explorar por tema', 'temas'], ['percurso', 'Percurso sugerido', 'percurso']]],
     ['Explorar', [['perguntas', 'Perguntas fundamentais', 'pergunta'], ['debates', 'Arena de debates', 'balanca'], ['oficina', 'Oficina de interpretação', 'oficina'], ['biblioteca', 'Biblioteca de ideias', 'livro'], ['pensadores', 'Pensadores', 'pessoas'], ['mapa', 'Mapa de ideias', 'mapa']]],
     ['Ferramentas', [['intuicao', 'Da intuição à ideia', 'ideia'], ['conviccoes', 'Exame de convicções', 'alvo'], ['laboratorio', 'Laboratório de expressão', 'lab']]],
     ['Meu caderno', [['caderno', 'Caderno', 'caderno'], ['desenvolvimento', 'Desenvolvimento', 'broto']]]
   ];
-  const PERTENCE = { debate: 'debates', conviccao: 'conviccoes', unidade: 'percurso', pergunta: 'perguntas', caso: 'oficina', livro: 'biblioteca', pensador: 'pensadores', lab: 'laboratorio', inicio: 'painel' };
+  const PERTENCE = { tema: 'temas', licao: 'temas', debate: 'debates', conviccao: 'conviccoes', unidade: 'percurso', pergunta: 'perguntas', caso: 'oficina', livro: 'biblioteca', pensador: 'pensadores', lab: 'laboratorio', inicio: 'painel' };
   AP.atualizarNav = (pagina) => {
-    const alvo = PERTENCE[pagina] || pagina;
+    const alvo = pagina === 'unidade' && /\/t-[a-z-]+$/.test(location.hash) ? 'temas' : (PERTENCE[pagina] || pagina);
     AP.$$('.nav-lateral a[data-nav]').forEach((a) => {
       const on = a.dataset.nav === alvo;
       a.classList.toggle('ativo', on);
@@ -11329,6 +11823,7 @@ html { background-color: var(--papel); }
       <a class="pular" href="#conteudo">Pular para o conteúdo</a>
       <header class="topo">
         <button type="button" class="btn-icone btn-menu" data-acao="menu" aria-label="Abrir menu" aria-controls="nav-lateral" aria-expanded="false">${AP.icone('menu')}</button>
+        <button type="button" class="btn-icone btn-voltar-topo" data-acao="voltar" aria-label="Voltar" title="Voltar" hidden>${AP.icone('esq')}</button>
         <a class="topo-marca" href="#/painel">${AP.marca()}<span>${esc(A.meta.nome)}</span></a>
         <a class="btn-icone" href="#/busca" aria-label="Buscar">${AP.icone('busca')}</a>
       </header>
@@ -11342,6 +11837,7 @@ html { background-color: var(--papel); }
           <p id="status-salvo" class="status-salvo" aria-live="polite"></p></div>
       </nav>
       <div class="veu" data-acao="fechar-menu"></div>
+      <button type="button" class="voltar-flutuante" data-acao="voltar" title="Voltar para onde eu estava" hidden>${AP.icone('esq')}<span>Voltar</span></button>
       <main id="conteudo" tabindex="-1"></main>
       <div id="avisos" class="avisos"></div>`;
     AP.statusSalvo(AP.storageOk ? 'salvo' : 'indisponivel');
@@ -12095,6 +12591,265 @@ html { background-color: var(--papel); }
 })();
 
 </script>
+  <script>/* js/app/09-navegacao.js */
+/* =========================================================
+   Navegação: botão Voltar e restauração da posição de leitura
+   ---------------------------------------------------------
+   Cada entrada do histórico recebe um número (history.state).
+   A posição da rolagem de cada entrada é guardada; ao voltar
+   (pelo botão do Ateliê ou do celular), a página reabre no
+   ponto em que você estava.
+   ========================================================= */
+(function () {
+  'use strict';
+  const AP = window.AP;
+  const CHAVE = 'atelie-do-pensamento:navegacao';
+  try { history.scrollRestoration = 'manual'; } catch (e) { /* ignora */ }
+  let mem = { contador: 0, base: 0, rolagem: {} };
+  try { mem = Object.assign(mem, JSON.parse(sessionStorage.getItem(CHAVE) || '{}')); } catch (e) { /* sem sessionStorage */ }
+  const gravar = () => { try { sessionStorage.setItem(CHAVE, JSON.stringify(mem)); } catch (e) { /* ignora */ } };
+
+  const idxDe = (st) => (st && typeof st.atelieIdx === 'number' ? st.atelieIdx : null);
+  AP.idxAtual = idxDe(history.state);
+  if (AP.idxAtual === null) {
+    AP.idxAtual = ++mem.contador;
+    if (!mem.base) mem.base = AP.idxAtual;
+    try { history.replaceState({ atelieIdx: AP.idxAtual }, ''); } catch (e) { /* ignora */ }
+    gravar();
+  }
+  AP.podeVoltar = () => AP.idxAtual > (mem.base || 1);
+
+  /* guarda a rolagem da entrada atual enquanto você lê */
+  let pendente = false;
+  window.addEventListener('scroll', () => {
+    if (pendente) return;
+    pendente = true;
+    requestAnimationFrame(() => { pendente = false; mem.rolagem[AP.idxAtual] = Math.round(window.scrollY); });
+  }, { passive: true });
+  window.addEventListener('pagehide', gravar);
+  document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden') gravar(); });
+
+  /* chamada em cada mudança de endereço */
+  AP.navegou = () => {
+    mem.rolagem[AP.idxAtual] = Math.round(window.scrollY);
+    const idx = idxDe(history.state);
+    let restaurar = null;
+    if (idx === null) {
+      AP.idxAtual = ++mem.contador;
+      try { history.replaceState({ atelieIdx: AP.idxAtual }, ''); } catch (e) { /* ignora */ }
+      // uma nova página depois de ter voltado descarta as posições "à frente"
+      Object.keys(mem.rolagem).forEach((k) => { if (+k >= AP.idxAtual) delete mem.rolagem[k]; });
+    } else {
+      AP.idxAtual = idx;
+      restaurar = mem.rolagem[idx];
+    }
+    gravar();
+    if (typeof restaurar === 'number') {
+      AP._semRolagem = true;
+      AP.renderizar();
+      requestAnimationFrame(() => window.scrollTo(0, restaurar));
+    } else {
+      AP.renderizar();
+    }
+    AP.atualizarVoltar();
+  };
+
+  AP.atualizarVoltar = () => {
+    const pode = AP.podeVoltar();
+    AP.$$('[data-acao="voltar"]').forEach((b) => { b.hidden = !pode; });
+    document.body.classList.toggle('pode-voltar', pode);
+  };
+
+  AP.acao('voltar', () => {
+    if (AP.podeVoltar()) history.back();
+    else AP.ir('#/painel');
+  });
+
+  /* atalho de teclado: Alt + seta para a esquerda já é do navegador; Esc fecha o menu */
+})();
+
+</script>
+  <script>/* js/app/10-temas.js */
+/* =========================================================
+   Explorar por tema · lições rápidas · versão curta
+   ========================================================= */
+(function () {
+  'use strict';
+  const A = window.ATELIE, AP = window.AP, esc = AP.esc;
+  const temas = () => A.temas || [];
+  const licoes = () => A.licoes || [];
+  const tema = (id) => temas().find((t) => t.id === id);
+  const licao = (id) => licoes().find((l) => l.id === id);
+  const licaoFeita = (id) => !!(AP.S.licoes[id] && AP.S.licoes[id].feita);
+  const licoesDoTema = (t) => t.licoes.map(licao).filter(Boolean);
+
+  AP.progressoTema = (t) => {
+    const un = AP.progresso(t.unidades);
+    const lf = t.licoes.filter(licaoFeita).length;
+    const total = un.total + t.licoes.length;
+    const feitas = un.feitas + lf;
+    return { feitas, total, pct: total ? Math.round((feitas / total) * 100) : 0, licoesFeitas: lf, unidadesFeitas: un.feitas };
+  };
+
+  /* ------------------------- versão curta das unidades ------------------------- */
+  AP.blocosCurtos = (u) => {
+    let conceitos = 0, pratica = false;
+    return u.blocos.filter((b) => {
+      if (['importa', 'impressao', 'situacao', 'sintese'].includes(b.t)) return true;
+      if (b.t === 'conceito' && conceitos < 2) { conceitos++; return true; }
+      if (!pratica && ['inversao', 'escolha', 'classificar', 'escrita'].includes(b.t)) { pratica = true; return true; }
+      return false;
+    });
+  };
+  AP.acao('versao-unidade', (el) => {
+    AP.S.preferencias.versaoUnidade = el.dataset.v === 'curta' ? 'curta' : 'completa';
+    AP.salvarJa();
+    const y = scrollY;
+    AP._semRolagem = true;
+    AP.renderizar();
+    scrollTo(0, y);
+  });
+
+  /* ------------------------- escolha do dia ------------------------- */
+  const diaDoAno = () => { const d = new Date(); return Math.floor((d - new Date(d.getFullYear(), 0, 0)) / 864e5); };
+  AP.licaoDoDia = () => {
+    const ult = tema(AP.S.preferencias.ultimoTema);
+    let pool = (ult ? licoesDoTema(ult) : []).filter((l) => !licaoFeita(l.id));
+    if (!pool.length) pool = licoes().filter((l) => !licaoFeita(l.id));
+    if (!pool.length) pool = licoes();
+    return pool.length ? pool[diaDoAno() % pool.length] : null;
+  };
+
+  const cartaoTema = (t) => {
+    const p = AP.progressoTema(t);
+    return `<a class="cartao-tema" href="#/tema/${t.id}">
+      <span class="ct-icone">${AP.icone(t.icone)}</span>
+      <span class="ct-nome">${esc(t.nome)}</span>
+      <span class="ct-gancho">${esc(t.gancho)}</span>
+      <span class="ct-meta"><span>${t.licoes.length} lições rápidas · ${t.unidades.length} unidades</span><span>${p.feitas}/${p.total}</span></span>
+      ${AP.barra(p.pct, 'Progresso no tema ' + t.nome)}</a>`;
+  };
+  const cartaoLicao = (l, comTema) => {
+    const t = tema(l.tema);
+    return `<a class="cartao-licao ${licaoFeita(l.id) ? 'feita' : ''}" href="#/licao/${l.id}">
+      <span class="cl-min">${AP.icone('relogio')} ${l.min} min${licaoFeita(l.id) ? ` · ${AP.icone('check')} feita` : ''}</span>
+      <span class="cl-titulo">${esc(l.titulo)}</span>
+      ${comTema && t ? `<span class="cl-tema">${esc(t.nome)}</span>` : ''}</a>`;
+  };
+
+  /* ------------------------- painel: bloco de temas ------------------------- */
+  AP.painelTemas = () => {
+    const l = AP.licaoDoDia();
+    const t = l && tema(l.tema);
+    const chips = temas().map((x) => `<a class="chip-tema" href="#/tema/${x.id}">${AP.icone(x.icone)}<span>${esc(x.nome)}</span></a>`).join('');
+    return `<section class="painel-temas" aria-labelledby="t-painel-temas">
+      <div class="pt-cab"><h2 id="t-painel-temas" class="rotulo">O que você quer estudar hoje?</h2><a class="btn-link" href="#/temas">Todos os temas</a></div>
+      <div class="chips-temas">${chips}</div>
+      ${l ? `<a class="licao-do-dia" href="#/licao/${l.id}"><span class="rotulo">${AP.icone('relogio')} Lição rápida de hoje · ${l.min} min${t ? ' · ' + esc(t.nome) : ''}</span><span class="ld-titulo">${esc(l.titulo)}</span><span class="ld-pergunta">${esc(AP.semHtml(l.pergunta))}</span></a>` : ''}
+    </section>`;
+  };
+
+  /* ------------------------- página: todos os temas ------------------------- */
+  AP.rota('temas', () => {
+    const feitas = licoes().filter((l) => licaoFeita(l.id)).length;
+    return `<div class="pagina pagina-temas">
+      ${AP.cabecalho({ titulo: 'Explorar por tema', sub: 'Escolha o assunto que está na sua cabeça agora. Cada tema reúne lições rápidas de 5 a 10 minutos, unidades completas de qualquer etapa, exercícios, debates, livros e pensadores. Não há ordem obrigatória.' })}
+      <div class="busca-tema">
+        <label for="busca-tema" class="campo-rotulo">Sobre o que você está pensando hoje?</label>
+        <input id="busca-tema" class="entrada" type="search" autocomplete="off" placeholder="Ex.: viés de confirmação, polarização, morte, notícia falsa, amizade…">
+        <div id="sugestoes-tema" aria-live="polite"></div>
+      </div>
+      <div class="grade-temas">${temas().map(cartaoTema).join('')}</div>
+      <p class="campo-dica">${feitas} de ${licoes().length} lições rápidas feitas. O <a href="#/percurso">percurso sugerido</a>, em seis etapas, continua disponível para quem prefere seguir uma ordem.</p>
+    </div>`;
+  });
+  document.addEventListener('input', (e) => {
+    if (e.target.id !== 'busca-tema') return;
+    const alvo = document.getElementById('sugestoes-tema');
+    const termos = AP.norm(e.target.value).split(/\s+/).filter((x) => x.length > 2);
+    if (!termos.length) { alvo.innerHTML = ''; return; }
+    const pontua = (texto) => { const n = AP.norm(AP.semHtml(texto)); return termos.reduce((s, t) => s + (n.includes(t) ? 1 : 0), 0); };
+    const ts = temas().map((t) => ({ t, p: pontua([t.nome, t.gancho, t.descricao, t.palavras].join(' ')) * 2 })).filter((x) => x.p).sort((a, b) => b.p - a.p).slice(0, 3);
+    const ls = licoes().map((l) => ({ l, p: pontua([l.titulo, l.ideia, l.pergunta].join(' ')) + pontua(l.titulo) })).filter((x) => x.p).sort((a, b) => b.p - a.p).slice(0, 4);
+    const us = Object.values(A.unidades).map((u) => ({ u, p: pontua([u.titulo, u.pergunta, u.resumo].join(' ')) })).filter((x) => x.p).sort((a, b) => b.p - a.p).slice(0, 3);
+    alvo.innerHTML = (ts.length || ls.length || us.length)
+      ? `<div class="sugestoes">${ts.map((x) => AP.linkRef('t:' + x.t.id)).join('')}${ls.map((x) => AP.linkRef('l:' + x.l.id)).join('')}${us.map((x) => AP.linkRef('u:' + x.u.id)).join('')}</div>`
+      : '<p class="campo-dica">Nada encontrado com essas palavras. Tente outras, ou a <a href="#/busca">busca completa</a>.</p>';
+  });
+
+  /* ------------------------- página de um tema ------------------------- */
+  AP.rota('tema', (args) => {
+    const t = tema(args[0]);
+    if (!t) return AP.rotas.naoEncontrada();
+    if (AP.S.preferencias.ultimoTema !== t.id) { AP.S.preferencias.ultimoTema = t.id; AP.salvar(); }
+    const p = AP.progressoTema(t);
+    const proxLicao = licoesDoTema(t).find((l) => !licaoFeita(l.id));
+    const proxUnid = t.unidades.find((u) => !AP.concluida(u));
+    const unidades = t.unidades.map((uid, i) => {
+      const u = A.unidades[uid];
+      return `<li class="item-unidade st-${AP.statusUnidade(uid)}"><a href="#/unidade/${uid}/${t.id}">
+        <span class="iu-titulo"><span class="iu-num">${i + 1}</span>${esc(u.titulo)}</span><span class="iu-pergunta">${esc(u.pergunta)}</span>
+        <span class="iu-meta">${AP.chipStatus(uid)}<span>${esc(u.duracao)} · ou versão curta, ~10 min</span></span></a></li>`;
+    }).join('');
+    const refs = (lista) => lista.map((r) => AP.linkRef(r)).join('');
+    const pens = t.pensadores.map((id) => AP.linkRef('p:' + id)).join('');
+    const conc = t.conceitos.map((id) => AP.linkRef('n:' + id)).join('');
+    const outros = temas().filter((x) => x.id !== t.id).map((x) => `<a class="chip-tema" href="#/tema/${x.id}">${AP.icone(x.icone)}<span>${esc(x.nome)}</span></a>`).join('');
+    return `<div class="pagina pagina-tema">
+      ${AP.cabecalho({ trilha: '<a href="#/temas">Explorar por tema</a>', titulo: esc(t.nome), sub: esc(t.gancho), extra: `<p class="tema-desc">${esc(t.descricao)}</p><div class="tema-prog"><span>${p.feitas} de ${p.total} feitas</span>${AP.barra(p.pct, 'Progresso no tema')}</div>` })}
+      <div class="tema-comecar">
+        ${proxLicao ? `<a class="btn btn-primario" href="#/licao/${proxLicao.id}">${AP.icone('relogio')} Tenho 5 minutos</a>` : ''}
+        ${proxUnid ? `<a class="btn btn-secundario" href="#/unidade/${proxUnid}/${t.id}">Tenho mais tempo: ${esc(A.unidades[proxUnid].titulo)}</a>` : ''}
+      </div>
+      <section class="tema-sec"><h2>Lições rápidas <small>5 a 10 minutos cada</small></h2>
+        <div class="grade-licoes">${licoesDoTema(t).map((l) => cartaoLicao(l)).join('')}</div></section>
+      <section class="tema-sec"><h2>Unidades completas <small>na ordem deste tema</small></h2>
+        <p class="campo-dica">Cada unidade tem uma versão curta (~10 min) e a completa. Abrindo daqui, o botão “Próxima” segue este tema.</p>
+        <ul class="lista-unidades">${unidades}</ul></section>
+      <section class="tema-sec"><h2>Pratique</h2><div class="lista-refs">${refs(t.praticar)}</div></section>
+      <section class="tema-sec"><h2>Pergunte e debata</h2><div class="lista-refs">${refs(t.debater)}</div></section>
+      <section class="tema-sec"><h2>Leia</h2><div class="grade-livros">${t.livros.map((id) => AP.cartaoLivro(id)).join('')}</div></section>
+      <section class="tema-sec tema-duplo"><div><h2>Pensadores</h2><div class="lista-refs">${pens}</div></div><div><h2>No mapa de ideias</h2><div class="lista-refs">${conc}</div></div></section>
+      <section class="tema-sec"><h2>Outros temas</h2><div class="chips-temas">${outros}</div></section>
+    </div>`;
+  });
+
+  /* ------------------------- página de uma lição rápida ------------------------- */
+  AP.rota('licao', (args) => {
+    const l = licao(args[0]);
+    if (!l) return AP.rotas.naoEncontrada();
+    const t = tema(l.tema);
+    const lista = t ? licoesDoTema(t) : licoes();
+    const i = lista.indexOf(l);
+    const prox = lista[i + 1] || null;
+    const reg = AP.S.licoes[l.id] || {};
+    const fim = reg.feita
+      ? `<p class="conclusao-info">${AP.icone('check')} Feita em ${AP.fmtData(reg.feita)}.</p>`
+      : `<button type="button" class="btn btn-primario" data-acao="licao-feita" data-id="${l.id}">${AP.icone('check')} Marcar como feita</button>`;
+    return `<article class="pagina pagina-licao">
+      ${AP.cabecalho({ trilha: t ? `<a href="#/tema/${t.id}">Tema · ${esc(t.nome)}</a> <span aria-hidden="true">·</span> lição ${i + 1} de ${lista.length}` : '<a href="#/temas">Temas</a>', titulo: esc(l.titulo), extra: `<div class="cab-meta"><span>${AP.icone('relogio')} ${l.min} minutos</span></div><div class="cab-acoes">${AP.botaoFavorito('l:' + l.id)}</div>` })}
+      <section class="b licao-ideia"><p class="rotulo">A ideia</p>${l.ideia}</section>
+      <section class="b licao-exemplo"><p class="rotulo">Um exemplo</p>${l.exemplo}</section>
+      <section class="b licao-vez"><p class="rotulo">Sua vez</p><p class="b-prompt">${l.pergunta}</p>${AP.campo(['licoes', l.id, 'resposta'], { rows: 5, rotuloSr: 'Sua resposta', espelho: false })}</section>
+      <section class="b licao-desafio"><p class="rotulo">${AP.icone('alvo')} Experimente hoje</p><p>${l.desafio}</p></section>
+      <section class="fim-unidade">${fim}
+        ${(l.refs || []).length ? `<div class="proximos"><h3>Para ir mais fundo</h3>${l.refs.map((r) => AP.linkRef(r)).join('')}</div>` : ''}
+      </section>
+      <nav class="nav-unidades" aria-label="Lições vizinhas">
+        ${t ? `<a href="#/tema/${t.id}" class="nav-ant">${AP.icone('esq')}<span><small>Voltar ao tema</small>${esc(t.nome)}</span></a>` : '<span></span>'}
+        ${prox ? `<a href="#/licao/${prox.id}" class="nav-prox"><span><small>Próxima lição rápida</small>${esc(prox.titulo)}</span>${AP.icone('dir')}</a>` : '<span></span>'}
+      </nav>
+    </article>`;
+  });
+  AP.acao('licao-feita', (el) => {
+    AP.gravar(['licoes', el.dataset.id, 'feita'], AP.agora());
+    AP.salvarJa();
+    AP.aviso('Lição registrada. Que tal o desafio de hoje?', 'ok');
+    AP._semRolagem = true; const y = scrollY; AP.renderizar(); scrollTo(0, y);
+  });
+})();
+
+</script>
   <script>/* js/app/07-iniciar.js */
 /* Inicialização — carregada por último */
 (function () {
@@ -12106,8 +12861,9 @@ html { background-color: var(--papel); }
     AP.aplicarPreferencias();
     AP.montar();
     if (!AP.storageOk) AP.aviso('O armazenamento local está indisponível (talvez modo privado). Você pode usar o Ateliê, mas exporte seus textos antes de fechar a página.', 'erro');
-    window.addEventListener('hashchange', AP.renderizar);
+    window.addEventListener('hashchange', AP.navegou || AP.renderizar);
     AP.renderizar();
+    if (AP.atualizarVoltar) AP.atualizarVoltar();
     if (AP.nuvem) AP.nuvem.iniciar();
   };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', AP.iniciar); else AP.iniciar();
