@@ -868,6 +868,20 @@ html { background-color: var(--papel); }
 .atalhos-biblioteca { margin: -.4rem 0 1.2rem; }
 .chip-tema.ativo { background: var(--acento-tinta); border-color: var(--acento); color: var(--acento-forte); }
 
+/* ---------- v1.6: situação rápida nos cartões de obras ---------- */
+.cartao-livro-caixa { display: flex; flex-direction: column; border-radius: var(--raio); border: 1px solid var(--linha); background: var(--superficie); border-top: 3px solid var(--linha-forte); overflow: hidden; }
+.cartao-livro-caixa:hover { border-color: var(--acento); }
+.cartao-livro-caixa > .cartao-livro { border: 0; border-radius: 0; background: transparent; flex: 1; }
+.cartao-livro-caixa.st-quero { border-top-color: var(--terracota-claro); }
+.cartao-livro-caixa.st-lendo { border-top-color: var(--acento); }
+.cartao-livro-caixa.st-concluida { border-top-color: var(--acento-forte); }
+.chip-leitura[hidden] { display: none !important; }
+.status-rapido { display: flex; flex-wrap: wrap; gap: .35rem; padding: .55rem .8rem .75rem; border-top: 1px dashed var(--linha); }
+.sr-op { display: inline-flex; align-items: center; gap: .25rem; border: 1px solid var(--linha); background: var(--papel-2); color: var(--tinta-2); font: 500 .78rem var(--f-ui); padding: .32rem .65rem; border-radius: 999px; cursor: pointer; min-height: 2rem; }
+.sr-op .ic { width: .9rem; height: .9rem; }
+.sr-op:hover { border-color: var(--acento); color: var(--acento-forte); }
+.sr-op.ativo { background: var(--acento); border-color: var(--acento); color: var(--papel); }
+
 </style>
 </head>
 <body>
@@ -10744,18 +10758,51 @@ html { background-color: var(--papel); }
     const t = { nova: 'Não iniciada', iniciada: 'Iniciada', concluida: 'Concluída', revisitada: 'Revisitada' }[s];
     return `<span class="chip chip-${s}">${s === 'concluida' || s === 'revisitada' ? AP.icone('check') : ''}${t}</span>`;
   };
-  AP.cartaoLivro = (id) => {
+  /* nomes da situação, conforme seja livro ou filme */
+  AP.nomeStatus = (st, filme) => {
+    if (!st) return '';
+    const f = { quero: 'Quero assistir', lista: 'Na lista para assistir', lendo: 'Assistindo', concluida: 'Assisti', revisitar: 'Quero rever' };
+    const l = { quero: 'Quero ler', lista: 'Na lista de leitura', lendo: 'Lendo', concluida: 'Li', revisitar: 'Quero reler' };
+    return (filme ? f : l)[st] || (A.statusLeitura.find((x) => x.id === st) || {}).nome || '';
+  };
+  /* botões rápidos de situação, usados nos cartões das listas */
+  const RAPIDOS = ['quero', 'lendo', 'concluida'];
+  AP.statusRapido = (b) => {
+    const st = AP.S.livros[b.id] && AP.S.livros[b.id].status;
+    const filme = b.tipo === 'Filme';
+    return `<div class="status-rapido" role="group" aria-label="Situação: ${AP.esc(b.titulo)}">${RAPIDOS.map((v) => `<button type="button" class="sr-op ${st === v ? 'ativo' : ''}" data-acao="status-rapido" data-id="${b.id}" data-v="${v}" aria-pressed="${st === v}">${v === 'concluida' ? AP.icone('check') : ''}${AP.esc(AP.nomeStatus(v, filme))}</button>`).join('')}</div>`;
+  };
+  AP.cartaoLivro = (id, o = {}) => {
     const b = A.livros.find((x) => x.id === id);
     if (!b) return '';
     const st = AP.S.livros[id] && AP.S.livros[id].status;
-    const stNome = st ? (A.statusLeitura.find((x) => x.id === st) || {}).nome : '';
-    return `<a class="cartao-livro" href="#/livro/${b.id}">
+    const stNome = AP.nomeStatus(st, b.tipo === 'Filme');
+    const link = `<a class="cartao-livro" href="#/livro/${b.id}">
       <span class="cl-tipo">${AP.esc(b.tipo)} · ${AP.esc(b.ano)}</span>
       <span class="cl-titulo">${AP.esc(b.titulo)}</span>
       <span class="cl-autor">${AP.esc(b.autor)}</span>
-      <span class="cl-porque">${AP.esc(b.porque)}</span>
-      ${stNome ? `<span class="chip chip-leitura">${AP.esc(stNome)}</span>` : ''}</a>`;
+      <span class="cl-porque">${AP.esc(AP.semHtml(b.porque))}</span>
+      <span class="chip chip-leitura" ${stNome ? '' : 'hidden'}>${AP.esc(stNome)}</span></a>`;
+    if (o.status === false) return link;
+    return `<div class="cartao-livro-caixa st-${st || 'nenhum'}" data-livro="${b.id}">${link}${AP.statusRapido(b)}</div>`;
   };
+  AP.acao('status-rapido', (el) => {
+    const id = el.dataset.id, v = el.dataset.v;
+    const b = A.livros.find((x) => x.id === id);
+    if (!b) return;
+    const reg = (AP.S.livros[id] = AP.S.livros[id] || {});
+    if (reg.status === v) delete reg.status; else { reg.status = v; reg.statusEm = AP.agora(); }
+    AP.salvar();
+    const st = reg.status;
+    AP.$$(`.cartao-livro-caixa[data-livro="${id}"]`).forEach((cx) => {
+      cx.className = `cartao-livro-caixa st-${st || 'nenhum'}`;
+      cx.querySelectorAll('.sr-op').forEach((bt) => { const on = bt.dataset.v === st; bt.classList.toggle('ativo', on); bt.setAttribute('aria-pressed', String(on)); });
+      const chip = cx.querySelector('.chip-leitura');
+      if (chip) { chip.textContent = AP.nomeStatus(st, b.tipo === 'Filme'); chip.hidden = !st; }
+    });
+    AP.statusSalvo && AP.statusSalvo('salvando');
+  });
+
   AP.cabecalho = (o) => `<header class="cab-pagina">${o.trilha ? `<p class="trilha">${o.trilha}</p>` : ''}<h1>${o.titulo}</h1>${o.sub ? `<p class="sub">${o.sub}</p>` : ''}${o.extra || ''}</header>`;
 })();
 
@@ -11437,7 +11484,7 @@ html { background-color: var(--papel); }
     const atualH = (AP.S.lab['x-h'] || {}).extra || {};
     const filme = b.tipo === 'Filme';
     const nomeFilme = { lista: 'Na lista para assistir', lendo: 'Assistindo', concluida: 'Assisti' };
-    const status = A.statusLeitura.map((s) => `<label class="opcao-radio"><input type="radio" name="status-livro" value="${s.id}" ${reg.status === s.id ? 'checked' : ''} data-acao-status="${b.id}"><span>${esc(filme && nomeFilme[s.id] ? nomeFilme[s.id] : s.nome)}</span></label>`).join('');
+    const status = A.statusLeitura.map((s) => `<label class="opcao-radio"><input type="radio" name="status-livro" value="${s.id}" ${reg.status === s.id ? 'checked' : ''} data-acao-status="${b.id}"><span>${esc(AP.nomeStatus(s.id, filme))}</span></label>`).join('');
     const sec = (t, h) => h ? `<section class="ficha-sec"><h2>${t}</h2>${h}</section>` : '';
     return `<article class="pagina pagina-ficha pagina-livro">
       ${AP.cabecalho({ trilha: '<a href="#/biblioteca">Biblioteca de ideias</a>', titulo: esc(b.titulo), sub: `${esc(b.autor)} · ${esc(b.ano)} · ${esc(b.tipo)} · ${esc(b.origem)}`, extra: `<div class="temas">${b.temas.map((t) => `<span class="tag">${esc(t)}</span>`).join('')}${(b.afinidades || []).map((a) => `<span class="tag tag-afinidade">${esc(A.afinidades[a])}</span>`).join('')}</div><div class="cab-acoes">${AP.botaoFavorito('b:' + b.id)}</div>` })}
