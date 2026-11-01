@@ -882,6 +882,25 @@ html { background-color: var(--papel); }
 .sr-op:hover { border-color: var(--acento); color: var(--acento-forte); }
 .sr-op.ativo { background: var(--acento); border-color: var(--acento); color: var(--papel); }
 
+/* ---------- v1.7: ranking de filmes por tema ---------- */
+.ranking-filmes { list-style: none; padding: 0; margin: 0; display: grid; gap: .6rem; counter-reset: none; }
+.item-rank { border-top-width: 1px; }
+.item-rank.st-quero { border-left: 3px solid var(--terracota-claro); }
+.item-rank.st-lendo { border-left: 3px solid var(--acento); }
+.item-rank.st-concluida { border-left: 3px solid var(--acento-forte); }
+.rank-link { display: flex; gap: .85rem; padding: .9rem 1rem .6rem; text-decoration: none; color: var(--tinta); }
+.rank-num { flex: none; width: 2rem; height: 2rem; border-radius: 50%; display: grid; place-items: center; background: var(--acento-tinta); color: var(--acento-forte); font: 600 .9rem var(--f-ui); }
+.item-rank:nth-child(-n+3) .rank-num { background: var(--acento); color: var(--papel); }
+.rank-corpo { display: flex; flex-direction: column; gap: .2rem; min-width: 0; }
+.rank-titulo { font-family: var(--f-titulo); font-weight: 600; font-size: 1.08rem; line-height: 1.3; }
+.rank-meta { font: .8rem var(--f-ui); color: var(--tinta-3); }
+.rank-porque { font-size: .93rem; color: var(--tinta-2); line-height: 1.5; }
+.rank-corpo .chip { align-self: flex-start; margin-top: .3rem; }
+.item-rank .status-rapido { padding-left: 3.85rem; }
+@media (max-width: 480px) { .item-rank .status-rapido { padding-left: 1rem; } }
+.ficha-aprofunda { background: var(--acento-tinta); border-radius: var(--raio); padding: 1rem 1.15rem; }
+.ficha-aprofunda h2 { color: var(--acento-forte); }
+
 </style>
 </head>
 <body>
@@ -7945,6 +7964,536 @@ html { background-color: var(--papel); }
 })();
 
 </script>
+  <script>/* js/conteudo/66-filmes-ampliados.js */
+/* =========================================================
+   Cinema ampliado (v1.7)
+   ---------------------------------------------------------
+   1) Campo novo “aprofunda”: o que o filme traz de especial
+      para aprofundar o tema e ampliar o horizonte.
+   2) Cerca de oitenta filmes novos.
+   A ordem de recomendação por tema fica em 99-temas.js.
+   ========================================================= */
+(function () {
+  const A = window.ATELIE;
+  const ONDE = 'Procure em serviços de streaming, locação digital, cineclubes ou bibliotecas com acervo de filmes; a disponibilidade muda com frequência.';
+  const f = (o) => A.livros.push(Object.assign({ tipo: 'Filme', alternativa: '', unidades: [], legal: ONDE }, o));
+
+  /* ------------------ o que traz de especial: filmes já cadastrados ------------------ */
+  const ap = {
+    'b-doze-homens': 'Mostra, em tempo quase real, como uma convicção coletiva se desfaz argumento por argumento — e que o que muda cada jurado raramente é só a lógica: é cansaço, orgulho, uma memória pessoal. É a melhor aula filmada sobre dúvida razoável.',
+    'b-filme-rashomon': 'Em vez de ensinar que “cada um tem sua verdade”, faz sentir o quanto o interesse e a vaidade moldam o relato — e deixa o espectador com a tarefa de decidir em quem confiar, e por quê.',
+    'b-filme-duvida': 'É raro um filme que se recusa a dar a resposta. Ele devolve a pergunta ao espectador: com o que você ficou convencido? Ótimo para perceber o próprio salto da suspeita à certeza.',
+    'b-filme-caca': 'Mostra o outro lado do “acredite na vítima”: como uma comunidade decente pode destruir um inocente quando a acusação se torna identidade do grupo. Incomoda quem tem certezas de qualquer lado.',
+    'b-filme-amnesia': 'Faz o espectador viver por dentro o autoengano: você também só sabe o que Leonard anotou. Ao final, percebe que escolher o que lembrar é uma forma de decidir no que acreditar.',
+    'b-filme-ilha-medo': 'Leva ao limite a ideia de que construímos interpretações para não encarar o que dói — e pergunta, no último diálogo, se às vezes é preferível não saber.',
+    'b-filme-truman': 'Uma alegoria acessível do conformismo: ninguém prende Truman — ele é contido pelo medo, pelo hábito e pelo conforto. Serve para perguntar que “cenários” aceitamos sem examinar.',
+    'b-filme-matrix': 'Popularizou perguntas filosóficas antigas (Platão, Descartes) para uma geração. O personagem que prefere a ilusão é a parte mais honesta do filme: muitos de nós faríamos o mesmo.',
+    'b-filme-grande-aposta': 'Mostra que o viés de confirmação não é só individual: um mercado inteiro, com especialistas e agências de risco, pode olhar na mesma direção errada. E o custo psicológico de estar certo sozinho.',
+    'b-filme-moneyball': 'Uma das ilustrações mais claras de Kahneman no cinema: intuição experiente contra dados. Mas também mostra os limites dos números — o que eles não medem.',
+    'b-filme-sully': 'Uma lição sobre julgar decisões passadas: o resultado conhecido depois parece óbvio, e as simulações não incluem o tempo de pensar. Útil para avaliar líderes, médicos — e a si mesmo.',
+    'b-filme-anatomia': 'Mostra o tribunal como uma disputa de narrativas sobre os mesmos fatos, e o filho que, sem acesso à verdade, precisa decidir em que acreditar. Uma aula sobre convicção diante da incerteza.',
+    'b-filme-onda': 'Mostra, em poucos dias, como disciplina, uniforme e um inimigo comum transformam adolescentes comuns. Serve de espelho para qualquer movimento, de qualquer lado, que oferece pertencimento.',
+    'b-filme-vida-outros': 'Talvez o melhor filme sobre como um regime vive da vigilância e da delação — e sobre a possibilidade de a consciência despertar justamente em quem vigia.',
+    'b-filme-boa-noite': 'Mostra a coragem de enfrentar uma onda de acusações sem provas — e lembra, pela história, que a ameaça real (a espionagem) não justificava os métodos.',
+    'b-filme-schindler': 'Um oportunista se torna salvador: o filme recusa a ideia de que só os puros fazem o bem. Faz pensar no que cada um teria arriscado.',
+    'b-filme-queda': 'Mostra o autoengano coletivo no momento extremo em que a realidade já não pode ser negada — e ainda assim é negada. Humaniza sem absolver.',
+    'b-filme-adeus-lenin': 'Uma versão afetuosa do Ministério da Verdade: o filho fabrica notícias por amor. Ajuda a perceber como narrativas reconfortantes se sustentam — e o que custa mantê-las.',
+    'b-filme-conformista': 'Mostra que a adesão a regimes pode nascer menos de ideias que do desejo de ser “normal” e aceito. Um retrato psicológico, mais que político.',
+    'b-filme-1984': 'Dá rosto e voz ao duplipensar; a interrogação de Winston por O’Brien é difícil de esquecer.',
+    'b-filme-tropa': 'Um teste vivo de polarização: o mesmo filme foi celebrado e condenado por razões opostas. Assisti-lo prestando atenção às próprias reações é um exercício de autoconhecimento político.',
+    'b-filme-ainda-estou-aqui': 'Coloca o espectador dentro de uma família, longe dos discursos. Permite reconhecer uma dor humana antes de qualquer classificação política — o que é, justamente, o que esta trilha pede.',
+    'b-filme-companheiro': 'Mostra militantes e repressores como pessoas com dúvidas e medos. Lido junto com <em>Ainda estou aqui</em>, ajuda a ver o mesmo período por ângulos diferentes.',
+    'b-filme-lincoln': 'Desfaz a ideia de que grandes causas se fazem com mãos limpas. Um bom material para discutir fins e meios sem cinismo.',
+    'b-filme-ponte-espioes': 'Uma defesa do Estado de Direito em sua forma mais difícil: garantir ao inimigo os mesmos direitos que se exige para si.',
+    'b-filme-sombra-stalin': 'Mostra que a desinformação não vem só de anônimos: pode vir do jornalista mais premiado, quando ideologia e acesso ao poder pesam mais que os fatos.',
+    'b-filme-capitao': 'Mostra que até uma educação contra o conformismo pode virar dogma. Bom para examinar os próprios ideais quando aplicados aos filhos.',
+    'b-filme-spotlight': 'Mostra o jornalismo como método — documentos, fontes, paciência — e a cegueira de uma comunidade inteira que preferiu não ver, incluindo o próprio jornal.',
+    'b-filme-presidente': 'O retrato clássico da apuração: duas fontes para cada fato. Lembra quanto trabalho custa uma verdade publicada.',
+    'b-filme-abutre': 'Mostra o viés de negatividade transformado em negócio — e implica o espectador, que consome o que critica.',
+    'b-filme-mera-coincidencia': 'Uma sátira sobre como se fabrica uma narrativa: emoção, imagem, repetição. Faz olhar o noticiário com outros olhos.',
+    'b-filme-rede-intrigas': 'Anteviu a indignação como produto de entretenimento. Assistir hoje é perceber quanto do nosso debate público é espetáculo.',
+    'b-filme-dilema-redes': 'Útil como ponto de partida e como objeto de crítica: vale assistir perguntando o que é dado e o que é alarme.',
+    'b-filme-negacao': 'Mostra como se demonstra um fato histórico contra alguém que o nega com habilidade — e discute quando debater uma tese a legitima.',
+    'b-filme-chegada': 'Uma porta poética para a relação entre língua, pensamento e tempo — e para a ideia de que aprender a ver como outro muda quem somos.',
+    'b-filme-obrigado-fumar': 'Um catálogo divertido de falácias e técnicas de persuasão. Assistido com papel e caneta, vira um exercício de identificar cada truque.',
+    'b-filme-jogo-imitacao': 'Mostra a força de mudar a pergunta para resolver um problema — e o preço que uma sociedade cobrou de quem não se encaixava.',
+    'b-filme-contato': 'Um raro filme que trata ciência e fé com respeito mútuo. A cena final do tribunal inverte os papéis e faz a cientista pedir confiança num testemunho.',
+    'b-filme-morangos': 'Um balanço de vida feito na velhice, que mostra que ainda é possível mudar. Dialoga com Ivan Ilitch e com a pergunta sobre a identidade ao longo do tempo.',
+    'b-filme-divertida': 'Mostra de forma acessível que as emoções têm funções — e que tentar eliminar a tristeza piora tudo. Excelente para ver em família e conversar.',
+    'b-filme-brilho-eterno': 'Pergunta se seríamos a mesma pessoa sem nossas memórias dolorosas — e se valeria a pena apagá-las.',
+    'b-filme-clube-luta': 'Mostra o vazio que torna homens vulneráveis a líderes carismáticos, e como uma crítica pode virar o que critica.',
+    'b-filme-genio': 'Mostra a diferença entre conhecimento e autoconhecimento; a cena do banco do parque resume a trilha “Quem sou eu”.',
+    'b-filme-ikiru': 'Talvez o filme mais próximo de Frankl: o sentido aparece numa tarefa concreta e modesta. A segunda metade, contada no velório, mostra como os outros reinterpretam uma vida.',
+    'b-filme-felicidade': 'Mostra o valor de uma vida comum e de sacrifícios invisíveis — o tecido de uma comunidade que só se percebe quando falta.',
+    'b-filme-setimo-selo': 'Dá forma às perguntas de Pascal e Kierkegaard: buscar Deus no silêncio, e encontrar algum sentido num momento simples partilhado.',
+    'b-filme-vida-oculta': 'Mostra o preço da consciência quando todos — inclusive os bons — pedem que você ceda. Uma meditação sobre o valor de um gesto que parece inútil.',
+    'b-filme-silencio': 'Não resolve a questão que levanta: fidelidade exterior ou misericórdia? Exige que o espectador pense a fé por dentro.',
+    'b-filme-homens-deuses': 'Mostra a fé como decisão comunitária e concreta, tomada entre o medo e a fidelidade a quem depende de você.',
+    'b-filme-arvore-vida': 'Uma meditação sobre o sofrimento à maneira do livro de Jó, contrapondo o caminho da natureza ao da graça. Exige paciência e recompensa quem a tem.',
+    'b-filme-feitico-tempo': 'Uma aula disfarçada de ética das virtudes: só pela repetição de bons atos o personagem se torna outro. Leve e profundo ao mesmo tempo.',
+    'b-filme-vida-bela': 'Mostra o sentido como algo que se dá ao outro, mesmo no horror. Também vale discutir os limites de contar o Holocausto como fábula.',
+    'b-filme-partida': 'Mostra a dignidade dos ritos diante da morte e de um trabalho desprezado, e ajuda a pensar o luto com delicadeza.',
+    'b-filme-dias-perfeitos': 'Uma demonstração de que atenção e rotina podem ser uma forma de plenitude. Faz pensar no que se procura fora que talvez já esteja aqui.',
+    'b-filme-poetas-mortos': 'Lido com atenção, é menos uma ode à rebeldia do que um conflito entre dois modos de formar jovens — e mostra os riscos de ambos.',
+    'b-filme-babette': 'Uma parábola sobre graça e gratidão: o banquete reconcilia uma comunidade dividida sem nenhum sermão.',
+    'b-filme-separacao': 'Ninguém está inteiramente certo; todos escondem algo pequeno. É um exercício perfeito para separar fatos, interpretações e interesses.',
+    'b-filme-gran-torino': 'Mostra que preconceitos podem ceder pela convivência, não pela argumentação — e que alguém pode mudar sem renegar quem é.',
+    'b-filme-crimes-pecados': 'Coloca a pergunta de Dostoiévski no cotidiano: o que acontece com a moral se o castigo não vem?',
+    'b-filme-violinista': 'O melhor filme sobre o dilema do conservador: o que ceder, o que manter, até onde ir — com humor e ternura.',
+    'b-filme-toquio': 'Mostra, sem vilões, o que se perde entre gerações quando a vida moderna acelera. Um filme que dói devagar.',
+    'b-filme-leopardo': 'Uma lição sobre como elites se adaptam para continuar no poder — e sobre a melancolia de quem vê seu mundo acabar.',
+    'b-filme-gattaca': 'Questiona uma sociedade que decide o valor das pessoas por sua natureza, e celebra o esforço sem negar os limites.',
+    'b-filme-central': 'Mostra a transformação de alguém endurecido pelo contato com uma criança e com um Brasil de fé popular.',
+    'b-filme-compadecida': 'Uma teologia popular brasileira sobre justiça e misericórdia, que faz rir e pensar.',
+    'b-filme-vidas-secas': 'Mostra como a falta de linguagem limita o próprio pensamento sobre a injustiça vivida.'
+  };
+  A.livros.forEach((b) => { if (ap[b.id]) b.aprofunda = ap[b.id]; });
+
+  /* =========================== filmes novos =========================== */
+  /* ---- vieses, percepção e autoengano ---- */
+  f({ id: 'b-filme-zodiaco', titulo: 'Zodíaco', autor: 'Direção: David Fincher', ano: '2007', origem: 'Estados Unidos', temas: ['verdade', 'percepção', 'pensamento'],
+    porque: 'Um cartunista, um jornalista e um policial passam anos obcecados pelo assassino do Zodíaco, que aterrorizou San Francisco a partir de 1969 e nunca foi identificado oficialmente.',
+    encontrar: 'Uma investigação longa e meticulosa, mais sobre a obsessão de saber do que sobre os crimes.',
+    conexao: 'Cada investigador acaba vendo provas que confirmam o seu suspeito favorito.',
+    aprofunda: 'Mostra o viés de confirmação em quem mais quer acertar: a vontade de fechar o caso faz pistas ambíguas parecerem decisivas. E o preço pessoal de não conseguir viver sem uma resposta.',
+    acesso: 'Longo; algumas cenas violentas.', perguntas: ['Em que momento a convicção sobre o suspeito passa à frente das provas?'], unidades: ['u-dissonancia', 'u-investigador'] });
+  f({ id: 'b-filme-conversacao', titulo: 'A conversação', autor: 'Direção: Francis Ford Coppola', ano: '1974', origem: 'Estados Unidos', temas: ['percepção', 'verdade', 'ética'],
+    porque: 'Harry Caul, especialista em escutas, grava a conversa de um casal num parque. Ao ouvir a fita muitas vezes, convence-se de que eles correm perigo.',
+    encontrar: 'Palma de Ouro em Cannes; um suspense silencioso com Gene Hackman.',
+    conexao: 'Uma frase gravada muda inteiramente de sentido conforme a entonação que ouvimos nela.',
+    aprofunda: 'Mostra como a mesma evidência pode ser lida de modos opostos — e como nossa culpa e nossos medos decidem a leitura. Uma lição sobre interpretação que vale para qualquer áudio “vazado”.',
+    acesso: 'Lento e introspectivo.', perguntas: ['O que mudou: a fita ou o modo de ouvir?'], unidades: ['u-fato', 'u-dissonancia'] });
+  f({ id: 'b-filme-blow-up', titulo: 'Blow-Up – Depois daquele beijo', autor: 'Direção: Michelangelo Antonioni', ano: '1966', origem: 'Reino Unido / Itália', temas: ['percepção', 'verdade'],
+    porque: 'Um fotógrafo da Londres dos anos 1960 amplia fotos tiradas num parque e acredita ter registrado um crime. Quanto mais amplia, menos nítido fica.',
+    encontrar: 'Um clássico enigmático do cinema moderno.',
+    conexao: 'A imagem que parecia prova vira mancha — a evidência não fala sozinha.',
+    aprofunda: 'Ajuda a desconfiar da ideia de que uma imagem “prova” algo por si. Útil numa época de prints e vídeos recortados.',
+    acesso: 'Difícil; ritmo e narrativa pouco convencionais.', perguntas: ['O crime aconteceu?'], unidades: ['u-fato', 'u-saber'] });
+  f({ id: 'b-filme-garota-exemplar', titulo: 'Garota exemplar', autor: 'Direção: David Fincher', ano: '2014', origem: 'Estados Unidos', temas: ['verdade', 'amor', 'sociedade'],
+    porque: 'Amy desaparece no dia do quinto aniversário de casamento. A imprensa e o país inteiro rapidamente decidem que o marido é culpado.',
+    encontrar: 'Um suspense com reviravoltas, baseado no romance de Gillian Flynn.',
+    conexao: 'A opinião pública condena por aparência e por narrativa televisiva.',
+    aprofunda: 'Mostra como uma narrativa bem construída manipula imprensa e público — e como nossa primeira impressão sobre alguém vira lente para tudo o que vem depois.',
+    acesso: 'Violento e perturbador.', perguntas: ['Em que momento você formou sua opinião sobre Nick?'], unidades: ['u-desinformacao', 'u-absorver'] });
+  f({ id: 'b-filme-prenda-me', titulo: 'Prenda-me se for capaz', autor: 'Direção: Steven Spielberg', ano: '2002', origem: 'Estados Unidos', temas: ['identidade', 'verdade', 'sociedade'],
+    porque: 'Frank Abagnale, ainda adolescente nos anos 1960, se passa por piloto, médico e advogado e falsifica milhões em cheques, perseguido por um agente do FBI.',
+    encontrar: 'Uma comédia leve com Leonardo DiCaprio e Tom Hanks.',
+    conexao: 'As pessoas acreditam no uniforme, no cargo, na confiança aparente — atalhos de autoridade.',
+    aprofunda: 'Um ótimo exemplo de heurística de autoridade. E uma ironia: jornalistas mostraram depois que boa parte da história contada pelo próprio Abagnale também era inventada.',
+    acesso: 'Muito fácil.', perguntas: ['Por que as pessoas confiavam nele?', 'Em quem você confia só pela aparência de autoridade?'], unidades: ['u-atalhos'] });
+  f({ id: 'b-filme-grande-truque', titulo: 'O grande truque', autor: 'Direção: Christopher Nolan', ano: '2006', origem: 'Estados Unidos / Reino Unido', temas: ['percepção', 'identidade'],
+    porque: 'Dois mágicos rivais na Londres do século XIX disputam o truque perfeito, sacrificando tudo — inclusive a si mesmos.',
+    encontrar: 'O próprio filme é construído como um número de mágica, em três atos.',
+    conexao: 'A mágica funciona porque o público quer ser enganado e olha para onde o mágico manda.',
+    aprofunda: 'Ensina a perguntar para onde estão desviando nossa atenção — uma pergunta útil diante de qualquer discurso político ou publicitário.',
+    acesso: 'Médio; exige atenção.', perguntas: ['O que você não viu porque estava olhando para outro lado?'], unidades: ['u-atalhos', 'u-desinformacao'] });
+  f({ id: 'b-filme-nao-olhe', titulo: 'Não olhe para cima', autor: 'Direção: Adam McKay', ano: '2021', origem: 'Estados Unidos', temas: ['ciência', 'sociedade', 'verdade'],
+    porque: 'Dois astrônomos descobrem que um cometa vai destruir a Terra em seis meses. Ninguém — governo, mídia, público — consegue levar a notícia a sério.',
+    encontrar: 'Uma sátira exagerada com Leonardo DiCaprio e Jennifer Lawrence.',
+    conexao: 'Sobre negação coletiva, espetáculo e a polarização de fatos científicos.',
+    aprofunda: 'Vale como sátira da negação — e como teste: o filme foi lido como alegoria sobre o clima, e muitos espectadores à direita o acharam caricato com eles. Repare se a sátira também acerta o lado que se considera “a favor da ciência”.',
+    acesso: 'Fácil; longo e propositalmente exagerado.',
+    leituras: [{ quem: 'Leitura de quem o aplaudiu', html: 'Uma sátira certeira da negação científica e da superficialidade da mídia.' }, { quem: 'Leitura crítica', html: 'Outros acharam que o filme trata quem discorda como estúpido — exatamente o que alimenta a polarização que ele critica.' }],
+    perguntas: ['Que fato incômodo o seu grupo prefere “não olhar”?'], unidades: ['u-dissonancia', 'u-nos-eles'] });
+
+  /* ---- política, consciência e poder ---- */
+  f({ id: 'b-filme-tropa2', titulo: 'Tropa de elite 2: O inimigo agora é outro', autor: 'Direção: José Padilha', ano: '2010', origem: 'Brasil', temas: ['poder', 'sociedade', 'ética'],
+    porque: 'Anos depois, Nascimento chega à Secretaria de Segurança e descobre que o problema não estava só no tráfico: milícias, políticos e mídia formam um sistema.',
+    encontrar: 'Por muito tempo, a maior bilheteria do cinema brasileiro.',
+    conexao: 'O próprio Nascimento revê suas convicções do primeiro filme.',
+    aprofunda: 'Um raro caso de continuação que corrige o próprio protagonista: o herói do primeiro filme descobre que estava enxergando só parte do problema. Uma aula sobre mudar de ideia sem mudar de valores.',
+    acesso: 'Violento.', perguntas: ['O que Nascimento aprendeu entre os dois filmes?'], unidades: ['u-investigador', 'u-nos-eles'], contraponto: 'b-filme-tropa' });
+  f({ id: 'b-filme-fita-branca', titulo: 'A fita branca', autor: 'Direção: Michael Haneke', ano: '2009', origem: 'Alemanha / Áustria', temas: ['poder', 'religião', 'educação'],
+    porque: 'Numa aldeia protestante do norte da Alemanha, pouco antes da Primeira Guerra, acontecimentos cruéis e inexplicáveis se sucedem. As crianças, educadas com rigor extremo, parecem saber mais do que dizem.',
+    encontrar: 'Palma de Ouro; preto e branco, frio e inquietante.',
+    conexao: 'Sugere as raízes, na educação e na moral da obediência, da geração que apoiaria o nazismo.',
+    aprofunda: 'Questiona a ideia de que a ordem e a disciplina bastam para formar pessoas boas — sem cair no oposto. Rende boa discussão entre conservadores e progressistas.',
+    acesso: 'Difícil; lento, frio e perturbador.', perguntas: ['O filme critica a religião, a autoridade ou a hipocrisia?'], unidades: ['u-tradicao', 'u-nos-eles'] });
+  f({ id: 'b-filme-z', titulo: 'Z', autor: 'Direção: Costa-Gavras', ano: '1969', origem: 'França / Argélia', temas: ['poder', 'verdade', 'liberdade'],
+    porque: 'O assassinato de um deputado pacifista, disfarçado de acidente, é investigado por um juiz que vai descobrindo a cumplicidade de policiais e militares. Inspirado no caso Lambrakis, na Grécia.',
+    encontrar: 'Oscar de filme estrangeiro; um thriller político com ritmo de ação.',
+    conexao: 'Sobre como versões oficiais são fabricadas — e desmontadas.',
+    aprofunda: 'Mostra o trabalho de um investigador que segue os fatos mesmo quando eles contrariam o poder. Lido junto com <em>A confissão</em>, do mesmo diretor, mostra que a manipulação da verdade não tem lado.',
+    acesso: 'Médio.', perguntas: ['O que o juiz faz que os outros não fazem?'], unidades: ['u-desinformacao'], contraponto: 'b-filme-confissao' });
+  f({ id: 'b-filme-confissao', titulo: 'A confissão', autor: 'Direção: Costa-Gavras', ano: '1970', origem: 'França', temas: ['poder', 'verdade', 'ética'],
+    porque: 'Artur London, vice-ministro comunista da Tchecoslováquia, é preso em 1951 e submetido a meses de tortura psicológica até confessar crimes que não cometeu no processo Slánský.',
+    encontrar: 'Baseado nas memórias do próprio London, com Yves Montand.',
+    conexao: 'A versão real de <em>O zero e o infinito</em>: um comunista convicto destruído pelo próprio partido.',
+    aprofunda: 'Feito por um diretor de esquerda sobre os crimes do comunismo, mostra como a lealdade a uma causa pode ser usada para obter a negação de si mesmo. Um dos melhores filmes sobre duplipensar real.',
+    acesso: 'Pesado e longo.', perguntas: ['Por que London acaba colaborando com a própria acusação?'], unidades: ['u-duplipensar'], contraponto: 'b-zero-infinito' });
+  f({ id: 'b-filme-sophie-scholl', titulo: 'Uma mulher contra Hitler', autor: 'Direção: Marc Rothemund', ano: '2005', origem: 'Alemanha', temas: ['liberdade', 'ética', 'religião'],
+    porque: 'Os últimos dias de Sophie Scholl, estudante da Rosa Branca, presa em 1943 por distribuir panfletos contra o nazismo na Universidade de Munique. Também conhecido como <em>Sophie Scholl – Os últimos dias</em>.',
+    encontrar: 'Baseado nas transcrições dos interrogatórios; o duelo entre Sophie e o interrogador é o centro do filme.',
+    conexao: 'Uma consciência formada pela fé e pela razão diante de um regime que exige adesão.',
+    aprofunda: 'Mostra que resistir começa por não aceitar as palavras do poder: Sophie desmonta, com calma, os argumentos do interrogador. Inspirador e sem heroísmo fácil.',
+    acesso: 'Médio; muito diálogo.', perguntas: ['De onde vinha a firmeza de Sophie?'], unidades: ['u-acao-boa', 'u-duplipensar'] });
+  f({ id: 'b-filme-mississippi', titulo: 'Mississippi em chamas', autor: 'Direção: Alan Parker', ano: '1988', origem: 'Estados Unidos', temas: ['sociedade', 'poder', 'ética'],
+    porque: 'Em 1964, dois agentes do FBI investigam o desaparecimento de três ativistas dos direitos civis numa cidade do Mississippi dominada pela Ku Klux Klan.',
+    encontrar: 'Um drama policial tenso com Gene Hackman e Willem Dafoe.',
+    conexao: 'Sobre o ódio de grupo como norma social de uma comunidade.',
+    aprofunda: 'Mostra como uma comunidade inteira pode normalizar a violência contra “eles”. Vale saber que historiadores criticaram o filme por fazer do FBI o herói e apagar o papel dos próprios ativistas negros.',
+    acesso: 'Violento.', perguntas: ['Como pessoas comuns convivem com o horror ao lado?'], unidades: ['u-nos-eles'] });
+  f({ id: 'b-filme-selma', titulo: 'Selma: Uma luta pela igualdade', autor: 'Direção: Ava DuVernay', ano: '2014', origem: 'Estados Unidos', temas: ['liberdade', 'poder', 'sociedade'],
+    porque: 'Em 1965, Martin Luther King Jr. lidera as marchas de Selma a Montgomery pelo direito de voto dos negros no Alabama.',
+    encontrar: 'Um retrato de King como estrategista político, com dúvidas e conflitos internos.',
+    conexao: 'Sobre a força moral da não violência e a arte de mudar uma opinião pública.',
+    aprofunda: 'Mostra a política como estratégia moral: provocar o adversário a revelar sua injustiça diante de todos. Historiadores discordaram do retrato do presidente Lyndon Johnson, mais hostil do que foi.',
+    acesso: 'Fácil; cenas de violência.', perguntas: ['Por que a não violência funcionou ali?'], unidades: ['u-acao-boa'] });
+  f({ id: 'b-filme-destino-nacao', titulo: 'O destino de uma nação', autor: 'Direção: Joe Wright', ano: '2017', origem: 'Reino Unido', temas: ['poder', 'história', 'liberdade'],
+    porque: 'Em maio de 1940, recém-nomeado primeiro-ministro, Winston Churchill precisa decidir se negocia a paz com Hitler, como quer parte do seu partido, ou se continua lutando.',
+    encontrar: 'Gary Oldman ganhou o Oscar de melhor ator como Churchill.',
+    conexao: 'Uma decisão política tomada contra a corrente, sob enorme incerteza.',
+    aprofunda: 'Mostra a solidão de quem decide contra o consenso das elites. A cena do metrô, em que Churchill ouve o povo, é inventada — o que é, ela mesma, uma boa discussão sobre como o cinema reescreve a história.',
+    acesso: 'Fácil.', perguntas: ['Como saber, na hora, se a teimosia é coragem ou imprudência?'], unidades: ['u-nao-sei', 'u-tradicao'] });
+  f({ id: 'b-filme-gandhi', titulo: 'Gandhi', autor: 'Direção: Richard Attenborough', ano: '1982', origem: 'Reino Unido / Índia', temas: ['liberdade', 'religião', 'poder'],
+    porque: 'A vida de Mohandas Gandhi, do racismo sofrido na África do Sul à independência da Índia, por meio da resistência não violenta.',
+    encontrar: 'Oito Oscars, incluindo melhor filme; Ben Kingsley no papel principal.',
+    conexao: 'Sobre convicção religiosa transformada em método político.',
+    aprofunda: 'Mostra uma forma de combater sem desumanizar o adversário. Também vale conhecer as críticas posteriores a Gandhi — sobre suas posições em relação a castas e a mulheres — que o filme não aborda.',
+    acesso: 'Muito longo.', perguntas: ['É possível vencer sem odiar o adversário?'], unidades: ['u-nos-eles', 'u-acao-boa'] });
+  f({ id: 'b-filme-invictus', titulo: 'Invictus', autor: 'Direção: Clint Eastwood', ano: '2009', origem: 'Estados Unidos', temas: ['sociedade', 'identidade', 'poder'],
+    porque: 'Recém-eleito presidente da África do Sul, Nelson Mandela aposta na Copa do Mundo de rúgbi de 1995 — esporte símbolo da minoria branca — para unir um país dividido.',
+    encontrar: 'Morgan Freeman como Mandela e Matt Damon como o capitão do time.',
+    conexao: 'Um líder que se recusa a vingar-se do “outro lado” e procura um símbolo comum.',
+    aprofunda: 'Talvez o melhor filme sobre como reduzir a polarização afetiva: Mandela escolhe gestos que desarmam o medo do adversário. Um contraponto prático à unidade “Nós e eles”.',
+    acesso: 'Fácil.', perguntas: ['Que símbolo poderia unir lados opostos no Brasil de hoje?'], unidades: ['u-nos-eles'] });
+  f({ id: 'b-filme-homem-eternidade', titulo: 'O homem que não vendeu sua alma', autor: 'Direção: Fred Zinnemann', ano: '1966', origem: 'Reino Unido', temas: ['religião', 'ética', 'poder', 'liberdade'],
+    porque: 'Thomas More, chanceler da Inglaterra, recusa-se a aprovar o divórcio de Henrique VIII e a ruptura com Roma. Prefere a prisão e a morte a jurar o que não acredita. Também conhecido como <em>Um homem para a eternidade</em>.',
+    encontrar: 'Oscar de melhor filme; baseado na peça de Robert Bolt, com diálogos memoráveis sobre lei e consciência.',
+    conexao: 'O conflito entre consciência e poder, e a defesa da lei como proteção contra o próprio poder.',
+    aprofunda: 'Contém um dos melhores diálogos já filmados sobre o Estado de Direito: More se recusa a “derrubar todas as leis para pegar o diabo”, porque depois não haveria onde se abrigar quando o diabo se voltasse contra ele. Uma lição sobre aplicar as regras também ao adversário.',
+    acesso: 'Médio; muito diálogo.', perguntas: ['Por que More não mente, se a mentira o salvaria?', 'Você daria ao diabo o benefício da lei?'], unidades: ['u-acao-boa', 'u-nos-eles'] });
+
+  /* ---- verdade, imprensa e palavras ---- */
+  f({ id: 'b-filme-informante', titulo: 'O informante', autor: 'Direção: Michael Mann', ano: '1999', origem: 'Estados Unidos', temas: ['verdade', 'trabalho', 'poder'],
+    porque: 'Jeffrey Wigand, ex-executivo da indústria do tabaco, decide revelar que as empresas sabiam do poder viciante da nicotina. Um produtor do programa <em>60 Minutes</em> luta para pôr a entrevista no ar.',
+    encontrar: 'Al Pacino e Russell Crowe numa história real.',
+    conexao: 'Sobre o custo pessoal de dizer a verdade e as pressões econômicas sobre a imprensa.',
+    aprofunda: 'Mostra que a desinformação também pode ser silêncio: uma emissora respeitada quase engaveta a verdade por medo de processo. E o preço que pagam os que falam.',
+    acesso: 'Longo.', perguntas: ['O que você arriscaria para dizer uma verdade?'], unidades: ['u-desinformacao'] });
+  f({ id: 'b-filme-kane', titulo: 'Cidadão Kane', autor: 'Direção: Orson Welles', ano: '1941', origem: 'Estados Unidos', temas: ['poder', 'memória', 'identidade'],
+    porque: 'Após a morte do magnata da imprensa Charles Foster Kane, um repórter tenta descobrir o sentido de sua última palavra, “Rosebud”, entrevistando quem o conheceu.',
+    encontrar: 'Por décadas considerado o maior filme já feito; inspirado em William Randolph Hearst.',
+    conexao: 'Um homem que fabricava a opinião pública e que ninguém conseguiu entender de verdade.',
+    aprofunda: 'Mostra uma vida contada por várias testemunhas, cada uma com um pedaço — e o poder da imprensa de criar realidades, inclusive guerras.',
+    acesso: 'Médio; preto e branco.', perguntas: ['Alguém conhece Kane de verdade?'], unidades: ['u-desinformacao', 'u-mesma'] });
+  f({ id: 'b-filme-sete-abutres', titulo: 'A montanha dos sete abutres', autor: 'Direção: Billy Wilder', ano: '1951', origem: 'Estados Unidos', temas: ['verdade', 'trabalho', 'ética'],
+    porque: 'Um jornalista ambicioso e decadente encontra um homem preso numa mina no Novo México e prolonga o resgate de propósito, para transformar o caso num espetáculo nacional.',
+    encontrar: 'Um dos filmes mais cínicos de Hollywood, com Kirk Douglas.',
+    conexao: 'A notícia fabricada para vender e o público que a consome como diversão.',
+    aprofunda: 'Antecipou em 70 anos a lógica do engajamento: a tragédia transformada em show, com público pagante. Faz pensar em quanto da nossa indignação é entretenimento.',
+    acesso: 'Fácil; preto e branco.', perguntas: ['Quem é mais culpado: o jornalista ou a multidão?'], unidades: ['u-desinformacao'], contraponto: 'b-filme-abutre' });
+  f({ id: 'b-filme-the-post', titulo: 'The Post: A guerra secreta', autor: 'Direção: Steven Spielberg', ano: '2017', origem: 'Estados Unidos', temas: ['verdade', 'poder', 'liberdade'],
+    porque: 'Em 1971, a dona do <em>Washington Post</em>, Katharine Graham, precisa decidir se publica os Papéis do Pentágono, que revelam décadas de mentiras do governo sobre a guerra do Vietnã.',
+    encontrar: 'Meryl Streep e Tom Hanks numa história de imprensa e coragem.',
+    conexao: 'Sobre mentiras de Estado, de governos dos dois partidos, e a decisão de publicá-las.',
+    aprofunda: 'Mostra que a mentira oficial atravessou presidentes democratas e republicanos — um bom antídoto contra a ideia de que só o outro lado mente.',
+    acesso: 'Fácil.', perguntas: ['Por que governos de lados opostos mantiveram a mesma mentira?'], unidades: ['u-desinformacao'] });
+  f({ id: 'b-filme-preco-verdade', titulo: 'O preço de uma verdade', autor: 'Direção: Billy Ray', ano: '2003', origem: 'Estados Unidos', temas: ['verdade', 'trabalho', 'ética'],
+    porque: 'Stephen Glass, jovem estrela da revista <em>The New Republic</em>, é descoberto inventando dezenas de reportagens. Seu editor precisa enfrentá-lo.',
+    encontrar: 'Uma história real e pouco conhecida sobre fabricação jornalística.',
+    conexao: 'Histórias boas demais para ser verdade passam pela checagem porque todos querem acreditar nelas.',
+    aprofunda: 'Mostra por que as histórias mais compartilhadas são justamente as que confirmam o que já pensamos e são divertidas demais para checar. Um alerta para leitores, não só para jornalistas.',
+    acesso: 'Fácil.', perguntas: ['Por que ninguém desconfiou antes?'], unidades: ['u-desinformacao', 'u-absorver'] });
+  f({ id: 'b-filme-conspiracao-poder', titulo: 'Conspiração e poder', autor: 'Direção: James Vanderbilt', ano: '2015', origem: 'Estados Unidos', temas: ['verdade', 'poder', 'trabalho'],
+    porque: 'Em 2004, a produtora Mary Mapes e o âncora Dan Rather, da CBS, levam ao ar documentos sobre o serviço militar de George W. Bush. A autenticidade dos documentos é contestada, e suas carreiras desmoronam.',
+    encontrar: 'Cate Blanchett e Robert Redford; contado do ponto de vista dos jornalistas.',
+    conexao: 'Um caso real em que jornalistas experientes podem ter deixado a convicção passar à frente da verificação.',
+    aprofunda: 'Ótimo para o teste da inversão: o filme defende os jornalistas, mas os fatos mostram que eles não conseguiram comprovar a autenticidade dos papéis. Assistir criticamente é um exercício de raciocínio motivado — o deles e o nosso.',
+    acesso: 'Fácil.',
+    leituras: [{ quem: 'Leitura do filme', html: 'Jornalistas corajosos derrubados por pressão política e por uma discussão técnica sobre fontes tipográficas.' }, { quem: 'Leitura crítica', html: 'Uma investigação independente concluiu que a CBS não seguiu seus próprios padrões; a convicção sobre a história parece ter guiado a apuração.' }],
+    perguntas: ['O filme é honesto com os fatos que contrariam seus heróis?'], unidades: ['u-desinformacao', 'u-dissonancia'] });
+  f({ id: 'b-filme-frost-nixon', titulo: 'Frost/Nixon', autor: 'Direção: Ron Howard', ano: '2008', origem: 'Estados Unidos', temas: ['verdade', 'poder', 'linguagem'],
+    porque: 'Em 1977, o apresentador britânico David Frost, visto como superficial, entrevista o ex-presidente Richard Nixon, que espera usar a conversa para reabilitar sua imagem.',
+    encontrar: 'Um duelo verbal baseado em entrevistas reais.',
+    conexao: 'Sobre como se arranca uma admissão de alguém habituado a se justificar.',
+    aprofunda: 'Mostra o funcionamento da autojustificação em alguém poderoso — e como perguntas bem preparadas podem atravessá-la. Interessa também a quem quer entender como reconhecer os próprios erros.',
+    acesso: 'Fácil.', perguntas: ['O que finalmente faz Nixon admitir algo?'], unidades: ['u-dissonancia', 'u-falacias'] });
+
+  /* ---- pensar com clareza ---- */
+  f({ id: 'b-filme-apollo13', titulo: 'Apollo 13: Do desastre ao triunfo', autor: 'Direção: Ron Howard', ano: '1995', origem: 'Estados Unidos', temas: ['ciência', 'pensamento', 'trabalho'],
+    porque: 'Em 1970, uma explosão a bordo da Apollo 13 obriga a NASA e três astronautas a improvisar soluções para voltar à Terra com recursos mínimos.',
+    encontrar: 'Uma história real; a famosa cena em que engenheiros precisam encaixar um filtro quadrado num buraco redondo.',
+    conexao: 'Resolver problemas sob pressão com método, trabalho em equipe e sem pânico.',
+    aprofunda: 'Uma aula de pensamento claro em situação extrema: separar o que se sabe do que não se sabe, testar hipóteses e decidir com o que se tem.',
+    acesso: 'Fácil.', perguntas: ['Que princípios guiaram a equipe de terra?'], unidades: ['u-perguntas', 'u-causa'] });
+  f({ id: 'b-filme-nome-rosa', titulo: 'O nome da rosa', autor: 'Direção: Jean-Jacques Annaud', ano: '1986', origem: 'Alemanha / França / Itália', temas: ['religião', 'pensamento', 'verdade'],
+    porque: 'Adaptação do romance de Umberto Eco: o frade Guilherme de Baskerville (Sean Connery) investiga mortes numa abadia medieval.',
+    encontrar: 'Um filme atmosférico que simplifica o livro, mas conserva o detetive e o mistério da biblioteca.',
+    conexao: 'Raciocínio, leitura de sinais e o perigo do dogmatismo.',
+    aprofunda: 'Mostra o método do investigador — observar, formular hipóteses, testar — e o risco de um intelecto brilhante se apaixonar por uma hipótese errada.',
+    acesso: 'Fácil a médio.', perguntas: ['Por que o vilão teme o riso?'], unidades: ['u-investigador'], contraponto: 'b-nome-rosa' });
+  f({ id: 'b-filme-mente-brilhante', titulo: 'Uma mente brilhante', autor: 'Direção: Ron Howard', ano: '2001', origem: 'Estados Unidos', temas: ['pensamento', 'percepção', 'identidade'],
+    porque: 'A vida do matemático John Nash, prêmio Nobel de Economia, que conviveu com a esquizofrenia.',
+    encontrar: 'Oscar de melhor filme; com Russell Crowe.',
+    conexao: 'Como alguém pode duvidar das próprias percepções e usar a razão contra elas.',
+    aprofunda: 'A forma como Nash passa a “testar” suas alucinações (a menina não envelhece) é uma imagem poderosa do pensamento crítico aplicado a si mesmo. O filme omite e altera vários fatos da vida real de Nash.',
+    acesso: 'Fácil.', perguntas: ['Como saber se o que eu percebo é real?'], unidades: ['u-saber', 'u-nao-sei'] });
+  f({ id: 'b-filme-perdido-marte', titulo: 'Perdido em Marte', autor: 'Direção: Ridley Scott', ano: '2015', origem: 'Estados Unidos', temas: ['ciência', 'pensamento'],
+    porque: 'Um astronauta é dado como morto e deixado sozinho em Marte. Para sobreviver, precisa resolver um problema de cada vez — com ciência e bom humor.',
+    encontrar: 'Baseado no romance de Andy Weir; com Matt Damon.',
+    conexao: 'O método científico como atitude de vida: problema, hipótese, teste, correção.',
+    aprofunda: 'Mostra que pensar com clareza é também uma forma de lidar com o medo: dividir um problema enorme em problemas pequenos e resolvê-los um a um.',
+    acesso: 'Muito fácil.', perguntas: ['Que problema seu poderia ser dividido em partes menores?'], unidades: ['u-perguntas'] });
+  f({ id: 'b-filme-expresso-oriente', titulo: 'Assassinato no Expresso Oriente', autor: 'Direção: Sidney Lumet', ano: '1974', origem: 'Reino Unido', temas: ['pensamento', 'ética', 'verdade'],
+    porque: 'Um homem é assassinado num trem preso pela neve, e Hercule Poirot interroga os passageiros, cada um com um álibi.',
+    encontrar: 'A adaptação clássica de Agatha Christie, com elenco estelar.',
+    conexao: 'Dedução a partir de pequenos detalhes — e um dilema moral no final.',
+    aprofunda: 'Além do raciocínio, coloca Poirot diante de uma escolha entre a lei e a justiça. Ótimo para discutir se a verdade deve sempre ser revelada.',
+    acesso: 'Fácil.', perguntas: ['Poirot fez a escolha certa?'], unidades: ['u-argumento', 'u-acao-boa'] });
+  f({ id: 'b-filme-facas', titulo: 'Entre facas e segredos', autor: 'Direção: Rian Johnson', ano: '2019', origem: 'Estados Unidos', temas: ['pensamento', 'família', 'verdade'],
+    porque: 'Um rico escritor de romances policiais morre na noite do seu aniversário. Um detetive excêntrico investiga a família — que esconde muito.',
+    encontrar: 'Uma comédia de mistério moderna, com tiradas sobre política e privilégio.',
+    conexao: 'Dedução, pistas falsas e motivos ocultos.',
+    aprofunda: 'Bom para treinar a atenção às pistas e perceber como os preconceitos de classe da família os impedem de ver o óbvio.',
+    acesso: 'Fácil.', perguntas: ['Que pista você ignorou por causa de um preconceito?'], unidades: ['u-argumento'] });
+  f({ id: 'b-filme-oleo-lorenzo', titulo: 'O óleo de Lorenzo', autor: 'Direção: George Miller', ano: '1992', origem: 'Estados Unidos', temas: ['ciência', 'família', 'pensamento'],
+    porque: 'Quando o filho recebe o diagnóstico de uma doença rara e fatal, um casal sem formação médica mergulha nas bibliotecas para buscar um tratamento que os especialistas não têm.',
+    encontrar: 'Uma história real, com Nick Nolte e Susan Sarandon.',
+    conexao: 'Leigos contra especialistas — e o que cada lado sabe e não sabe.',
+    aprofunda: 'Um caso complexo e honesto: os pais mostram que leigos dedicados podem contribuir; mas estudos posteriores sobre o óleo tiveram resultados limitados. Ótimo para pensar quando desafiar especialistas e quando confiar neles.',
+    acesso: 'Emocionalmente pesado.', perguntas: ['Quando um leigo deve confiar em especialistas — e quando desafiá-los?'], unidades: ['u-nao-sei', 'u-saber'] });
+  f({ id: 'b-filme-anatomia-crime', titulo: 'Anatomia de um crime', autor: 'Direção: Otto Preminger', ano: '1959', origem: 'Estados Unidos', temas: ['verdade', 'linguagem', 'ética'],
+    porque: 'Um advogado do interior defende um tenente que matou o homem que teria estuprado sua esposa. O julgamento é uma batalha de estratégias.',
+    encontrar: 'Um dos melhores filmes de tribunal, com James Stewart.',
+    conexao: 'Como argumentos são construídos para convencer um júri, e não necessariamente para revelar a verdade.',
+    aprofunda: 'Mostra o advogado “ensinando” o cliente a encontrar a defesa certa — uma aula sobre raciocínio orientado pela conclusão, do lado de quem o pratica.',
+    acesso: 'Longo; tema de violência sexual.', perguntas: ['O que o júri soube de verdade?'], unidades: ['u-investigador', 'u-argumento'] });
+  f({ id: 'b-filme-testemunha-acusacao', titulo: 'Testemunha de acusação', autor: 'Direção: Billy Wilder', ano: '1957', origem: 'Estados Unidos', temas: ['verdade', 'percepção'],
+    porque: 'Um velho advogado londrino aceita defender um homem acusado de matar uma viúva rica. A esposa do réu é a testemunha decisiva — e imprevisível.',
+    encontrar: 'Adaptação de Agatha Christie, com reviravoltas célebres.',
+    conexao: 'Testemunho, credibilidade e manipulação da percepção.',
+    aprofunda: 'Mostra como julgamos a credibilidade de alguém mais pela simpatia do que pelas provas — e como isso pode ser explorado.',
+    acesso: 'Fácil; preto e branco.', perguntas: ['Em quem você confiou, e por quê?'], unidades: ['u-saber', 'u-atalhos'] });
+
+  /* ---- quem sou eu ---- */
+  f({ id: 'b-filme-persona', titulo: 'Persona', autor: 'Direção: Ingmar Bergman', ano: '1966', origem: 'Suécia', temas: ['identidade', 'consciência'],
+    porque: 'Uma atriz deixa de falar, e uma enfermeira é encarregada de cuidar dela numa casa de praia. Aos poucos, as identidades das duas parecem se fundir.',
+    encontrar: 'Um dos filmes mais estudados da história do cinema.',
+    conexao: 'O eu como máscara (“persona”) e o que resta quando ela cai.',
+    aprofunda: 'Leva ao limite a pergunta sobre o que é um “eu”: papéis sociais, palavras, rostos. Difícil, mas inesquecível.',
+    acesso: 'Difícil; curto e experimental.', perguntas: ['Qual é a sua “persona”?'], unidades: ['u-mesma', 'u-camadas'] });
+  f({ id: 'b-filme-ela', titulo: 'Ela', autor: 'Direção: Spike Jonze', ano: '2013', origem: 'Estados Unidos', temas: ['amor', 'identidade', 'consciência'],
+    porque: 'Num futuro próximo, um homem solitário se apaixona por um sistema operacional com voz e personalidade.',
+    encontrar: 'Oscar de roteiro original; melancólico e terno.',
+    conexao: 'O que é uma pessoa, uma relação, uma consciência?',
+    aprofunda: 'Ficou mais atual com as inteligências artificiais: pergunta o que buscamos numa relação e se aquilo que nos responde precisa ser alguém.',
+    acesso: 'Fácil.', perguntas: ['O que Theodore procura em Samantha?'], unidades: ['u-mesma', 'u-emocao'] });
+  f({ id: 'b-filme-boyhood', titulo: 'Boyhood: Da infância à juventude', autor: 'Direção: Richard Linklater', ano: '2014', origem: 'Estados Unidos', temas: ['tempo', 'identidade', 'família'],
+    porque: 'Filmado com os mesmos atores ao longo de doze anos, acompanha Mason dos 6 aos 18 anos.',
+    encontrar: 'Uma experiência única de ver alguém crescer de verdade na tela.',
+    conexao: 'Identidade como processo: o mesmo e outro ao mesmo tempo.',
+    aprofunda: 'Mostra que uma vida é feita de momentos pequenos, e não de grandes eventos — e a frase final da mãe resume o susto de ver o tempo passar.',
+    acesso: 'Longo, sem grande enredo.', perguntas: ['Quais momentos “pequenos” fizeram você ser quem é?'], unidades: ['u-mesma', 'u-tempo'] });
+  f({ id: 'b-filme-conta-comigo', titulo: 'Conta comigo', autor: 'Direção: Rob Reiner', ano: '1986', origem: 'Estados Unidos', temas: ['amor', 'memória', 'identidade'],
+    porque: 'Em 1959, quatro meninos de 12 anos caminham pelos trilhos para ver o corpo de um garoto desaparecido.',
+    encontrar: 'Baseado num conto de Stephen King; nostálgico e sincero.',
+    conexao: 'Amizade, medo e o fim da infância.',
+    aprofunda: 'Mostra como algumas amizades de infância nos formam — e como a memória de um adulto reconstrói esse passado.',
+    acesso: 'Fácil; linguagem forte.', perguntas: ['Que amizade de infância formou você?'], unidades: ['u-mesma', 'u-emocao'] });
+  f({ id: 'b-filme-incompreendidos', titulo: 'Os incompreendidos', autor: 'Direção: François Truffaut', ano: '1959', origem: 'França', temas: ['educação', 'família', 'identidade'],
+    porque: 'Antoine Doinel, um garoto de 12 anos em Paris, negligenciado em casa e maltratado na escola, vai se afastando de tudo.',
+    encontrar: 'Marco da Nouvelle Vague, parcialmente autobiográfico.',
+    conexao: 'Como uma identidade se forma — e se perde — na falta de cuidado.',
+    aprofunda: 'Mostra a adolescência sem julgar: nem o menino é só vítima, nem os adultos só vilões. Um olhar que ajuda a entender o próprio passado.',
+    acesso: 'Médio; preto e branco.', perguntas: ['O que Antoine precisava e não recebeu?'], unidades: ['u-camadas', 'u-emocao'] });
+  f({ id: 'b-filme-benjamin-button', titulo: 'O curioso caso de Benjamin Button', autor: 'Direção: David Fincher', ano: '2008', origem: 'Estados Unidos', temas: ['tempo', 'identidade', 'morte'],
+    porque: 'Benjamin nasce velho e rejuvenesce com o passar dos anos, enquanto as pessoas que ama envelhecem.',
+    encontrar: 'Inspirado num conto de F. Scott Fitzgerald; com Brad Pitt e Cate Blanchett.',
+    conexao: 'O tempo, a identidade e o amor vistos de trás para frente.',
+    aprofunda: 'Inverte o envelhecimento para fazer perceber o que normalmente não vemos: que todos estamos indo embora, e que o tempo partilhado é o que importa.',
+    acesso: 'Longo.', perguntas: ['Você gostaria de saber como envelheceria?'], unidades: ['u-tempo', 'u-mesma'] });
+  f({ id: 'b-filme-lady-bird', titulo: 'Lady Bird: A hora de voar', autor: 'Direção: Greta Gerwig', ano: '2017', origem: 'Estados Unidos', temas: ['família', 'identidade', 'religião'],
+    porque: 'No último ano numa escola católica de Sacramento, Christine — que se chama de Lady Bird — briga com a mãe e sonha em ir embora.',
+    encontrar: 'Uma comédia dramática delicada, que trata a escola católica com afeto, sem caricatura.',
+    conexao: 'A identidade que se constrói contra as raízes — e o reconhecimento tardio delas.',
+    aprofunda: 'Mostra que rejeitar a própria origem também é uma forma de ser marcado por ela, e que a gratidão costuma chegar depois.',
+    acesso: 'Fácil.', perguntas: ['Do que você quis fugir — e o que levou consigo?'], unidades: ['u-mesma', 'u-tradicao'] });
+  f({ id: 'b-filme-cisne-negro', titulo: 'Cisne negro', autor: 'Direção: Darren Aronofsky', ano: '2010', origem: 'Estados Unidos', temas: ['identidade', 'emoções', 'trabalho'],
+    porque: 'Uma bailarina perfeccionista conquista o papel principal em <em>O lago dos cisnes</em> e precisa encontrar em si o lado sombrio do cisne negro.',
+    encontrar: 'Um suspense psicológico; Natalie Portman ganhou o Oscar.',
+    conexao: 'Perfeccionismo, duplicidade e a perda do controle de si.',
+    aprofunda: 'Uma imagem extrema do conflito interior e do perfeccionismo que destrói — útil para pensar o lugar da competência na identidade.',
+    acesso: 'Perturbador; cenas sexuais e de automutilação.', perguntas: ['Onde termina a dedicação e começa a autodestruição?'], unidades: ['u-camadas', 'u-emocao'], contraponto: 'b-duplo' });
+  f({ id: 'b-filme-rain-man', titulo: 'Rain Man', autor: 'Direção: Barry Levinson', ano: '1988', origem: 'Estados Unidos', temas: ['família', 'identidade', 'emoções'],
+    porque: 'Charlie, um negociante egoísta, descobre que tem um irmão mais velho autista, internado havia anos, que herdou a fortuna do pai. Os dois cruzam o país juntos.',
+    encontrar: 'Oscar de melhor filme; com Dustin Hoffman e Tom Cruise.',
+    conexao: 'Como a convivência com alguém diferente transforma a própria identidade.',
+    aprofunda: 'Mostra uma mudança que não vem de argumentos, mas de convivência — e um retrato do autismo que, na época, mudou percepções (hoje considerado limitado e estereotipado).',
+    acesso: 'Fácil.', perguntas: ['O que Charlie aprende com Raymond?'], unidades: ['u-emocao'] });
+  f({ id: 'b-filme-forrest', titulo: 'Forrest Gump: O contador de histórias', autor: 'Direção: Robert Zemeckis', ano: '1994', origem: 'Estados Unidos', temas: ['identidade', 'história', 'amor'],
+    porque: 'Forrest, um homem simples e bondoso, atravessa três décadas da história americana sem entender bem o que acontece ao seu redor.',
+    encontrar: 'Oscar de melhor filme; com Tom Hanks.',
+    conexao: 'Bondade, lealdade e simplicidade diante de uma época de grandes ideologias.',
+    aprofunda: 'Foi lido como elogio conservador da virtude simples contra a contracultura dos anos 1960 — e criticado justamente por isso. Bom para discutir o que o filme valoriza e o que ele ridiculariza.',
+    acesso: 'Fácil.', perguntas: ['O filme é ingênuo ou sábio?'], unidades: ['u-mesma', 'u-acao-boa'] });
+
+  /* ---- sentido, sofrimento e fé ---- */
+  f({ id: 'b-filme-ordet', titulo: 'A palavra (Ordet)', autor: 'Direção: Carl Theodor Dreyer', ano: '1955', origem: 'Dinamarca', temas: ['religião', 'família', 'morte'],
+    porque: 'Numa fazenda da Jutlândia, uma família dividida por disputas religiosas enfrenta a morte de uma jovem mãe. Um dos filhos, tido como louco, acredita ser Cristo.',
+    encontrar: 'Leão de Ouro em Veneza; um final que está entre os mais comentados da história do cinema.',
+    conexao: 'Fé, dúvida e milagre.',
+    aprofunda: 'Coloca no centro a pergunta mais difícil para o crente moderno: ainda acreditamos que Deus pode agir? E faz a pergunta também ao cético.',
+    acesso: 'Difícil; lento e austero.', perguntas: ['O que o final significa para você?'], unidades: ['u-sentido'] });
+  f({ id: 'b-filme-rublev', titulo: 'Andrei Rublev', autor: 'Direção: Andrei Tarkovsky', ano: '1966', origem: 'União Soviética', temas: ['religião', 'história', 'sentido da vida'],
+    porque: 'A vida do maior pintor de ícones russo, no século XV, em meio a invasões tártaras, violência e fé.',
+    encontrar: 'Um épico em episódios; censurado por anos na União Soviética.',
+    conexao: 'A arte e a fé num mundo brutal.',
+    aprofunda: 'Feito sob um regime ateu, é uma meditação sobre a vocação do artista e a beleza como resposta ao sofrimento. A sequência do sino é inesquecível.',
+    acesso: 'Muito difícil; longo e violento.', perguntas: ['Por que Rublev volta a pintar?'], unidades: ['u-sentido'] });
+  f({ id: 'b-filme-diario-paroco', titulo: 'Diário de um pároco de aldeia', autor: 'Direção: Robert Bresson', ano: '1951', origem: 'França', temas: ['religião', 'sentido da vida'],
+    porque: 'Um jovem padre doente assume uma paróquia rural hostil e anota em seu diário a luta para cumprir a missão.',
+    encontrar: 'A adaptação austera do romance de Georges Bernanos.',
+    conexao: 'A graça em meio ao fracasso aparente.',
+    aprofunda: 'Mostra a fé como fidelidade, não como sucesso — e termina com a frase de Bernanos: “Tudo é graça”.',
+    acesso: 'Difícil; lento e minimalista.', perguntas: ['O padre fracassou?'], unidades: ['u-sentido'], contraponto: 'b-diario-paroco' });
+  f({ id: 'b-filme-carruagens', titulo: 'Carruagens de fogo', autor: 'Direção: Hugh Hudson', ano: '1981', origem: 'Reino Unido', temas: ['religião', 'identidade', 'sentido da vida'],
+    porque: 'Dois atletas britânicos se preparam para as Olimpíadas de 1924: Harold Abrahams, judeu que corre contra o preconceito, e Eric Liddell, escocês cristão que corre para a glória de Deus.',
+    encontrar: 'Oscar de melhor filme; a trilha de Vangelis ficou famosa.',
+    conexao: 'Dois sentidos diferentes para o mesmo esforço.',
+    aprofunda: 'Liddell se recusa a correr no domingo, mesmo diante do príncipe: um exemplo de convicção que não cede por conveniência, contado com respeito.',
+    acesso: 'Fácil.', perguntas: ['Por que você faz o que faz?'], unidades: ['u-sentido', 'u-acao-boa'] });
+  f({ id: 'b-filme-missao', titulo: 'A missão', autor: 'Direção: Roland Joffé', ano: '1986', origem: 'Reino Unido', temas: ['religião', 'poder', 'ética'],
+    porque: 'No século XVIII, jesuítas protegem os guaranis numa missão na fronteira entre terras espanholas e portuguesas. Um tratado entre as coroas os condena.',
+    encontrar: 'Palma de Ouro; Jeremy Irons e Robert De Niro; trilha de Ennio Morricone.',
+    conexao: 'Fé, política e a escolha entre resistir pela força ou pela oração.',
+    aprofunda: 'Coloca lado a lado dois caminhos de fidelidade — o do padre que pega em armas e o que não pega — sem dizer qual é o certo. E mostra a Igreja dividida entre política e consciência.',
+    acesso: 'Fácil a médio; violento no final.', perguntas: ['Qual dos dois padres estava certo?'], unidades: ['u-acao-boa', 'u-sentido'] });
+  f({ id: 'b-filme-escafandro', titulo: 'O escafandro e a borboleta', autor: 'Direção: Julian Schnabel', ano: '2007', origem: 'França', temas: ['sentido da vida', 'consciência', 'linguagem'],
+    porque: 'O editor da revista <em>Elle</em> sofre um derrame e fica totalmente paralisado, podendo mover só um olho. Piscando, letra por letra, ele dita um livro.',
+    encontrar: 'Uma história real; filmado em grande parte do ponto de vista dele.',
+    conexao: 'O que resta de uma pessoa quando quase tudo lhe é tirado.',
+    aprofunda: 'Uma demonstração viva de Frankl: a liberdade interior e a imaginação como último espaço — e a linguagem como forma de continuar existindo.',
+    acesso: 'Médio; angustiante no início.', perguntas: ['O que ainda seria seu se você perdesse quase tudo?'], unidades: ['u-sentido', 'u-palavra'] });
+  f({ id: 'b-filme-melancolia', titulo: 'Melancolia', autor: 'Direção: Lars von Trier', ano: '2011', origem: 'Dinamarca', temas: ['emoções', 'morte', 'sentido da vida'],
+    porque: 'No dia do próprio casamento, Justine afunda numa depressão profunda. Enquanto isso, um planeta chamado Melancolia se aproxima da Terra.',
+    encontrar: 'Um filme belo e sombrio; Kirsten Dunst premiada em Cannes.',
+    conexao: 'A depressão e o fim do mundo como espelhos.',
+    aprofunda: 'Mostra, de dentro, como é a depressão — e, paradoxalmente, quem está deprimida enfrenta o fim com mais calma que os “saudáveis”. Uma visão desesperançada, que vale confrontar com Frankl.',
+    acesso: 'Difícil e pesado. Atenção a quem atravessa depressão.', perguntas: ['O que o filme diz sobre a esperança?'], unidades: ['u-emocao', 'u-sentido'] });
+  f({ id: 'b-filme-viva', titulo: 'Viva: A vida é uma festa', autor: 'Direção: Lee Unkrich', ano: '2017', origem: 'Estados Unidos', temas: ['família', 'morte', 'memória'],
+    porque: 'Miguel, um menino mexicano que sonha ser músico, entra na Terra dos Mortos durante o Dia dos Mortos e conhece os antepassados.',
+    encontrar: 'Uma animação da Pixar, ganhadora do Oscar, cheia de música.',
+    conexao: 'A memória como forma de manter os mortos vivos, e a tradição familiar.',
+    aprofunda: 'Mostra a tradição como laço de amor entre gerações, e não só como regra — ótimo para conversar sobre morte e memória com crianças e adultos.',
+    acesso: 'Muito fácil.', perguntas: ['De quem você quer se lembrar — e quem vai se lembrar de você?'], unidades: ['u-tradicao', 'u-sentido'] });
+
+  /* ---- como viver bem ---- */
+  f({ id: 'b-filme-sonho-liberdade', titulo: 'Um sonho de liberdade', autor: 'Direção: Frank Darabont', ano: '1994', origem: 'Estados Unidos', temas: ['liberdade', 'amor', 'sentido da vida'],
+    porque: 'Andy, um banqueiro condenado injustamente, passa décadas numa prisão do Maine, onde cultiva uma amizade improvável e uma esperança obstinada.',
+    encontrar: 'Baseado num conto de Stephen King; frequentemente o filme mais bem avaliado pelo público em listas de cinema.',
+    conexao: 'Esperança, amizade e liberdade interior.',
+    aprofunda: 'Mostra a diferença entre os que se “institucionalizam” e os que guardam algo dentro que ninguém tira — tema caro aos estoicos e a Frankl.',
+    acesso: 'Fácil; cenas de violência na prisão.', perguntas: ['O que Andy tinha que os outros não tinham?'], unidades: ['u-sentido'] });
+  f({ id: 'b-filme-melhores-anos', titulo: 'Os melhores anos de nossas vidas', autor: 'Direção: William Wyler', ano: '1946', origem: 'Estados Unidos', temas: ['família', 'trabalho', 'emoções'],
+    porque: 'Três veteranos da Segunda Guerra voltam para a mesma cidade e tentam retomar a vida — com famílias, empregos e corpos que mudaram.',
+    encontrar: 'Oscar de melhor filme; um dos atores, Harold Russell, havia de fato perdido as mãos na guerra.',
+    conexao: 'Reintegração, dignidade e o que devemos a quem sacrificou algo por nós.',
+    aprofunda: 'Um retrato sóbrio da volta para casa, sem heroísmo nem cinismo: as feridas invisíveis e o papel da família na reconstrução.',
+    acesso: 'Longo; preto e branco.', perguntas: ['O que a cidade deve aos que voltaram?'], unidades: ['u-emocao', 'u-acao-boa'] });
+  f({ id: 'b-filme-intocaveis', titulo: 'Intocáveis', autor: 'Direção: Olivier Nakache e Éric Toledano', ano: '2011', origem: 'França', temas: ['amor', 'sociedade', 'emoções'],
+    porque: 'Um aristocrata tetraplégico contrata como cuidador um jovem da periferia, sem nenhuma experiência. Nasce uma amizade.',
+    encontrar: 'Uma comédia baseada numa história real, enorme sucesso na França.',
+    conexao: 'Amizade entre mundos opostos e a dignidade de não ser tratado com pena.',
+    aprofunda: 'Mostra que tratar alguém como igual às vezes significa não poupá-lo — uma lição sobre respeito. Alguns críticos acharam o retrato do personagem da periferia estereotipado.',
+    acesso: 'Muito fácil.', perguntas: ['Por que Philippe escolhe Driss?'], unidades: ['u-acao-boa', 'u-nos-eles'] });
+  f({ id: 'b-filme-match-point', titulo: 'Match Point', autor: 'Direção: Woody Allen', ano: '2005', origem: 'Reino Unido / Estados Unidos', temas: ['ética', 'sentido da vida'],
+    porque: 'Um ex-tenista ambicioso se casa com a filha de uma família rica de Londres, mas mantém um caso apaixonado que ameaça tudo.',
+    encontrar: 'O personagem lê <em>Crime e castigo</em> no início — não por acaso.',
+    conexao: 'Sorte, culpa e justiça.',
+    aprofunda: 'Uma versão moderna e mais sombria de Dostoiévski: e se a sorte, e não a consciência, decidir tudo? Vale assistir junto com <em>Crimes e pecados</em>.',
+    acesso: 'Fácil.', perguntas: ['O personagem é punido?'], unidades: ['u-acao-boa', 'u-dissonancia'], contraponto: 'b-crime' });
+  f({ id: 'b-filme-o-filho', titulo: 'O filho', autor: 'Direção: Jean-Pierre e Luc Dardenne', ano: '2002', origem: 'Bélgica', temas: ['ética', 'família', 'emoções'],
+    porque: 'Um professor de carpintaria numa escola de reinserção aceita como aluno o adolescente que matou seu filho anos antes. O garoto não sabe quem ele é.',
+    encontrar: 'A câmera cola no protagonista; Olivier Gourmet foi premiado em Cannes.',
+    conexao: 'Perdão, vingança e a possibilidade de recomeçar.',
+    aprofunda: 'Um dos filmes mais sérios sobre perdão, sem sentimentalismo: mostra que perdoar pode ser um processo físico, lento, quase involuntário.',
+    acesso: 'Médio; austero.', perguntas: ['O que Olivier quer do garoto?'], unidades: ['u-acao-boa', 'u-emocao'] });
+  f({ id: 'b-filme-manchester', titulo: 'Manchester à beira-mar', autor: 'Direção: Kenneth Lonergan', ano: '2016', origem: 'Estados Unidos', temas: ['emoções', 'família', 'morte'],
+    porque: 'Lee, um zelador solitário, volta à cidade natal após a morte do irmão e descobre que foi nomeado tutor do sobrinho adolescente. Lá estão as memórias de uma tragédia que ele não superou.',
+    encontrar: 'Oscar de roteiro e de ator para Casey Affleck.',
+    conexao: 'Luto, culpa e os limites do que se pode superar.',
+    aprofunda: 'Recusa o final redentor: mostra que algumas dores não se resolvem, apenas se carregam — e que isso também é honesto.',
+    acesso: 'Muito triste.', perguntas: ['É preciso “superar” tudo?'], unidades: ['u-emocao', 'u-sentido'] });
+  f({ id: 'b-filme-kramer', titulo: 'Kramer vs. Kramer', autor: 'Direção: Robert Benton', ano: '1979', origem: 'Estados Unidos', temas: ['família', 'trabalho', 'amor'],
+    porque: 'Quando a esposa vai embora, um publicitário absorvido pelo trabalho precisa aprender a cuidar do filho pequeno. Depois, ela volta e pede a guarda.',
+    encontrar: 'Oscar de melhor filme, com Dustin Hoffman e Meryl Streep.',
+    conexao: 'Família, papéis de pai e mãe, e o que é o melhor para uma criança.',
+    aprofunda: 'Mostra os dois lados de um divórcio sem vilões — um exercício de empatia com quem está do outro lado de uma disputa.',
+    acesso: 'Fácil.', perguntas: ['Com quem você ficou? Por quê?'], unidades: ['u-acao-boa', 'u-emocao'] });
+  f({ id: 'b-filme-soldado-ryan', titulo: 'O resgate do soldado Ryan', autor: 'Direção: Steven Spielberg', ano: '1998', origem: 'Estados Unidos', temas: ['ética', 'sentido da vida', 'morte'],
+    porque: 'Após o Dia D, em 1944, um pelotão recebe a missão de encontrar e trazer de volta um único soldado, cujos três irmãos morreram em combate.',
+    encontrar: 'A sequência inicial do desembarque na Normandia é uma das mais intensas do cinema.',
+    conexao: 'O valor de uma vida e a dívida de quem sobrevive.',
+    aprofunda: 'Termina com uma pergunta para toda uma vida: “Eu fui um homem bom?”. Um filme sobre gratidão e responsabilidade.',
+    acesso: 'Extremamente violento.', perguntas: ['Valia arriscar oito vidas por uma?'], unidades: ['u-acao-boa', 'u-sentido'] });
+  f({ id: 'b-filme-ladroes-bicicleta', titulo: 'Ladrões de bicicleta', autor: 'Direção: Vittorio De Sica', ano: '1948', origem: 'Itália', temas: ['trabalho', 'família', 'sociedade'],
+    porque: 'Na Roma do pós-guerra, um desempregado consegue um emprego que exige uma bicicleta. No primeiro dia, ela é roubada. Com o filho pequeno, ele percorre a cidade para encontrá-la.',
+    encontrar: 'Obra-prima do neorrealismo italiano, com atores não profissionais.',
+    conexao: 'Dignidade, pobreza e a relação entre pai e filho.',
+    aprofunda: 'Mostra como a necessidade pode levar um homem honesto ao que ele condena — e o olhar do filho que vê tudo.',
+    acesso: 'Fácil; preto e branco.', perguntas: ['Você julgaria o pai?'], unidades: ['u-acao-boa', 'u-dinheiro'] });
+
+  /* ---- tradição, sociedade e mudança ---- */
+  f({ id: 'b-filme-poderoso-chefao', titulo: 'O poderoso chefão', autor: 'Direção: Francis Ford Coppola', ano: '1972', origem: 'Estados Unidos', temas: ['família', 'poder', 'ética'],
+    porque: 'A família Corleone, uma das mais poderosas da máfia de Nova York, e a transformação de Michael, o filho que não queria entrar nos negócios.',
+    encontrar: 'Um dos filmes mais celebrados de todos os tempos.',
+    conexao: 'Família, lealdade, tradição e o poder que corrompe.',
+    aprofunda: 'Mostra como lealdade e tradição — valores admiráveis — podem servir a uma moral fechada no próprio grupo. Uma ilustração perfeita da lealdade como fundamento moral, com seu lado sombrio.',
+    acesso: 'Longo e violento.', perguntas: ['Em que momento Michael deixa de ser quem era?'], unidades: ['u-tradicao', 'u-nos-eles'] });
+  f({ id: 'b-filme-cidade-deus', titulo: 'Cidade de Deus', autor: 'Direção: Fernando Meirelles e Kátia Lund', ano: '2002', origem: 'Brasil', temas: ['sociedade', 'poder'],
+    porque: 'A história de uma comunidade do Rio de Janeiro dos anos 1960 aos 1980, contada por Buscapé, um jovem que sonha ser fotógrafo, enquanto o tráfico domina tudo.',
+    encontrar: 'Baseado no livro de Paulo Lins; indicado a quatro Oscars.',
+    conexao: 'Violência, escolhas e as condições que as cercam.',
+    aprofunda: 'Bom para discutir causas sem cair em explicações únicas: escolhas individuais, ausência do Estado, cultura do crime. Cada lado político costuma enfatizar uma delas.',
+    acesso: 'Extremamente violento.',
+    leituras: [{ quem: 'Leitura social', html: 'Um retrato do abandono do Estado e da desigualdade que produzem a violência.' }, { quem: 'Leitura da responsabilidade', html: 'Buscapé e Dadinho vivem as mesmas condições e escolhem caminhos opostos: o filme também é sobre escolhas.' }],
+    perguntas: ['O que explica as escolhas diferentes de Buscapé e Dadinho?'], unidades: ['u-causa', 'u-explicar'] });
+  f({ id: 'b-filme-vinhas-ira', titulo: 'As vinhas da ira', autor: 'Direção: John Ford', ano: '1940', origem: 'Estados Unidos', temas: ['sociedade', 'família', 'trabalho'],
+    porque: 'A família Joad, expulsa das terras de Oklahoma pela seca e pelos bancos, atravessa o país rumo à Califórnia durante a Grande Depressão.',
+    encontrar: 'A adaptação do romance de John Steinbeck.',
+    conexao: 'Crise econômica, migração e solidariedade.',
+    aprofunda: 'Um retrato da família como último abrigo diante de forças econômicas impessoais — lido tanto como crítica ao capitalismo quanto como elogio da coesão familiar.',
+    acesso: 'Médio; preto e branco.', perguntas: ['Quem é responsável pelo sofrimento dos Joad?'], unidades: ['u-dinheiro', 'u-explicar'] });
+  f({ id: 'b-filme-tempos-modernos', titulo: 'Tempos modernos', autor: 'Direção: Charlie Chaplin', ano: '1936', origem: 'Estados Unidos', temas: ['trabalho', 'sociedade'],
+    porque: 'Carlitos, operário numa linha de montagem, enlouquece com a repetição e passa a viver de emprego em emprego na Grande Depressão.',
+    encontrar: 'Uma comédia quase muda que virou símbolo da era industrial.',
+    conexao: 'O ser humano diante da máquina e da produtividade.',
+    aprofunda: 'Ajuda a pensar o que a modernidade dá e tira — uma pergunta que conservadores e progressistas fazem de ângulos diferentes.',
+    acesso: 'Muito fácil.', perguntas: ['Qual é a sua “linha de montagem”?'], unidades: ['u-dinheiro', 'u-natural'] });
+  f({ id: 'b-filme-facinora', titulo: 'O homem que matou o facínora', autor: 'Direção: John Ford', ano: '1962', origem: 'Estados Unidos', temas: ['história', 'verdade', 'poder'],
+    porque: 'Um senador volta a uma cidade do Oeste para o enterro de um homem esquecido e conta a um jornalista a verdade sobre o tiroteio que fez sua fama.',
+    encontrar: 'Com James Stewart e John Wayne; um faroeste sobre o fim do faroeste.',
+    conexao: 'A passagem da lei do revólver para a lei escrita — e o papel dos mitos.',
+    aprofunda: 'Termina com uma frase célebre: “quando a lenda vira fato, publique-se a lenda”. Um filme sobre como as sociedades preferem mitos fundadores à verdade, e sobre se isso tem alguma sabedoria.',
+    acesso: 'Fácil; preto e branco.', perguntas: ['Uma sociedade precisa de mitos?'], unidades: ['u-tradicao', 'u-desinformacao'] });
+  f({ id: 'b-filme-vestigios', titulo: 'Vestígios do dia', autor: 'Direção: James Ivory', ano: '1993', origem: 'Reino Unido', temas: ['trabalho', 'emoções', 'sociedade'],
+    porque: 'A adaptação do romance de Ishiguro: o mordomo Stevens, dedicado por toda a vida a um lorde que simpatizou com os nazistas, revê o que deixou de viver.',
+    encontrar: 'Anthony Hopkins e Emma Thompson em atuações contidas.',
+    conexao: 'Dever, lealdade e autoengano.',
+    aprofunda: 'Mostra como uma virtude real — a lealdade ao dever — pode servir de abrigo para não ver nem sentir. Um dos melhores retratos de autoengano do cinema.',
+    acesso: 'Lento.', perguntas: ['Stevens foi leal ou cúmplice?'], unidades: ['u-dissonancia', 'u-tradicao'], contraponto: 'b-vestigios-dia' });
+  f({ id: 'b-filme-testemunha', titulo: 'A testemunha', autor: 'Direção: Peter Weir', ano: '1985', origem: 'Estados Unidos', temas: ['religião', 'sociedade', 'cultura'],
+    porque: 'Um menino amish testemunha um assassinato na estação da Filadélfia. O detetive que investiga o caso (Harrison Ford) precisa se esconder na comunidade amish.',
+    encontrar: 'Um suspense policial que vira um encontro de dois mundos.',
+    conexao: 'Uma comunidade que recusou a modernidade e a não violência diante da violência.',
+    aprofunda: 'Mostra com respeito uma comunidade tradicional e faz perguntar o que a modernidade perdeu — e o que os amish perdem também.',
+    acesso: 'Fácil; algumas cenas violentas.', perguntas: ['O que você levaria da vida amish?'], unidades: ['u-tradicao'] });
+  f({ id: 'b-filme-pagador', titulo: 'O pagador de promessas', autor: 'Direção: Anselmo Duarte', ano: '1962', origem: 'Brasil', temas: ['religião', 'sociedade', 'poder'],
+    porque: 'Zé do Burro, um homem simples do interior, carrega uma cruz até uma igreja de Salvador para pagar uma promessa feita num terreiro de candomblé. O padre se recusa a deixá-lo entrar.',
+    encontrar: 'O único filme brasileiro a ganhar a Palma de Ouro; baseado na peça de Dias Gomes.',
+    conexao: 'Fé popular, instituições e a transformação de um homem em símbolo por jornalistas e políticos.',
+    aprofunda: 'Mostra como uma promessa sincera vira disputa religiosa, notícia e causa política — cada grupo usando Zé para os próprios fins. Uma lição brasileira sobre captura de narrativas.',
+    acesso: 'Fácil; preto e branco.', perguntas: ['Quem tinha razão: Zé ou o padre?', 'Quem usou Zé do Burro?'], unidades: ['u-tradicao', 'u-desinformacao'] });
+  f({ id: 'b-filme-deus-diabo', titulo: 'Deus e o diabo na terra do sol', autor: 'Direção: Glauber Rocha', ano: '1964', origem: 'Brasil', temas: ['religião', 'poder', 'sociedade'],
+    porque: 'No sertão, o vaqueiro Manuel mata o patrão e foge com a mulher; segue primeiro um beato messiânico, depois um cangaceiro.',
+    encontrar: 'O filme-símbolo do Cinema Novo; alegórico e intenso.',
+    conexao: 'Messianismo religioso e político como respostas à miséria.',
+    aprofunda: 'Mostra a sedução de líderes que prometem salvação — do beato ao cangaceiro. Glauber, de esquerda, critica também as ilusões revolucionárias. Exige disposição, mas é parte essencial do cinema brasileiro.',
+    acesso: 'Difícil; linguagem pouco convencional e violenta.', perguntas: ['Por que Manuel segue cada líder?'], unidades: ['u-nos-eles', 'u-tradicao'], contraponto: 'b-os-sertoes' });
+})();
+
+</script>
   <script>/* js/conteudo/70-pensadores.js */
 /* =========================================================
    Pensadores — fichas de contexto
@@ -9833,7 +10382,7 @@ html { background-color: var(--papel); }
       livros: ['b-tavris', 'b-kahneman', 'b-arte-pensar', 'b-galef', 'b-pense-novo', 'b-tartufo', 'b-dom-casmurro', 'b-reparacao'],
       pensadores: ['festinger', 'kahneman', 'haidt', 'popper'],
       conceitos: ['confirmacao', 'motivado', 'dissonancia', 'repeticao', 'heuristica'],
-      filmes: ['b-filme-amnesia', 'b-filme-duvida', 'b-filme-caca', 'b-filme-rashomon', 'b-filme-grande-aposta', 'b-filme-moneyball', 'b-filme-sully', 'b-filme-ilha-medo', 'b-filme-queda']
+      filmes: ['b-doze-homens', 'b-filme-rashomon', 'b-filme-caca', 'b-filme-duvida', 'b-filme-amnesia', 'b-filme-zodiaco', 'b-filme-moneyball', 'b-filme-grande-aposta', 'b-filme-conversacao', 'b-filme-anatomia', 'b-filme-vestigios', 'b-filme-sully', 'b-filme-garota-exemplar', 'b-filme-tropa2', 'b-filme-queda', 'b-filme-prenda-me', 'b-filme-ilha-medo', 'b-filme-grande-truque', 'b-filme-blow-up', 'b-filme-nao-olhe']
     },
     {
       id: 't-politica', nome: 'Política, identidade e polarização', icone: 'balanca',
@@ -9847,7 +10396,7 @@ html { background-color: var(--papel); }
       livros: ['b-haidt', 'b-biografia-abismo', 'b-sowell-visoes', 'b-1984', 'b-zero-infinito', 'b-rinoceronte', 'b-burke', 'b-mill'],
       pensadores: ['haidt', 'sowell', 'burke', 'orwell', 'mill', 'milosz'],
       conceitos: ['polarizacao', 'identidade', 'poder', 'duplipensar'],
-      filmes: ['b-filme-onda', 'b-filme-vida-outros', 'b-filme-tropa', 'b-filme-ainda-estou-aqui', 'b-filme-companheiro', 'b-filme-conformista', 'b-filme-ponte-espioes', 'b-filme-lincoln', 'b-filme-boa-noite', 'b-filme-gran-torino', 'b-doze-homens']
+      filmes: ['b-filme-vida-outros', 'b-filme-homem-eternidade', 'b-filme-invictus', 'b-filme-onda', 'b-filme-confissao', 'b-filme-ponte-espioes', 'b-filme-sophie-scholl', 'b-doze-homens', 'b-filme-conformista', 'b-filme-lincoln', 'b-filme-ainda-estou-aqui', 'b-filme-companheiro', 'b-filme-tropa', 'b-filme-tropa2', 'b-filme-destino-nacao', 'b-filme-z', 'b-filme-fita-branca', 'b-filme-boa-noite', 'b-filme-selma', 'b-filme-gandhi', 'b-filme-mississippi', 'b-filme-gran-torino']
     },
     {
       id: 't-verdade', nome: 'Verdade, notícias e palavras', icone: 'olho',
@@ -9861,7 +10410,7 @@ html { background-color: var(--papel); }
       livros: ['b-educacao-midiatica', 'b-mentir-estatistica', 'b-klemperer', 'b-orwell-ensaios', 'b-honra-katharina', 'b-alice-espelho', 'b-sowell-falacias'],
       pensadores: ['orwell', 'wittgenstein', 'arendt', 'popper'],
       conceitos: ['desinformacao', 'verdade', 'linguagem', 'interpretacao'],
-      filmes: ['b-filme-spotlight', 'b-filme-presidente', 'b-filme-sombra-stalin', 'b-filme-negacao', 'b-filme-mera-coincidencia', 'b-filme-abutre', 'b-filme-rede-intrigas', 'b-filme-dilema-redes', 'b-filme-anatomia', 'b-filme-adeus-lenin', 'b-filme-1984', 'b-filme-chegada']
+      filmes: ['b-filme-spotlight', 'b-filme-presidente', 'b-filme-sombra-stalin', 'b-filme-negacao', 'b-filme-informante', 'b-filme-conspiracao-poder', 'b-filme-preco-verdade', 'b-filme-rede-intrigas', 'b-filme-sete-abutres', 'b-filme-the-post', 'b-filme-pagador', 'b-filme-mera-coincidencia', 'b-filme-kane', 'b-filme-facinora', 'b-filme-abutre', 'b-filme-confissao', 'b-filme-frost-nixon', 'b-filme-adeus-lenin', 'b-filme-1984', 'b-filme-chegada', 'b-filme-dilema-redes', 'b-filme-garota-exemplar']
     },
     {
       id: 't-pensar', nome: 'Pensar com clareza', icone: 'ideia',
@@ -9875,7 +10424,7 @@ html { background-color: var(--papel); }
       livros: ['b-weston', 'b-carnielli', 'b-warburton', 'b-sagan-mundo', 'b-schopenhauer-debate', 'b-doze-homens'],
       pensadores: ['socrates', 'aristoteles', 'descartes', 'peirce', 'popper'],
       conceitos: ['falacia', 'causalidade', 'conhecimento', 'verdade'],
-      filmes: ['b-doze-homens', 'b-filme-obrigado-fumar', 'b-filme-moneyball', 'b-filme-jogo-imitacao', 'b-filme-contato', 'b-filme-rashomon', 'b-filme-separacao']
+      filmes: ['b-doze-homens', 'b-filme-obrigado-fumar', 'b-filme-apollo13', 'b-filme-moneyball', 'b-filme-rashomon', 'b-filme-separacao', 'b-filme-anatomia-crime', 'b-filme-oleo-lorenzo', 'b-filme-perdido-marte', 'b-filme-nome-rosa', 'b-filme-contato', 'b-filme-mente-brilhante', 'b-filme-testemunha-acusacao', 'b-filme-expresso-oriente', 'b-filme-facas', 'b-filme-jogo-imitacao', 'b-filme-zodiaco', 'b-filme-frost-nixon']
     },
     {
       id: 't-eu', nome: 'Quem sou eu', icone: 'pessoas',
@@ -9889,7 +10438,7 @@ html { background-color: var(--papel); }
       livros: ['b-montaigne', 'b-confissoes', 'b-12regras', 'b-poder-quietos', 'b-duplo', 'b-desassossego', 'b-xadrez'],
       pensadores: ['montaigne', 'agostinho', 'hume', 'olavo', 'peterson'],
       conceitos: ['identidade', 'memoria', 'narrativa', 'emocao'],
-      filmes: ['b-filme-divertida', 'b-filme-amnesia', 'b-filme-brilho-eterno', 'b-filme-genio', 'b-filme-morangos', 'b-filme-clube-luta', 'b-filme-gattaca', 'b-filme-truman', 'b-filme-matrix']
+      filmes: ['b-filme-divertida', 'b-filme-morangos', 'b-filme-genio', 'b-filme-brilho-eterno', 'b-filme-amnesia', 'b-filme-boyhood', 'b-filme-truman', 'b-filme-incompreendidos', 'b-filme-lady-bird', 'b-filme-conta-comigo', 'b-filme-gattaca', 'b-filme-ela', 'b-filme-persona', 'b-filme-benjamin-button', 'b-filme-forrest', 'b-filme-rain-man', 'b-filme-cisne-negro', 'b-filme-clube-luta', 'b-filme-matrix', 'b-filme-escafandro']
     },
     {
       id: 't-sentido', nome: 'Sentido, sofrimento e fé', icone: 'estrela',
@@ -9903,7 +10452,7 @@ html { background-color: var(--papel); }
       livros: ['b-frankl', 'b-karamazov', 'b-ivan-ilitch', 'b-pascal', 'b-cristianismo-puro', 'b-sisifo', 'b-confissao-tolstoi', 'b-consolacao'],
       pensadores: ['frankl', 'pascal', 'dostoievski', 'kierkegaard', 'camus', 'agostinho', 'cslewis'],
       conceitos: ['sentido', 'morte', 'sagrado', 'tempo'],
-      filmes: ['b-filme-ikiru', 'b-filme-felicidade', 'b-filme-vida-oculta', 'b-filme-homens-deuses', 'b-filme-silencio', 'b-filme-setimo-selo', 'b-filme-arvore-vida', 'b-filme-vida-bela', 'b-filme-partida', 'b-filme-central', 'b-filme-contato']
+      filmes: ['b-filme-ikiru', 'b-filme-vida-oculta', 'b-filme-homens-deuses', 'b-filme-felicidade', 'b-filme-escafandro', 'b-filme-silencio', 'b-filme-ordet', 'b-filme-diario-paroco', 'b-filme-carruagens', 'b-filme-missao', 'b-filme-setimo-selo', 'b-filme-arvore-vida', 'b-filme-dias-perfeitos', 'b-filme-vida-bela', 'b-filme-partida', 'b-filme-central', 'b-filme-viva', 'b-filme-sonho-liberdade', 'b-filme-rublev', 'b-filme-contato', 'b-filme-melancolia', 'b-filme-manchester']
     },
     {
       id: 't-viver', nome: 'Como viver bem', icone: 'broto',
@@ -9917,7 +10466,7 @@ html { background-color: var(--papel); }
       livros: ['b-etica-nicomaco', 'b-manual', 'b-seneca', 'b-meditacoes', 'b-quatro-amores', 'b-arte-amar', 'b-pequeno-tratado', 'b-12regras'],
       pensadores: ['aristoteles', 'estoicos', 'kant', 'aquino', 'macintyre', 'weil'],
       conceitos: ['etica', 'valor', 'responsabilidade', 'liberdade'],
-      filmes: ['b-filme-feitico-tempo', 'b-filme-dias-perfeitos', 'b-filme-babette', 'b-filme-separacao', 'b-filme-poetas-mortos', 'b-filme-schindler', 'b-filme-crimes-pecados', 'b-filme-gran-torino', 'b-filme-compadecida']
+      filmes: ['b-filme-feitico-tempo', 'b-filme-babette', 'b-filme-dias-perfeitos', 'b-filme-sonho-liberdade', 'b-filme-o-filho', 'b-filme-separacao', 'b-filme-melhores-anos', 'b-filme-schindler', 'b-filme-soldado-ryan', 'b-filme-intocaveis', 'b-filme-ladroes-bicicleta', 'b-filme-kramer', 'b-filme-gran-torino', 'b-filme-crimes-pecados', 'b-filme-match-point', 'b-filme-poetas-mortos', 'b-filme-manchester', 'b-filme-compadecida', 'b-filme-carruagens', 'b-filme-homem-eternidade']
     },
     {
       id: 't-sociedade', nome: 'Tradição, sociedade e mudança', icone: 'mapa',
@@ -9931,7 +10480,7 @@ html { background-color: var(--papel); }
       livros: ['b-burke', 'b-scruton-conservador', 'b-tocqueville', 'b-hayek-servidao', 'b-paine', 'b-leopardo', 'b-pais-filhos', 'b-sapiens'],
       pensadores: ['burke', 'chesterton', 'tocqueville', 'hayek', 'marx', 'weber'],
       conceitos: ['tradicao', 'instituicao', 'cultura', 'historia'],
-      filmes: ['b-filme-violinista', 'b-filme-toquio', 'b-filme-leopardo', 'b-filme-poetas-mortos', 'b-filme-capitao', 'b-filme-gattaca', 'b-filme-vidas-secas', 'b-filme-felicidade']
+      filmes: ['b-filme-violinista', 'b-filme-toquio', 'b-filme-leopardo', 'b-filme-poderoso-chefao', 'b-filme-testemunha', 'b-filme-vestigios', 'b-filme-facinora', 'b-filme-pagador', 'b-filme-felicidade', 'b-filme-vinhas-ira', 'b-filme-ladroes-bicicleta', 'b-filme-tempos-modernos', 'b-filme-poetas-mortos', 'b-filme-capitao', 'b-filme-cidade-deus', 'b-filme-fita-branca', 'b-filme-gattaca', 'b-filme-vidas-secas', 'b-filme-deus-diabo', 'b-filme-viva']
     }
   ];
 
@@ -10795,7 +11344,8 @@ html { background-color: var(--papel); }
     AP.salvar();
     const st = reg.status;
     AP.$$(`.cartao-livro-caixa[data-livro="${id}"]`).forEach((cx) => {
-      cx.className = `cartao-livro-caixa st-${st || 'nenhum'}`;
+      [...cx.classList].filter((c) => c.startsWith('st-')).forEach((c) => cx.classList.remove(c));
+      cx.classList.add('st-' + (st || 'nenhum'));
       cx.querySelectorAll('.sr-op').forEach((bt) => { const on = bt.dataset.v === st; bt.classList.toggle('ativo', on); bt.setAttribute('aria-pressed', String(on)); });
       const chip = cx.querySelector('.chip-leitura');
       if (chip) { chip.textContent = AP.nomeStatus(st, b.tipo === 'Filme'); chip.hidden = !st; }
@@ -11491,7 +12041,8 @@ html { background-color: var(--papel); }
       <fieldset class="status-leitura"><legend>${filme ? 'Situação' : 'Situação de leitura'}</legend>${status}${reg.status ? `<button type="button" class="btn-link" data-acao="limpar-status-livro" data-id="${b.id}">Limpar</button>` : ''}</fieldset>
       ${sec(filme ? 'Por que vale assistir' : 'Por que vale a leitura', `<p>${b.porque}</p>`)}
       ${sec('O que você pode encontrar', `<p>${b.encontrar}</p>`)}
-      ${sec('A conexão com o estudo', `<p>${b.conexao}</p>`)}
+      ${sec(filme ? 'Como se relaciona aos temas do Ateliê' : 'A conexão com o estudo', `<p>${b.conexao}</p>`)}
+      ${b.aprofunda ? `<section class="ficha-sec ficha-aprofunda"><h2>O que ele traz de especial</h2><p class="campo-dica">Como ${filme ? 'o filme' : 'a obra'} pode aprofundar o tema e ampliar o seu horizonte.</p><p>${b.aprofunda}</p></section>` : ''}
       ${sec('Acessibilidade', `<p>${b.acesso}</p>`)}
       ${sec(filme ? 'Como assistir com proveito' : 'Como ler com proveito', `<p class="campo-dica">${filme ? 'Perguntas para levar ao filme — sem transformá-lo em tarefa.' : 'Perguntas para levar à leitura — sem transformá-la em tarefa.'}</p><ul class="caminhos">${b.perguntas.map((p) => `<li>${esc(p)}</li>`).join('')}</ul>`)}
       ${b.alternativa ? sec('Uma alternativa', `<p>${b.alternativa}</p>`) : ''}
@@ -13459,11 +14010,24 @@ html { background-color: var(--papel); }
       <section class="tema-sec"><h2>Pratique</h2><div class="lista-refs">${refs(t.praticar)}</div></section>
       <section class="tema-sec"><h2>Pergunte e debata</h2><div class="lista-refs">${refs(t.debater)}</div></section>
       <section class="tema-sec"><h2>Leia</h2><div class="grade-livros">${t.livros.map((id) => AP.cartaoLivro(id)).join('')}</div></section>
-      ${(t.filmes || []).length ? `<section class="tema-sec"><h2>Assista <small>${t.filmes.length} filmes</small></h2><div class="grade-livros">${t.filmes.map((id) => AP.cartaoLivro(id)).join('')}</div><p><a class="btn-link" href="#/biblioteca/filmes">Ver todos os filmes da Biblioteca</a></p></section>` : ''}
+      ${(t.filmes || []).length ? `<section class="tema-sec"><h2>Assista <small>${t.filmes.length} filmes, do mais recomendado para este tema ao menos</small></h2><ol class="ranking-filmes">${t.filmes.map((id, i) => AP.itemFilmeRank(id, i + 1)).join('')}</ol><p><a class="btn-link" href="#/biblioteca/filmes">Ver todos os filmes da Biblioteca</a></p></section>` : ''}
       <section class="tema-sec tema-duplo"><div><h2>Pensadores</h2><div class="lista-refs">${pens}</div></div><div><h2>No mapa de ideias</h2><div class="lista-refs">${conc}</div></div></section>
       <section class="tema-sec"><h2>Outros temas</h2><div class="chips-temas">${outros}</div></section>
     </div>`;
   });
+
+  /* item do ranking de filmes de um tema */
+  AP.itemFilmeRank = (id, n) => {
+    const b = A.livros.find((x) => x.id === id);
+    if (!b) return '';
+    const st = AP.S.livros[id] && AP.S.livros[id].status;
+    return `<li class="item-rank cartao-livro-caixa st-${st || 'nenhum'}" data-livro="${b.id}">
+      <a class="rank-link" href="#/livro/${b.id}"><span class="rank-num" aria-hidden="true">${n}</span>
+        <span class="rank-corpo"><span class="rank-titulo">${esc(b.titulo)}</span><span class="rank-meta">${esc(b.ano)} · ${esc(b.autor.replace(/^Direção: /, ''))} · ${esc(b.origem)}</span>
+        <span class="rank-porque">${b.aprofunda || b.conexao}</span>
+        <span class="chip chip-leitura" ${st ? '' : 'hidden'}>${esc(AP.nomeStatus(st, true))}</span></span></a>
+      ${AP.statusRapido(b)}</li>`;
+  };
 
   /* ------------------------- página de uma lição rápida ------------------------- */
   AP.rota('licao', (args) => {
